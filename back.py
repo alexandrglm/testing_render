@@ -29,10 +29,10 @@ def home():
 @app.route('/<project_id>/')
 def render_project(project_id):
     try:
-        return render_template(f"{project_id}/index_{project_id}.html")
+        return render_template(f'{project_id}/index_{project_id}.html')
     except:
 
-        return "Page not found", 404
+        return render_template('404/index_404.html')
 
 # 01 logic
 @app.route('/01/')
@@ -45,8 +45,7 @@ def hello_world_backend():
     <h1>Hello World testing app</h1>
     <p>This 'Hello World' screen is being loaded and served using Python<p>
     </body>
-    </html>
-    """
+    </html>"""
 
 # 02 Logic
 #

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyectos</title>
+    <title>Web Services Showroom !</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,22 +22,25 @@
 
         header {
             text-align: center;
-            padding: 20px 0;
             background: linear-gradient(135deg, #8dcb11, #c8ff00);
             color: #333;
             width: 100%;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        header h1 {
+            font-family: "Lato", sans-serif;
+            font-weight: 900;
+            font-style: italic;
             font-size: 2em;
             font-weight: 700;
             margin: 0;
         }
 
-        p {
+        header p {
             font-size: 1em;
             opacity: 0.9;
+            margin-top: -10px;
         }
 
         .container {
@@ -114,8 +117,8 @@
 </head>
 <body>
     <header>
-        <h1>Back-End Showroom</h1><br>
-        <p>Updated to March 3, 2025: All this content is FrontEnd-BackEnd testing.<p>
+        <h1>Web Services Showroom</h1><br>
+        <p>- Updated to March 3, 2025 -<p>
     </header>
         <div class="container">
         {% for project in projects %}
