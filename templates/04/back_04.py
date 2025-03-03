@@ -1,44 +1,27 @@
+# BackEnd 3: Python + HTML
+
+""""
+Es lo mismo que el back 2, pero la lógica se hace en back con python.
+
+Por un lado hay que setear la config de flask para que renderice la web.
+Por otra parte, la lógica del color converter en Python.
+Es la parte más sencilla.
+
+En el front, JS debe:
+1. Interpretar las acciones de inputs, output y button.
+2. Formar el JSON
+3. Realizar el GET-FETCH como POST.
+Esta parte es menos sencilla.
+
+"""
+
 from flask import Flask, render_template, request, jsonify
 
-app = Flask(__name__)
-
-
-projects = [
-    {'id': '01', 'title': 'Simple Hello World'},
-    {'id': '02', 'title': 'A More Complex Hello World'},
-    {'id': '03', 'title': 'BackEnd only as server'},
-    {'id': '04', 'title': 'BackEnd as LOGIC'},
-]
+app = Flask(__name__, static_folder="front", template_folder="front")
 
 @app.route('/')
 def home():
-    return render_template('main.html', projects=projects)
-
-@app.route('/01/')
-def render_project_01():
-        return hello_world_backend()
-
-@app.route('/<project_id>/')
-def render_project(project_id):
-    try:
-        return render_template(f"{project_id}/index_{project_id}.html")
-    except:
-        return "Page not found", 404
-
-# 01 logic
-def hello_world_backend():
-    return """<html>
-    <body>
-    <h1>Hello World testing app</h1>
-    <p>This 'Hello World' screen is being loaded and served using Python<p>
-    </body>
-    </html>
-    """
-
-# 02 Logic
-#
-
-# 03 Logic
+    return render_template('index_04.html')
 
 @app.route('/convert', methods=['POST'])
 def convert_colors():
@@ -83,10 +66,6 @@ def convert_colors():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-    
 
-# main serve logic
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
-
-    
