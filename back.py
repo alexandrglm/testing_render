@@ -16,7 +16,8 @@ projects = [
     {'id': '04', 'title': 'BackEnd as LOGIC', 'desc' : 'App Test 02: AMSTRAD Color Tool converter, using Python'},
     {'id': '05', 'title': 'InspectorView Demo', 'desc' : 'Web CSS Inspector Tool idea'},
     {'id': '06', 'title': 'Naiz Headlines, Now', 'desc' : 'A news&headlines scrapping tool using \'requests\''},
-    {'id': '404', 'title': 'Not every mistake is really a mistake' , 'desc' : '404'},
+    {'id': '07', 'title': 'ISS-is', 'desc' : 'ISS Live Geopositional simple tool using \'requests\''},
+    {'id': '404', 'title': 'Not every mistake is really a mistake' , 'desc' : '404'}
 ]
 
 
@@ -144,8 +145,28 @@ def naiz_titularrak_orain():
     return titularrak
 
 
+# 07 Logic
+@app.route('/07/')
+def render_project_07():
+    return render_template('07/index_07.html')
 
-# main serve logic
+@app.route('/07/iss_position')
+
+def iss_position():
+    try:
+        url = 'http://api.open-notify.org/iss-now.json'
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+
+        longitude = data['iss_position']['longitude']
+        latitude = data['iss_position']['latitude']
+
+        return jsonify({'longitude': longitude, 'latitude': latitude})
+    except requests.RequestException as e:
+        return jsonify({'error': f"Failed to get ISS position: {e}"}), 500
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
 
