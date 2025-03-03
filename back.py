@@ -123,12 +123,11 @@ def naiz_titularrak_orain():
         author_tag = article.find('a', class_='article__author')
         image_tag = article.find('img')
 
-        title = title_tag.get_text(strip=True) if title_tag else "Sin título"
+        title = title_tag.get_text(strip=True) if title_tag else "No Title"
         link = link_tag['href'] if link_tag else "#"
-        author = author_tag.get_text(strip=True) if author_tag else "Desconocido"
-        image = image_tag['src'] if image_tag else "https://via.placeholder.com/300"
+        author = author_tag.get_text(strip=True) if author_tag else "Unknown"
+        image = image_tag['src'] if image_tag else "https://picsum.photos/300/300"
 
-        # Convertir URL relativa en absoluta
         if link.startswith("/"):
             link = url + link
         if image.startswith("/"):
