@@ -8,6 +8,7 @@ projects = [
     {'id': '02', 'title': 'A More Complex Hello World'},
     {'id': '03', 'title': 'BackEnd only as server'},
     {'id': '04', 'title': 'BackEnd as LOGIC'},
+    {'id': '404', 'title': 'Ooops ... 404!'},
 ]
 
 @app.route('/')

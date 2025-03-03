@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
-    <h1>Proyectos</h1>
+    <h1>Back-End Showroom</h1>
     <div class="container">
         {% for project in projects %}
             <a href="/{{ project.id }}/" class="project">{{ loop.index }}. {{ project.title }}</a><br>
@@ -15,3 +15,7 @@
     </div>
 </body>
 </html>
+
+<div class="titleWrapper">
+    <div class="title"></div>
+</div>
