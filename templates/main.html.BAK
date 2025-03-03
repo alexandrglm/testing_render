@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <h1>Back-End Showroom</h1>
+    <div class="container">
+        <div class="card">
+            {% for project in projects %}
+                <a href="/{{ project.id }}/" class="project">{{ loop.index }}. {{ project.title }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+
+<div class="titleWrapper">
+    <div class="title"></div>
+</div>

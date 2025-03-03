@@ -4,11 +4,12 @@ app = Flask(__name__)
 
 
 projects = [
-    {'id': '01', 'title': 'Simple Hello World'},
-    {'id': '02', 'title': 'A More Complex Hello World'},
-    {'id': '03', 'title': 'BackEnd only as server'},
-    {'id': '04', 'title': 'BackEnd as LOGIC'},
-    {'id': '404', 'title': 'Ooops ... 404!'},
+    {'id': '01', 'title': 'Simple Hello World', 'desc' : 'A simple Hello World using Python as a back-end, with no html.'},
+    {'id': '02', 'title': 'A More Complex Hello World', 'desc' : 'CSS parallax floating bubbles saying Hello World'},
+    {'id': '03', 'title': 'BackEnd only as server', 'desc' : 'App Test 01: AMSTRAD Color Tool converter, using JavaScript'},
+    {'id': '04', 'title': 'BackEnd as LOGIC', 'desc' : 'App Test 02: AMSTRAD Color Tool converter, using Python'},
+    {'id': '05', 'title': 'InspectorView Demo', 'desc' : 'Web CSS Inspector Tool idea'},
+    {'id': '404', 'title': 'Not every mistake is really a mistake' , 'desc' : '404'},
 ]
 
 @app.route('/')

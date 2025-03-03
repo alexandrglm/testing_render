@@ -5,17 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.7.2/js/solid.js" crossorigin="anonymous" defer></script>
+    <script src="https://use.fontawesome.com/releases/v6.7.2/js/fontawesome.js" crossorigin="anonymous" defer></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            background-color: #313131;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #8dcb11, #c8ff00);
+            color: #333;
+            width: 100%;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            width: 240px;
+            text-align: center;
+            box-shadow: 0px 5px 15px rgb(255, 255, 255);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            text-decoration: none;
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: solid 1px #333;
+            box-shadow: 
+        }
+
+        .metadata {
+            margin-top: 10px;
+        }
+
+        .metadata .title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .metadata .desc {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .buttonGroup {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .button {
+            margin: 0 8px;
+            font-size: 1.4em;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .button a {
+            color: #444;
+            text-decoration: none;
+        }
+
+        .button:hover a {
+            color: #2575fc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Back-End Showroom</h1>
-    <div class="container">
+    <header>
+        <h1>Back-End Showroom</h1><br>
+        <p>Updated to March 3, 2025: All this content is FrontEnd-BackEnd testing.<p>
+    </header>
+        <div class="container">
         {% for project in projects %}
-            <a href="/{{ project.id }}/" class="project">{{ loop.index }}. {{ project.title }}</a><br>
+            <a href="/{{ project.id }}/" class="item">
+                <div class="item-2">
+                    <img src="{{ url_for('static', filename=project.id + '/' + project.id + '.png') }}" alt="Project Image">
+                    <div class="metadata">
+                        <h1 class="title">{{ loop.index }}. {{ project.title }}</h1>
+                        <p class="desc">{{ project.desc }}</p>
+                    </div>
+                    <!---
+                    <div class="buttonGroup">
+                        <div class="button">
+                            <a href="/{{ project.id }}/">
+                                <i class="fas fa-plus-circle"></i>
+                            </a>
+                        </div>
+                        <div class="button">
+                            <a href="#">
+                                <i class="fas fa-times-circle"></i>
+                            </a>
+                        </div>
+                    </div> --->
+                </div>
+            </a>
         {% endfor %}
     </div>
 </body>
 </html>
-
-<div class="titleWrapper">
-    <div class="title"></div>
-</div>

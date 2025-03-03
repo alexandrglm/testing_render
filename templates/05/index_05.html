@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspector Framework example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.7.2/js/solid.js" crossorigin="anonymous" defer></script>
+    <script src="https://use.fontawesome.com/releases/v6.7.2/js/fontawesome.js" crossorigin="anonymous" defer></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+        .container {
+            display: flex;
+        }
+        .container .item {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            border: 1px solid gray;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .container .item .content {
+            display: flex;
+        }
+        .container .item .content .metadata {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 0 0 20px;
+        }
+        .container .item .content .metadata .title {
+            margin: 0px;
+        }
+        .container .item .buttonGroup {
+            display: flex;
+            align-items: flex-end;
+            align-items: center;
+        }
+        .container .item .buttonGroup .button {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 90%;
+            width: 42px;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        .container .item .buttonGroup .button a {
+            text-decoration: none;
+        }
+        .container .item .buttonGroup .button:hover {
+            background-color: lightslategray;
+        }
+        .container .item .buttonGroup .button:hover a {
+            color: whitesmoke;
+        }
+        .item .featured {
+            flex: auto;
+        }
+        .item .associated {
+            flex: initial;
+        }
+
+        /* debug inspector */
+        .inspectorActive .container {
+            background-color: lightcoral !important;
+            outline: 2px dashed red !important;
+
+        }
+        .inspectorActive .item {
+            background-color: lightgreen !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .content {
+            background-color: lightblue !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .metadata {
+            background-color: lightyellow !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .title {
+            background-color: lightseagreen !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .subtitle {
+            background-color: lightgray !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .buttonGroup {
+            background-color: lightpink !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .button {
+            background-color: aliceblue !important;
+            outline: 2px dashed red !important;
+        }
+        .inspectorActive .button a {
+            background-color: lightseagreen !important;
+            outline: 2px dashed red !important;
+        }
+
+        .toggle {
+            margin: 20px;
+            color: red;
+            background: greenyellow;
+            font: bold italic 2em "Lato", sans-serif;
+            padding: 10px;
+            border-radius: 10px;
+            border-color: whitesmoke;
+            box-shadow: 10px 5px 10px 5px rgba(1,1,1,0.1);
+
+            display: flex;
+        }
+        .toggle:hover {
+            color: green;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item featured">
+            <div class="content">
+                <img src="https://picsum.photos/200/120" width="200px" height="120px">
+                <div class="metadata">
+                    <h1 class="title">Title Card post 1 </h1>
+                    <h3 class="subtitle">Subtitle for Card 1</h3>
+                </div>
+            </div>
+            <div class="buttonGroup">
+                <div class="button">
+                    <a href="#">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                </div>
+                <div class="button">
+                    <a href="#">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="item associated">
+            <div class="content">
+                <img src="https://picsum.photos/200/120" width="200px" height="120px">
+                <div class="metadata">
+                    <h1 class="title">Title card 2</h1>
+                </div>
+            </div>
+            <div class="buttonGroup">
+                <div class="button">
+                    <a href="#">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                </div>
+                <div class="button">
+                    <a href="#">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="containerB"></div>
+            <button id="inspector" class="toggle">InspectorView</button>
+            <h4>A simple JS script toggles new styles which applies 'background-color' in light colours and a dashed red outline properties into the selected elements.</h4>
+        <div class="code"></div>    
+            <h6 style="margin:2em;">JS Code example</h6>
+            <p style="font-style: italic;">    
+                document.getElementById('inspector').addEventListener('click', function () {<br>
+                document.body.classList.toggle('inspectorActive');<br>
+                });<br>
+            </p>
+            <h6 style="margin:2em;">CSS usage:</h6>
+            <p style="font-style: italic;">        
+                /* debug inspector */<br>
+                .inspectorActive .container {<br>
+                    background-color: lightcoral !important;<br>
+                    outline: 2px dashed red !important;<br>
+                }<br>
+            </p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('inspector').addEventListener('click', function () {
+            document.body.classList.toggle('inspectorActive');
+        });
+    </script>
+</body>
+</html>
