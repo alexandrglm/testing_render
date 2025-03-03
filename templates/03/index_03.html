@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <title>Z80 CPC Mode 1 Colour Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='03.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">  
+</head>
+<body>
+    <div class="container">
+        <div class="heading">  
+            <h1>Example 03:    Python Z80 CPC Colour Converter</h1>
+            <h3>Conversion is performed at <strong>back-end</strong> using <strong>Python</strong></h3>
+        </div> 
+        <div class="pickerWrapper">
+            <div class="inputWrapper">
+                <label for="inputColourText">Make your colour combination (Example: YCYC):</label>
+                <input type="text" id="inputColourText" maxlength="4">
+            </div>
+
+            <div class="inputColourPicker">
+                <label>Or choose the colours:</label>
+                <select id="colour1Picker">
+                    <option value="B">Blue (B)</option>
+                    <option value="Y">Yellow (Y)</option>
+                    <option value="C">Cyan (C)</option>
+                    <option value="R">Red (R)</option>
+                </select>
+                <select id="colour2Picker">
+                    <option value="B">Blue (B)</option>
+                    <option value="Y">Yellow (Y)</option>
+                    <option value="C">Cyan (C)</option>
+                    <option value="R">Red (R)</option>
+                </select>
+                <select id="colour3Picker">
+                    <option value="B">Blue (B)</option>
+                    <option value="Y">Yellow (Y)</option>
+                    <option value="C">Cyan (C)</option>
+                    <option value="R">Red (R)</option>
+                </select>
+                <select id="colour4Picker">
+                    <option value="B">Blue (B)</option>
+                    <option value="Y">Yellow (Y)</option>
+                    <option value="C">Cyan (C)</option>
+                    <option value="R">Red (R)</option>
+                </select>
+            </div>
+            <div class="buttonStyles">
+                <button id="convertButton">Convert</button>
+            </div>
+        </div>
+    <div class="outputWrapper">
+        <div class="output" id="output"></div>
+    </div>	    
+    </div>
+    <script src="{{ url_for('static', filename='03.js') }}" defer></script>
+</body>
+</html>
