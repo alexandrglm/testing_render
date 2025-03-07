@@ -16,7 +16,8 @@ projects = [
     {'id': '04', 'title': 'BackEnd as LOGIC', 'desc' : 'App Test 02: AMSTRAD Color Tool converter, using Python'},
     {'id': '05', 'title': 'InspectorView Demo', 'desc' : 'Web CSS Inspector Tool idea'},
     {'id': '06', 'title': 'Naiz Headlines, Now', 'desc' : 'A news&headlines scrapping tool using \'requests\''},
-    {'id': '07', 'title': 'ISS-is', 'desc' : 'ISS Live Geopositional simple tool using \'requests\''},
+    {'id': '08', 'title': 'Profile Info', 'desc' : 'An example of an User\'s profile page managed with "__init__" constructor and @property decorators. '},
+    {'id': '404', 'title': 'Not every mistake is really a mistake' , 'desc' : '404'}
     {'id': '404', 'title': 'Not every mistake is really a mistake' , 'desc' : '404'}
 ]
 
