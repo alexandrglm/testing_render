@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory, url_for # 04 05 06 07 08
 import requests # 06 07 08
 from bs4 import BeautifulSoup # 06
-import datetime # 06
 import json # 08
-import os   # 08 img catcher
-from datetime import datetime # 08, no es redundante
-from PIL import Image
+import os   # 08 img catcher, 09 game data loader
+import datetime # 06
+from PIL import Image #08
+
 
 app = Flask(__name__)
 
@@ -113,7 +113,7 @@ def convert_colors():
 
 ############################################################################
 # 06 Logic
-
+#
 @app.route('/06/')
 def render_project_06():
     articles = naiz_titularrak_orain()
@@ -154,7 +154,7 @@ def naiz_titularrak_orain():
             'link': link,
             'author': author,
             'image': image,
-            'date': datetime.datetime.now().strftime("%Y-%m-%d")
+            'date': datetime.now().strftime("%Y-%m-%d")
         })
 
     return titularrak
@@ -188,7 +188,7 @@ def iss_position():
 
 ############################################################################
 # 08 Logic
-#
+from datetime import datetime # 08, no redundante
 #############
 # 8.1 Route
 #############
@@ -241,13 +241,6 @@ def img_profiler(client_id, is_temp=False):
                     file.write(default_file.read())
 
     return f'/data/08/{image_name}'
-
-
-
-
-
-
-
 
 #############
 # JSON things
@@ -428,7 +421,9 @@ class UserData:
                 return f'/data/08/{image_name}'
             else:
                 return url_for('data', filename='08/default.jpg')
-############################################################################
+            
+
+            
 
 
 # Server ops
