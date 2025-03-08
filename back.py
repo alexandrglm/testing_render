@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory, url_for # 04 05 06 07 08
+from flask import Flask, render_template, request, jsonify, send_from_directory, url_for, render_template_string # 04 05 06 07 08 JinjaCSS
 import requests # 06 07 08
 from bs4 import BeautifulSoup # 06
 import json # 08
@@ -13,25 +13,26 @@ app = Flask(__name__)
 # Projects
 
 projects = [
-    {'id': '01', 'title': 'Simple Hello World', 'desc': 'A basic Hello World using Python as the backend, with no HTML.'},
-    {'id': '02', 'title': 'Advanced Hello World', 'desc': 'CSS parallax effect with floating bubbles displaying Hello World.'},
-    {'id': '03', 'title': 'Backend as a Server', 'desc': 'App Test 01: AMSTRAD Color Tool converter using JavaScript.'},
-    {'id': '04', 'title': 'Backend as Logic', 'desc': 'App Test 02: AMSTRAD Color Tool converter using Python.'},
-    {'id': '05', 'title': 'InspectorView Demo', 'desc': 'A concept for a web CSS inspector tool.'},
-    {'id': '06', 'title': 'Naiz Headlines, Now', 'desc': 'A news and headlines scraping tool using the "requests" library.'},
-    {'id': '07', 'title': 'ISS Tracker', 'desc': 'A simple ISS live geopositioning tool using the "requests" library.'},
-    {'id': '08', 'title': 'Profile Info Getter/Setter', 'desc': 'An example of a JSON user profiles\'s editor as excuse to learn about the "__init__" constructor and "@property decorators.'},
-    {'id': '404', 'title': 'Not Every Mistake is Truly a Mistake', 'desc': '404'}
+    {'id': '01', 'title': 'Simple Hello World', 'desc': 'No frills, no HTML fuss—just Python.'},
+    {'id': '02', 'title': 'Advanced Hello World', 'desc': 'A less simpler HelloWorld screen made by CSS with parallax effect and floating bubbles, fully over-hardcoded for no reason.'},
+    {'id': '03', 'title': 'Back-End only as server', 'desc': 'App Test 01: AMSTRAD Color Tool converter using JavaScript.'},
+    {'id': '04', 'title': 'Back-End as Logic', 'desc': 'App Test 02: AMSTRAD Color Tool converter using Python. Zero Front-end drama.'},
+    {'id': '05', 'title': 'InspectorView Demo', 'desc': 'Why is this div not centered? Simple concept for a web CSS inspector tool.'},
+    {'id': '06', 'title': 'Naiz Headlines, Now', 'desc': 'Scraping headlines like if I were a junior devel. Best news and headlines scraping tool using Py. "requests" from naiz.eus.'},
+    {'id': '07', 'title': '(Where) Is-ISS?', 'desc': 'Yet another ISS live tracking tool using "requests" and JSON, but simplest.'},
+    {'id': '08', 'title': 'Profile Info Getter/Setter', 'desc': 'An excuse to learn about __init_, __main__, @property decorators and so on, and so forth, by serving a fully "Profiles/Records" framework.'},
+    {'id': '404', 'title': 'Not Every Mistake is Truly a Mistake', 'desc': 'Sometimes, mistakes are masterpieces, unlike this error 404 page. '}
 ]
 
-
-
-
-# @app.routes use Jinja when compatible, otherwhise set app.route('/XX') BEFORE the Jinja routes
+############################################################################
+# Flask logic
+############################################################################
+# main render
 @app.route('/')
 def home():
     return render_template('main.html', projects=projects)
-
+#########################
+# project routes render
 @app.route('/<project_id>/')
 def render_project(project_id):
     try:
@@ -41,29 +42,41 @@ def render_project(project_id):
     except:
 
         return render_template('404/index_404.html')
+#########################    
+# css.jinja routes, when used, else, static routes
+@app.route('/templates/<project_id>/<filename>.css')
+def css_template(project_id, filename):
+
+    css_path = f'{project_id}/{filename}.css.jinja'
     
+    if not os.path.exists(os.path.join(app.template_folder, css_path)):
+        return "Not found, use static/<project_id> route", 404
+    
+    return render_template(css_path), 200, {'Content-Type': 'text/css'}
+
 
 
 ############################################################################
 # 01 logic
 @app.route('/01/')
 def render_project_01():
-        return hello_world_backend()
+        return hello_world_flask()
 
-def hello_world_backend():
+def hello_world_flask():
     return """<html>
+    <title>Project 01: Simple Hello World created into a Python function.</title>
     <body>
-    <h1>Hello World testing app</h1>
-    <p>This 'Hello World' screen is being loaded and served using Python<p>
+        <h1>Zero Front-end drama</h1><br>
+        <p style="font-style:italic;">No HTML or CSS were harmed in the making of this Hello World screen.</p>
     </body>
     </html>"""
 ############################################################################
 
-
+############################################################################
 # 02 Logic
 
+############################################################################
 # 03 Logic
-
 @app.route('/convert', methods=['POST'])
 def convert_colors():
     try:
@@ -423,7 +436,9 @@ class UserData:
                 return url_for('data', filename='08/default.jpg')
             
 
-            
+############################################################################
+# 404
+#############
 
 
 # Server ops
