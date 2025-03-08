@@ -2,11 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User profile page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.3">
+    <title>Client DB View/Editor using JSON</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='08/08.css') }}">
 </head>
-<body>.
-    
+<body>
+    <nav>
+        <h1>Client DB View/Editor using JSON, demo</h1>
+        <p>This sentire service is created to test @property decorators in Python.</p>
+    </nav>
+    <div class="container">
+        <div class="data-wrapper">
+            <div class="userProfileViewer" id="viewer">
+                <h3>Visor</h3>
+                <select class="userPicker" id="userPicker">
+                    <option value="">Choose a User</option>
+                </select>
+                <div id="userProfile" class="profileContainer">
+                    <img id="JS_IMG_PROFILE" src="/data/08/default.jpeg" alt="Profile Image" style="max-width: 100px;">
+                    <p id="viewerClient">Client #.: <span></span></p>
+                    <p id="viewerFullName">Full Name: <span></span></p>
+                    <p id="viewerID">Document - ID: <span></span></p>
+                    <p id="viewerDOB">Date of Birth: <span></span></p>
+                </div>                
+            </div>
+            <div class="userProfileEditor">
+                <h3>Editor</h3>
+                <form id="editProfileForm">
+                    <label for="editClientID">Client #.</label>
+                    <input type="number" id="editClientID" name="editClientID" required disabled>
+
+                    <label for="editFirstName">First Name :</label>
+                    <input type="text" id="editFirstName" name="editFirstName" required>
+
+                    <label for="editLastName">Last Name :</label>
+                    <input type="text" id="editLastName" name="editLastName" required>
+
+                    <label for="editDOB">Date of Birth :</label>
+                    <input type="date" id="editDOB" name="editDOB" required>
+
+                    <label for="editID">Document- ID:</label>
+                    <input type="text" id="editID" name="editID" required>
+                </form>
+            </div>
+        </div>
+        <div class="button-container" id="buttonContainer">
+            <button type="submit" id="saveButton">Save Record</button>
+            <button type="button" id="clearButton">Clear Form</button>
+            <button type="button" id="deleteButton">Delete record</button>
+            <button type="button" id="createButton">Create New Record</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='08/08.js') }}"></script>
 </body>
 </html>

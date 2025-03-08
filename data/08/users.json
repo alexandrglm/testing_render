@@ -1,0 +1,18 @@
+[
+    {
+        "client_id": 1,
+        "first_name": "Smith",
+        "last_name": "ContentMan",
+        "dob": "1933-01-02",
+        "ident_id": "AWS897524",
+        "img_profile": "img_generated"
+    },
+    {
+        "client_id": 2,
+        "first_name": "Eagan",
+        "last_name": "Kirr",
+        "dob": "1989-09-08",
+        "ident_id": "OYJ-58742",
+        "img_profile": "img_generated"
+    }
+]
