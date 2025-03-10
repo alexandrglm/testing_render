@@ -13,8 +13,8 @@ app = Flask(__name__)
 # Projects
 
 projects = [
-    {'id': '01', 'title': 'Simple Hello World', 'desc': 'No frills, no HTML fuss—just Python.'},
-    {'id': '02', 'title': 'Advanced Hello World', 'desc': 'A less simpler HelloWorld screen made by CSS with parallax effect and floating bubbles, fully over-hardcoded for no reason.'},
+    {'id': '01', 'title': 'The Most Complex "Simple Hello World" site', 'desc': 'No frills, no HTML fuss—just Python.'},
+    {'id': '02', 'title': 'CSS Advanced Hello World', 'desc': 'A less simpler HelloWorld screen made by CSS with parallax effect and floating bubbles, fully over-hardcoded for no reason.'},
     {'id': '03', 'title': 'Back-End only as server', 'desc': 'App Test 01: AMSTRAD Color Tool converter using JavaScript.'},
     {'id': '04', 'title': 'Back-End as Logic', 'desc': 'App Test 02: AMSTRAD Color Tool converter using Python. Zero Front-end drama.'},
     {'id': '05', 'title': 'InspectorView Demo', 'desc': 'Why is this div not centered? Simple concept for a web CSS inspector tool.'},
@@ -60,16 +60,181 @@ def css_template(project_id, filename):
 # 01 logic
 @app.route('/01/')
 def render_project_01():
-        return hello_world_flask()
 
-def hello_world_flask():
-    return """<html>
-    <title>Project 01: Simple Hello World created into a Python function.</title>
+    # Estos nuevos objetos son los constructores finales
+    
+    heading = Headings('Zero Front-end drama')
+    
+    p1 = P('No HTML or CSS were harmed in the making of this Hello World screen.', style="font-style:italic;")
+    p2 = P('Hello World, by the way.')
+    
+    heading_4 = Headings('This is how this hello world page is build', heading_type=4)
+    
+    code_content = '''
+
+# Enjoy reading code
+def render():
+
+    heading = Headings('Zero Front-end drama')
+    p1 = P('No HTML or CSS were harmed in the making of this Hello World screen.', style="font-style:italic;")
+    p2 = P('Hello World, by the way.')
+
+    code_content = Code to be shown, here
+    code_style = "font-style:italic; background-color:lightgray;"
+
+    # Web Builders
+    site = Site(title='title', web_elements=[])
+    site.joining_web_elements(heading)
+    site.joining_web_elements(p1)
+    site.joining_web_elements(p2)
+    site.joining_web_elements(Code(code_content, code_style))
+
+    # Render start
+    return site.render_html()
+
+# Now, Class'es
+# The Parent Class
+class HtmlRender:
+    def __init__(self, content):
+        self.content = content
+
+    def render_html(self):
+        raise NotImplementedError('DEBUG: No está recogiendo el contenido')
+
+
+# Body COntent Classes as Child Classes
+
+class Headings(HtmlRender):
+    def __init__(self, content, heading_type=1):
+        super().__init__(content)
+        self.heading_type = heading_type
+
+    def render_html(self):
+        return f'< h{ self.heading_type} >{ self.content}< /h{ self.heading_type} >'
+
+    
+class P(HtmlRender):
+    def __init__(self, content, style=None):
+        super().__init__(content)
+        self.style = style
+
+    def render_html(self):
+        if self.style:
+            return f'< p style="{ self.style}">< /p>'
+        return f'< p >{ self.content}< /p >'
+
+# How this code block is being projected
+class Code(HtmlRender):
+    def __init__(self, content, style="font-style:italic; background-color:lightgray;"):
+        super().__init__(content)
+        self.style = style
+
+    def render_html(self):
+        return f'< pre >< code style="{ self.style}">{ self.content}< /code >< /pre >'
+
+
+# How this site is being build
+class Site(HtmlRender):
+    def __init__(self, title, web_elements=None):
+        super().__init__('')
+        self.title = title
+        self.web_elements = web_elements if web_elements is not None else []
+
+    def joining_web_elements(self, single_element):
+        self.web_elements.append(single_element)
+
+    def render_html(self):
+        body_wrapped = ''
+        
+        for single_element in self.web_elements:
+            body_wrapped += single_element.render_html() + '\\n'
+
+        return f' ' '
+< html >
+    < head >
+        < title >{self.title}< /title >
+    < /head >
+    < body >
+        {body_wrapped}
+    < /body >
+< /html >' ' ' '''
+
+    code_style = "font-style:italic;"
+
+    
+    # BUilding the web
+    site = HelloWorldPage(title='Project 01: The most complex "Simple Hello World" site', web_elements=[])
+    site.joining_web_elements(heading)
+    site.joining_web_elements(p1)
+    site.joining_web_elements(heading_4)
+    site.joining_web_elements(Code(code_content, code_style))
+    site.joining_web_elements(p2)
+    
+
+    # Rendering 
+    return site.render_html()
+
+class HtmlRender:
+    def __init__(self, content):
+        self.content = content
+
+    def render_html(self):
+        raise NotImplementedError('DEBUG: No está recogiendo el contenido')
+
+class Headings(HtmlRender):
+    def __init__(self, content, heading_type=1):
+        super().__init__(content)
+        self.heading_type = heading_type
+
+    def render_html(self):
+        return f'<h{self.heading_type}>{self.content}</h{self.heading_type}>'
+
+class P(HtmlRender):
+    def __init__(self, content, style=None):
+        super().__init__(content)
+        self.style = style
+
+    def render_html(self):
+        if self.style:
+            return f'<p style="{self.style}">{self.content}</p>'
+        return f'<p>{self.content}</p>'
+
+class Code(HtmlRender):
+    def __init__(self, content, style="font-style:italic; background-color:lightgray;"):
+        super().__init__(content)
+        self.style = style
+
+    def render_html(self):
+        return f'<pre><code style="{self.style}">{self.content}</code></pre>'
+
+class HelloWorldPage(HtmlRender):
+    def __init__(self, title, web_elements=None):
+        super().__init__('')
+        self.title = title
+        self.web_elements = web_elements if web_elements is not None else []
+
+    def joining_web_elements(self, single_element):
+        self.web_elements.append(single_element)
+
+    def render_html(self):
+        body_wrapped = ''
+        
+        for single_element in self.web_elements:
+            body_wrapped += single_element.render_html() + '\n'
+
+        return f'''<!DOCTYPE html>
+<html>
+    <head>
+        <title>{self.title}</title>
+    </head>
     <body>
-        <h1>Zero Front-end drama</h1><br>
-        <p style="font-style:italic;">No HTML or CSS were harmed in the making of this Hello World screen.</p>
+        {body_wrapped}
     </body>
-    </html>"""
+</html>'''
+
+
+
+
 ############################################################################
 
 ############################################################################
