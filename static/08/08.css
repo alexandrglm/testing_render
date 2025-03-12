@@ -172,7 +172,7 @@ nav h1 {
 }
 
 .userProfileEditor input {
-    width: calc(100% - 16px); /* calculo manual para evitar overflow-right */
+    width: calc(100% - 16px);
     padding: 8px;
     border-radius: 8px;
     border: 1px solid #ccc;

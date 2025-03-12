@@ -29,7 +29,7 @@ document.getElementById("convertButton").addEventListener("click", function() {
     console.log("Sending JSON:", colorJSON); 
 
     // Fecth, POST
-    fetch('/convert', {
+    fetch('/04/convert', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

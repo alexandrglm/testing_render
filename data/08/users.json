@@ -14,5 +14,13 @@
         "dob": "1989-09-08",
         "ident_id": "OYJ-58742",
         "img_profile": "img_generated"
+    },
+    {
+        "client_id": 3,
+        "first_name": "dfsdf",
+        "last_name": "sdfsdf",
+        "dob": "0008-01-01",
+        "ident_id": "wrwewer",
+        "img_profile": "img_generated"
     }
 ]

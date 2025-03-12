@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         dobField.value = "";
         idField.value = "";
         userPicker.value = "";
-        profileImage.src = "/data/08/default.jpeg";
+        profileImage.src = "/08/data/08/default.jpeg";
     }
 
     //////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("viewerFullName").querySelector("span").textContent = "";
         document.getElementById("viewerID").querySelector("span").textContent = "";
         document.getElementById("viewerDOB").querySelector("span").textContent = "";
-        profileImage.src = "/data/08/default.jpeg";
+        profileImage.src = "/08/data/08/default.jpeg";
         editButton.style.display = "none";
     }
 
