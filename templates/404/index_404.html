@@ -73,6 +73,7 @@
         <div class="canvas">
             <img src="{{ url_for('static', filename='404/404_logo.png') }}" alt="404 image">
         </div>
-    </div>        
+    </div>
+    {{ render_footer() | safe }}        
 </body>
 </html>

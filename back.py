@@ -3,6 +3,7 @@
 # Date:         2025, March. 12th
 ############################################################################
 from flask import Flask, render_template, send_from_directory
+from markupsafe import Markup
 import os
 import importlib
 
@@ -89,6 +90,14 @@ def static_files(filename):
 
     return send_from_directory('static', filename)
 ############################################################################
+# Cookies management
+@app.context_processor
+def cookies_notice():
+    
+    def render_footer():
+        return Markup(render_template('_footer.html'))
+    
+    return dict(render_footer = render_footer)
 
 # server init, 0.0.0.0 required for Render, deact. debug before committing
 if __name__ == '__main__':

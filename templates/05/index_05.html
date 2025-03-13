@@ -188,6 +188,7 @@
             </p>
         </div>
     </div>
+    {{ render_footer() | safe }}
     <script>
         document.getElementById('inspector').addEventListener('click', function () {
             document.body.classList.toggle('inspectorActive');

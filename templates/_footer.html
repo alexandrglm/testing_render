@@ -1,0 +1,97 @@
+<footer>
+    <style>
+        .cookie-consent-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 600px;
+            width: 100%;
+            font-size: 14px;
+        }
+        .cookie-consent-banner p {
+            margin-bottom: 10px;
+        }
+        .cookie-consent-banner p strong {
+            font-weight: bold;
+        }
+        .cookie-consent-banner button {
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #007BFF;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .cookie-consent-banner button:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .cookie-consent-banner button#reject-cookies {
+            background-color: #bd4c32;
+            border-color: #ab2b18;
+        }
+        .cookie-consent-banner button#reject-cookies:hover {
+            background-color: #ff2600;
+            border-color: #ff1e00;
+        }
+        .cookie-consent-banner button#accept-cookies {
+            background-color: #9ddc14;
+            border-color: #28a745;
+        }
+        .cookie-consent-banner button#accept-cookies:hover {
+            background-color: #84ac00;
+            border-color: #218838;
+        }
+        .cookie-consent-banner a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .cookie-consent-banner a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <div id="cookie-consent-banner" class="cookie-consent-banner">
+        <p>This site does NOT use cookies for anything, but it’s fantastic to see how Jinja embeds div's and footers, like this Cookie Notice, in an amazing way. I once had to learn how to make Cookie Notices, right?</p>
+        <button id="accept-cookies">Yes, it's amazing</button>
+        <button id="reject-cookies">I click buttons without reading them before</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieConsentBanner = document.getElementById('cookie-consent-banner');
+            const acceptCookiesButton = document.getElementById('accept-cookies');
+            const rejectCookiesButton = document.getElementById('reject-cookies');
+
+            if (localStorage.getItem('cookieConsent') === null) {
+                cookieConsentBanner.style.display = 'block';
+            } else {
+                cookieConsentBanner.style.display = 'none';
+            }
+
+            // when Accepted
+            acceptCookiesButton.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieConsentBanner.style.display = 'none';
+                // #
+            });
+
+            // when Declined
+            rejectCookiesButton.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'rejected');
+                cookieConsentBanner.style.display = 'none';
+                // #
+            });
+        });
+    </script>
+</footer>

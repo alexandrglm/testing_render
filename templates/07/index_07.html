@@ -50,6 +50,7 @@
     referrerpolicy="no-referrer-when-downgrade"
     allowfullscreen>
   </iframe> --->
+  {{ render_footer() | safe }}
   <script src="{{ url_for('static', filename='07/07.js') }}"></script>
 </body>
 </html>

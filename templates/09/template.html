@@ -29,6 +29,7 @@
         {{ content | safe }}
     </div>
     <a href="{{ url_for('project09.render_project_09') }}" class="back-link">Back to Library Index</a>
+    {{ render_footer() | safe }}
     <script src="{{ url_for('static', filename='09/09.js') }}"></script>
 </body>
 </html>

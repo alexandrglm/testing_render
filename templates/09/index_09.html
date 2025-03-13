@@ -42,6 +42,7 @@
             {% endfor %}
         </ul>
     </div>
+    {{ render_footer() | safe }}
     <script src="{{ url_for('static', filename='09/09.js') }}"></script>
 </body>
 </html>

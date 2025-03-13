@@ -19,6 +19,8 @@ def render_project_01():
     
     heading_4 = Headings('This is how this hello world page is build', heading_type=4)
     
+    footer = Footer()
+
     code_content = '''
 
 # Enjoy reading code
@@ -118,6 +120,7 @@ class Site(HtmlRender):
     site.joining_web_elements(heading_4)
     site.joining_web_elements(Code(code_content, code_style))
     site.joining_web_elements(p2)
+    site.joining_web_elements(footer)
     
 
     # Rendering 
@@ -155,6 +158,13 @@ class Code(HtmlRender):
 
     def render_html(self):
         return f'<pre><code style="{self.style}">{self.content}</code></pre>'
+
+class Footer(HtmlRender):
+    def __init__(self):
+        super().__init__('')
+
+    def render_html(self):
+        return render_template('_footer.html')
 
 class HelloWorldPage(HtmlRender):
     def __init__(self, title, web_elements=None):
