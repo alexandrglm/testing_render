@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
         body {
             background-image: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, rgba(0, 0, 50, 0.8) 70%, rgba(0, 0, 20, 1) 100%);
@@ -115,7 +115,7 @@
         const playButton = document.getElementById("play-button");
         const canvas = document.querySelector(".canvas");
 
-        function gifLoader() {
+        function loadGif() {
             const gif = document.createElement("img");
             gif.src = "{{ url_for('static', filename='404/test1.gif') }}";
             gif.alt = "404 GIF";
@@ -158,7 +158,7 @@
             gifLoader.style.display = "none";
 
             gifLoader.onload = () => {
-                gifLoader();
+                loadGif();
             };
 
             document.body.appendChild(gifLoader);
