@@ -1,11 +1,15 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, March. 12th
+# Date:         2025, March. 13th
 ############################################################################
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, request, jsonify
 from markupsafe import Markup
 import os
 import importlib
+import datetime
+from functools import wraps
+import json
+
 
 app = Flask(__name__)
 
@@ -98,6 +102,12 @@ def cookies_notice():
         return Markup(render_template('_footer.html'))
     
     return dict(render_footer = render_footer)
+############################################################################
+# STATIC PAGES
+@app.route('/about/')
+def render_about():
+
+    return render_template('about/about.html')
 
 # server init, 0.0.0.0 required for Render, deact. debug before committing
 if __name__ == '__main__':

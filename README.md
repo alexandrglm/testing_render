@@ -35,7 +35,7 @@ Welcome to **Web Services Test**, a repository designed for experimenting with w
 
 ## ⚙️ How to Run
 
-These web services are available online: [Test them here](https://testing-render-zgdg.onrender.com/)
+These web services are available online: [JustLearn.ing](https://justlearn.ing/)
 
 To run them locally:
 

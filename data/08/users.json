@@ -18,9 +18,17 @@
     {
         "client_id": 3,
         "first_name": "Carlos",
-        "last_name": "Fernández",
+        "last_name": "Fern\u00e1ndez",
         "dob": "1985-03-30",
         "ident_id": "ID-63849205",
+        "img_profile": "img_generated"
+    },
+    {
+        "client_id": 4,
+        "first_name": "Kirr",
+        "last_name": "Eagan",
+        "dob": "1975-01-01",
+        "ident_id": "74601582a",
         "img_profile": "img_generated"
     }
 ]

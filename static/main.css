@@ -1,0 +1,288 @@
+@media screen and (max-width: 768px) {
+    nav {
+        justify-content: space-between;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: #222222ac;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+        z-index: 100;
+    }
+
+    .nav-active {
+        display: flex;
+    }
+
+    .site-title {
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    .burger {
+        display: flex;
+    }
+}
+
+/* Commons */
+body {
+    font-family: "Lato", sans-serif;
+    background-color: #ffffff;
+    background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: repeat;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-family: "Lato", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 2em;
+    margin: 0;
+}
+
+header p {
+    font-size: 1em;
+    opacity: 0.9;
+    margin-top: -10px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+/* title cards*/
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    width: 240px;
+    text-align: center;
+    box-shadow: 
+        0px 4px 8px rgba(0, 0, 0, 0.1),
+        0px 8px 16px rgba(0, 0, 0, 0.1), 
+        0px 12px 24px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-decoration: none;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    position: relative;
+}
+
+.item:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.item img {
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+    border: 1px solid #85858580;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.3s ease-in-out;
+    transform: translateY(0);
+}
+
+.item:hover img {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0px 8px 20px rgba(82, 82, 82, 0.897);
+    filter: brightness(1.2);
+}
+
+.item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    border: 3px dotted rgba(0, 0, 0, 0.61);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    box-shadow: 10px 10px  5px rgb(100, 75, 75);
+}
+
+.item:hover::before {
+    opacity: 1;
+}
+.metadata {
+    margin-top: 15px;
+}
+
+.metadata .title {
+    font-family: "Merriweather", serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.metadata .desc {
+    font-size: 0.9em;
+    color: #666666;
+    line-height: 1.4;
+}
+/* pendiente, para botones en totlecards */
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.button {
+    margin: 0 8px;
+    font-size: 1.4em;
+    transition: color 0.2s ease-in-out;
+}
+
+.button a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.button:hover a {
+    color: #555555;
+}
+
+/* NavBar shitties */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1a1a1a8d;
+    padding: 10px 25px;
+    font-family: "Lato", sans-serif;
+    height: 80px; 
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 2px solid #2f2f2f;
+}
+
+.burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 4px;
+    transition: 0.3s;
+}
+
+/* Estilos para el logo */
+.logo {
+    font-size: 2rem;
+    color: whitesmoke;
+    text-shadow: 
+        0 0 5px rgba(255, 105, 180, 0.8),
+        0 0 10px rgba(0, 191, 255, 0.8),
+        0 0 20px rgba(255, 255, 0, 0.6), 
+        0 0 40px rgba(0, 255, 0, 0.4);
+    backdrop-filter: blur(4px);
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(218, 255, 130, 0.621);
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgb(124, 179, 124);
+}
+
+
+.site-title {
+    font-family: "Merriweather", serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: rgba(245, 245, 245, 0.858);
+    margin-left: 15px;
+    flex-grow: 1;
+    text-align: center;
+    position: relative;
+    text-shadow: /* pend: testar diferentes shadows mas sutiles */
+        0 0 5px rgba(255, 105, 180, 0.8),
+        0 0 10px rgba(0, 191, 255, 0.8),
+        0 0 20px rgba(255, 255, 0, 0.6), 
+        0 0 40px rgba(0, 255, 0, 0.4); 
+    backdrop-filter: blur(4px);
+}
+
+.site-title::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 105, 180, 0.993),
+        rgba(0, 191, 255, 0.912),
+        rgba(255, 255, 0, 0.1),
+        rgba(0, 255, 0, 0.1)
+    );
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(10px);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin-right: 20px;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #e4ff60;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 8px 12px;
+}
+
+.nav-links a:hover {
+    color: #ff3700;
+}
+
+/* footer no Jinja */
+.updated-text {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}

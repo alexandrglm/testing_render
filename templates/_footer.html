@@ -5,67 +5,78 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #f8f9fa;
+            background-color: rgba(255, 255, 255, 0.95);
             color: #333;
-            padding: 15px 30px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 12px;
             font-family: 'Helvetica', 'Arial', sans-serif;
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1000;
-            max-width: 600px;
-            width: 100%;
+            max-width: 500px;
+            width: 90%;
             font-size: 14px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .cookie-consent-banner p {
-            margin-bottom: 10px;
+            margin: 0 0 15px;
+            line-height: 1.5;
+            color: #555;
         }
         .cookie-consent-banner p strong {
             font-weight: bold;
+            color: #333;
+        }
+        .cookie-consent-banner .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
         }
         .cookie-consent-banner button {
-            background-color: #007BFF;
-            color: white;
-            border: 1px solid #007BFF;
+            background-color: transparent;
+            color: #007BFF;
+            border: none;
             padding: 10px 20px;
-            margin: 0 10px;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 500;
         }
         .cookie-consent-banner button:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            background-color: rgba(0, 123, 255, 0.1);
+            color: #0056b3;
         }
         .cookie-consent-banner button#reject-cookies {
-            background-color: #bd4c32;
-            border-color: #ab2b18;
+            color: #bd4c32;
         }
         .cookie-consent-banner button#reject-cookies:hover {
-            background-color: #ff2600;
-            border-color: #ff1e00;
+            background-color: rgba(189, 76, 50, 0.1);
+            color: #ab2b18;
         }
         .cookie-consent-banner button#accept-cookies {
-            background-color: #9ddc14;
-            border-color: #28a745;
+            color: #28a745;
         }
         .cookie-consent-banner button#accept-cookies:hover {
-            background-color: #84ac00;
-            border-color: #218838;
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #218838;
         }
         .cookie-consent-banner a {
             color: #007BFF;
             text-decoration: none;
+            font-weight: 500;
         }
         .cookie-consent-banner a:hover {
             text-decoration: underline;
         }
     </style>
     <div id="cookie-consent-banner" class="cookie-consent-banner">
-        <p>This site does NOT use cookies for anything, but it’s fantastic to see how Jinja embeds div's and footers, like this Cookie Notice, in an amazing way. I once had to learn how to make Cookie Notices, right?</p>
-        <button id="accept-cookies">Yes, it's amazing</button>
-        <button id="reject-cookies">I click buttons without reading them before</button>
+        <p>This site doesn’t use cookies, but, isn’t it cool how Jinja handles footers and embedded content? Learning to make cookie notices was quite this idea!</p>
+        <div class="buttons">
+            <button id="accept-cookies">Got it, looks great!</button>
+            <button id="reject-cookies">I don’t read, just click</button>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -79,18 +90,18 @@
                 cookieConsentBanner.style.display = 'none';
             }
 
-            // when Accepted
+            // When Accepted
             acceptCookiesButton.addEventListener('click', function() {
                 localStorage.setItem('cookieConsent', 'accepted');
                 cookieConsentBanner.style.display = 'none';
-                // #
+                // action oon backend
             });
 
-            // when Declined
+            // When Declined
             rejectCookiesButton.addEventListener('click', function() {
                 localStorage.setItem('cookieConsent', 'rejected');
                 cookieConsentBanner.style.display = 'none';
-                // #
+                // action oon backend
             });
         });
     </script>

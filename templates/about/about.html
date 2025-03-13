@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://1.gravatar.com/bg/257740958/306f71657507141dc77d1bf28a59ac4c");
+            background-size: cover;
+            background-repeat: repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-avatar img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0 5px;
+            color: #333;
+        }
+        .profile-text {
+            font-size: 16px;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .profile-actions {
+            margin-top: 20px;
+        }
+        .profile-actions button {
+            background-color: #0073aa;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .profile-actions button:hover {
+            background-color: #005177;
+        }
+        .profile-links {
+            margin-top: 20px;
+        }
+
+        .profile-links a {
+            display: block;
+            background-color: #f5f5f5;
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px; 
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-links a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .profile-links a img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-avatar">
+            <img src="https://1.gravatar.com/avatar/3a217ecb55a0197d19dabb8f9dc8be833cc3542e02af00f2da75ae60c08c0d89?size=256" alt="IMG">
+        </div>
+
+        <div class="profile-name">Alexandr Gomez</div>
+        <div class="profile-text">a / le /  san / 'der </div>
+        <div class="profile-links">
+            <a href="https://github.com/alexandrglm" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub Icon">
+                GitHub
+            </a>
+            <a href="https://justlearn.ing" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Portfolio Icon">
+                Portfolio
+            </a>
+        </div>
+    </div>
+</body>
+</html>

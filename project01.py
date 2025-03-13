@@ -14,7 +14,7 @@ def render_project_01():
     
     heading = Headings('Zero Front-end drama')
     
-    p1 = P('No HTML or CSS were harmed in the making of this Hello World screen.', style="font-style:italic;")
+    p1 = P('No HTML or CSS files were harmed in the making of this Hello World screen.', style="font-style:italic;")
     p2 = P('Hello World, by the way.')
     
     heading_4 = Headings('This is how this hello world page is build', heading_type=4)
