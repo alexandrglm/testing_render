@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Service testing room</title>
+    <title>Web Services testing room</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,38 +11,38 @@
     <style>
         body {
             font-family: "Lato", sans-serif;
-            background-color: #313131;
-            color: #333;
+            background-color: #ffffff;
+            color: #000000;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
+    
         header {
             text-align: center;
-            background: linear-gradient(135deg, #8dcb11, #c8ff00);
-            color: #333;
+            background-color: #000000;
+            color: #ffffff;
             width: 100%;
+            padding: 20px 0;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-
+    
         header h1 {
             font-family: "Lato", sans-serif;
             font-weight: 900;
             font-style: italic;
             font-size: 2em;
-            font-weight: 700;
             margin: 0;
         }
-
+    
         header p {
             font-size: 1em;
             opacity: 0.9;
             margin-top: -10px;
         }
-
+    
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -50,75 +50,75 @@
             gap: 20px;
             padding: 40px 20px;
         }
-
+    
         .item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: white;
+            background-color: #ffffff;
             border-radius: 12px;
             padding: 15px;
             width: 240px;
             text-align: center;
-            box-shadow: 0px 5px 15px rgb(255, 255, 255);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             text-decoration: none;
+            border: 1px solid #e0e0e0;
         }
-
+    
         .item:hover {
             transform: translateY(-5px);
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
         }
-
+    
         .item img {
             width: 100%;
             height: auto;
             border-radius: 8px;
-            border: solid 1px #333;
-            /* box-shadow: */
+            border: 1px solid #e0e0e0;
         }
-
+    
         .metadata {
             margin-top: 10px;
         }
-
+    
         .metadata .title {
             font-size: 1.3em;
             font-weight: 700;
-            color: #444;
+            color: #000000;
         }
-
+    
         .metadata .desc {
             font-size: 0.9em;
-            color: #666;
+            color: #666666;
         }
-
+    
         .buttonGroup {
             display: flex;
             justify-content: center;
             margin-top: 10px;
         }
-
+    
         .button {
             margin: 0 8px;
             font-size: 1.4em;
             transition: color 0.2s ease-in-out;
         }
-
+    
         .button a {
-            color: #444;
+            color: #000000;
             text-decoration: none;
         }
-
+    
         .button:hover a {
-            color: #2575fc;
+            color: #555555;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Web Service testing room</h1><br>
-        <p><strong>Last updated:</strong> March 12, 2025</p>
+        <h1>Web Services testing room</h1><br>
+        <p>Last updated:<strong> March 12, 2025</strong></p>
     </header>
         <div class="container">
         {% for project in projects %}

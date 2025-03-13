@@ -1,0 +1,197 @@
+:root {
+  --font-family:  "Merriweather", serif;;
+  --font-size: 16px;
+  --line-height: 1.6;
+  --max-width: 800px;
+  --padding: 20px;
+  --border-radius: 4px;
+  --transition-speed: 0.3s;
+  --primary-color: #0366d6;
+  --secondary-color: #6a737d;
+  --background-color: #ffffff;
+  --text-color: #24292e;
+  --border-color: #eaecef;
+  --code-background: #f6f8fa;
+  --code-text-color: #24292e;
+  --blockquote-color: #6a737d;
+  --blockquote-border: #dfe2e5;
+  --table-header-background: #f6f8fa;
+  --table-border: #dfe2e5;
+  --hr-color: #eaecef;
+  --footnote-color: #6a737d;
+}
+
+[data-theme="dark"] {
+  --background-color: #1e1e1e;
+  --text-color: #e1e1e1;
+  --border-color: #444;
+  --code-background: #2d2d2d;
+  --code-text-color: #e1e1e1;
+  --blockquote-color: #888;
+  --blockquote-border: #555;
+  --table-header-background: #2d2d2d;
+  --table-border: #444;
+  --hr-color: #555;
+  --footnote-color: #888;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--padding);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  background-color: #e0f7d0;
+  border: 2px solid transparent;
+}
+
+.navbar-nav a:hover {
+  background-color: #ff7f50;
+  color: #fff;
+  text-decoration: none;
+  border-color: #ff7f50;
+}
+
+.navbar-nav a.active {
+  background-color: #ff7f50;
+  color: #fff;
+  text-decoration: none;
+  border-color: #ff7f50;
+}
+
+.theme-toggle {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.theme-toggle:hover {
+  background-color: #0056b3;
+}
+
+.markdown-body code {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+  font-size: 85%;
+  background-color: var(--code-background);
+  color: var(--code-text-color);
+  padding: 0.2em 0.4em;
+  border-radius: var(--border-radius);
+}
+
+.markdown-body pre {
+  background-color: var(--code-background);
+  color: var(--code-text-color);
+  padding: 16px;
+  overflow: auto;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.navbar-button {
+  background-color: #e0f7d0;
+  color: var(--text-color);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: bold;
+  border: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+[data-theme="dark"] .navbar-button {
+  color: #24292e; 
+}
+
+.navbar-button:hover {
+  background-color: #ff7f50;
+  color: #fff;
+  text-decoration: none;
+  border-color: #ff7f50;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #e0f7d0;
+  color: var(--text-color);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: bold;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+[data-theme="dark"] .back-link {
+  color: #24292e;
+}
+
+.back-link:hover {
+  background-color: #ff7f50;
+  color: #fff;
+  text-decoration: none;
+  border-color: #ff7f50;
+}

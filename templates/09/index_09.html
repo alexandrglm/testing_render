@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='09/09.css') }}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="navbar-title">Library Index</h1>
+            <div class="navbar-tools">
+                <button id="zoom-in" class="navbar-button">Zoom +</button>
+                <button id="zoom-out" class="navbar-button">Zoom -</button>
+                <button id="toggle-theme" class="navbar-button">Toggle Dark/Light</button>
+            </div>
+        </nav>
+    </header>
+    <div class="content-wrapper">
+        <ul>
+            {% for rel_path, dirs, files in library_index %}
+                {% if rel_path %}
+                    <li><strong>{{ rel_path | replace('_', ' ') | title }}</strong></li>
+                    <ul>
+                {% endif %}
+                {% for file in files %}
+                    {% if file.endswith(('.md', '.markdown')) %}
+                        <li>
+                            <a href="{{ url_for('project09.rendering_md', filename=file | replace('.md', '') | replace('.markdown', '')) }}">
+                                {{ file | replace('_', ' ') | replace('.md', '') | replace('.markdown', '') | title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if rel_path %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="{{ url_for('static', filename='09/09.js') }}"></script>
+</body>
+</html>

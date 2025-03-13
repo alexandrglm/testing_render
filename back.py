@@ -18,6 +18,7 @@ projects = [
     {'id': '06', 'title': 'Naiz Headlines, Now', 'desc': 'Scraping headlines like if I were a junior devel. Best news and headlines scraping tool using Py. "requests" from naiz.eus.'},
     {'id': '07', 'title': '(Where) Is-ISS?', 'desc': 'Yet another ISS live tracking tool using "requests" and JSON, but simplest.'},
     {'id': '08', 'title': 'Profile Info Getter/Setter', 'desc': 'An excuse to learn about __init_, __main__, @property decorators and so on, and so forth, by serving a fully "Profiles/Records" framework.'},
+    {'id': '09', 'title': 'Study Framework 1: MarkDown Web Server', 'desc': 'Parsing Markdown into HTML. A basic framework with auto-generated indexes for a documentation showroom.'},
     {'id': '404', 'title': 'Not Every Mistake is Truly a Mistake', 'desc': 'Sometimes, mistakes are masterpieces, unlike this error 404 page. '}
 ]
 
@@ -89,6 +90,6 @@ def static_files(filename):
     return send_from_directory('static', filename)
 ############################################################################
 
-# server init, 0.0.0.0 required for Render, dact debug before committing
+# server init, 0.0.0.0 required for Render, deact. debug before committing
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080)

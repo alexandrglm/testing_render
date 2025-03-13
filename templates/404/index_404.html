@@ -10,37 +10,69 @@
     <style>
         body {
             background-image: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, rgba(0, 0, 50, 0.8) 70%, rgba(0, 0, 20, 1) 100%);
-            font-family: "Sixtyfour Convergence", sans-serif;;
+            font-family: "Sixtyfour Convergence", sans-serif;
             font-weight: 400;
             font-style: normal;
-        }
-
-        .errorWrapper {
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow: hidden;
         }
-
-        .errorWrapper > .errorHeading {
-            margin: 0 0 42px 0;
+    
+        .errorWrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 90%;
         }
-
-        img {
-            width: 25%;
+    
+        .errorHeading {
+            margin-bottom: 20px;
         }
-        
+    
+        .errorHeading h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #fff;
+        }
+    
+        .errorHeading h2 {
+            font-size: 1.5em;
+            margin: 10px 0 0 0;
+            color: #fff;
+        }
+    
+        .canvas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+            margin-top: 20px;
+        }
+    
+        .canvas img {
+            max-width: 100%;
+            height: auto;
+            max-height: 70vh; 
+        }
     </style>
 </head>
 <body>
     <div class="errorWrapper"> 
         <div class="errorHeading"> 
             <h1>HTTP 404</h1>
-            <h2>Not every mistake is truly a mistake...</h2> 
+            <h2>Not every mistake is truly a mistake...</h2>
         </div>
-    
-        <img src="{{ url_for('static', filename='404/404_logo.png') }}" alt="404 image">
+        <div class="canvas">
+            <img src="{{ url_for('static', filename='404/404_logo.png') }}" alt="404 image">
+        </div>
     </div>        
 </body>
 </html>

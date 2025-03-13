@@ -1,39 +1,75 @@
 # Web Services Test & Showroom
 
-Welcome to **Web Services Test**, a repository designed for testing web services with a Python backend and many other features.   
+## Updated to 2025, March. 12
 
-This project serves as a playground for experimenting with different frontend and backend implementations while developing a Bootcamp at Bottega.
+****
+
+Welcome to **Web Services Test**, a repository designed for experimenting with web services using a Python backend, along with various frontend implementations.
 
 ****
 
 ## 📌 Project Structure
 
 ```
-/testing_render├── 01_HelloWord/│   ├── www/│   │   ├── index_01.html│   │   ├── styles.css│   │   ├── script.js├── 02_FrontHTML-CSS-JS/│   ├── www/│   │   ├── index_02.html│   │   ├── styles.css│   │   ├── script.js├── 03_Front_and_BackPYTHON/│   ├── www/│   │   ├── index_03.html│   │   ├── styles.css│   │   ├── script.js├── main.py├── README.md
+/testing_render
+├── back.py            # Main backend server
+├── requirements.txt   # Python dependencies
+├── static/            # Static assets for each project
+│   ├── 01/
+│   ├── ...
+│   ├── 404/
+├── templates/         # HTML web renders for each project
+│   ├── 01/
+│   ├── ...
+│   ├── 404/
+│   ├── main.html
+├── data/              # Project-specific data storage
+│   ├── 01/
+│   ├── ...
+│   ├── 404/
+├── projectXX.py       # Project XX backend logic
 ```
 
-- **Backend**: Python.
-
+- **Backend**: Python
 - **Frontend**: HTML, CSS, JavaScript
-
-
-
-****
 
 ## ⚙️ How to Run
 
-##### These web services are available online [here](https://testing-render-zgdg.onrender.com/).
+These web services are available online: [Test them here](https://testing-render-zgdg.onrender.com/)
 
-##### You can also run them locally as follows:
+To run them locally:
 
 1. Install dependencies:
    
-   ```
+   ```bash
    pip install -r requirements.txt
    ```
 
-2. Run the backend, at localhost:8080 :
+2. Start the backend at `localhost:8080`:
    
+   ```bash
+   python back.py
    ```
-   python main.py.
-   ```
+
+---
+
+## 📂 Projects
+
+A collection of experimental web services and tools:
+
+| ID  | Title                                      | Description                                                                                            |
+| --- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| 01  | **The Most Complex "Simple Hello World"**  | No frills, no HTML fuss—just Python.                                                                   |
+| 02  | **CSS Advanced Hello World**               | A Hello World with parallax effects and floating bubbles—over-engineered on purpose.                   |
+| 03  | **Back-End Only as Server**                | App Test 01: AMSTRAD Color Tool converter using JavaScript.                                            |
+| 04  | **Back-End as Logic**                      | App Test 02: AMSTRAD Color Tool converter using Python. Zero Front-end drama.                          |
+| 05  | **InspectorView Demo**                     | Why is this `div` not centered? A simple concept for a CSS inspector tool.                             |
+| 06  | **Naiz Headlines, Now**                    | Scraping headlines like a junior dev. A Python `requests` scraper for naiz.eus.                        |
+| 07  | **(Where) Is-ISS?**                        | Yet another ISS live tracking tool using `requests` and JSON—the simplest one yet.                     |
+| 08  | **Profile Info Getter/Setter**             | Learning `__init__`, `__main__`, and `@property` decorators by serving a "Profiles/Records" framework. |
+| 09  | **Study Framework 1: Markdown Web Server** | Parses Markdown into HTML with auto-generated indexes for a documentation showroom.                    |
+| 404 | **Not Every Mistake is Truly a Mistake**   | Sometimes, mistakes are masterpieces... but not this error 404 page.                                   |
+
+
+
+

@@ -9,6 +9,10 @@ requests = "*"
 bs4 = "*"
 pillow = "*"
 datetime = "*"
+markup = "*"
+markupsafe = "*"
+markdown = "*"
+pymdown-extensions = "*"
 
 [dev-packages]
 
