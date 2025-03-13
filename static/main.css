@@ -103,7 +103,7 @@ header p {
 .item img {
     width: 100%;
     height: auto;
-    border-radius: 2px;
+    border-radius: 5px;
     border: 1px solid #85858580;
     transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.3s ease-in-out;
     transform: translateY(0);
@@ -133,7 +133,10 @@ header p {
     opacity: 1;
 }
 .metadata {
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px;
 }
 
 .metadata .title {
@@ -142,12 +145,19 @@ header p {
     font-weight: 700;
     color: #333;
     margin-bottom: 8px;
+    flex-shrink: 0;
 }
 
 .metadata .desc {
+    margin-top: 20px;
     font-size: 0.9em;
     color: #666666;
     line-height: 1.4;
+    display: flex;
+    flex-grow: 1;
+    align-items:flex-end;
+    justify-content: center;
+
 }
 /* pendiente, para botones en totlecards */
 .buttonGroup {
