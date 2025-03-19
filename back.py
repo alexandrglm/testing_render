@@ -179,7 +179,7 @@ def commander(data):
 
         if command == 'clear':
 
-            emit('commander_output', {'output': 'shell: ~$'})
+            emit('commander_output', {'output': ''.clear()})
             return
 
         if len(command) > 60:
