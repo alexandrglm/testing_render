@@ -182,12 +182,12 @@ def commander(data):
             emit('commander_output', {'output': f'Hey, dude! Queries are too long.'})
             return
 
-        for f in forbidden:
+        # for f in forbidden:
             
-            if command.startswith(forbidden):
+        #    if command.startswith(forbidden):
                 
-                emit('commander_output', {'output': f'Hey! "{command}" is forbidden in this open shell.'})
-                return
+        #        emit('commander_output', {'output': f'Hey! "{command}" is forbidden in this open shell.'})
+        #        return
         
 
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
