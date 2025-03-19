@@ -129,7 +129,7 @@ def commander(data):
     except Exception as e:
         
         emit('commander_output', {'output': f"Error Command Exec: {str(e)}"})
-
-# run inits: Sockets - Flask main
+##########################################################################
+# run inits, main via socketio
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=8080, debug=True, allow_unsafe_werkzeug=True)
