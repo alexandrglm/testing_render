@@ -10,7 +10,7 @@ body {
     overflow: hidden;
     color: whitesmoke;
     font-family: "JetBrains Mono", monospace;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
@@ -38,23 +38,9 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 1.1em;
+    margin: 0 0 0 2em;
 }
-#commandInput {
-    background-color: transparent;
-    color: whitesmoke;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 1.5rem;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0 0 0 1em;
-    display: inline-block;
-    width: calc(100% - 10ch);
-    caret-color: #8fbc8f;
-}
+
 #commandInput::placeholder {
     color: #888;
 }
@@ -64,7 +50,9 @@ body {
 
 .pwd-color {
     font-family: "Merriweather", serif;
+    font-style: bold;
     font-size: 1.5rem;
     color: rgba(255, 72, 0, 0.938);
     text-shadow: -2px -3px 5px rgba(255, 255, 255, 0.795);
+    margin: 0 0 0 -1.5em;
 }
