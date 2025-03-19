@@ -8,10 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='10/10.css') }}">
-</head>
 <body>
     <div id="output-container">
-        <div id="output"></div>
+        <div id="output"><span class="pwd-color">~$</span> <input type="text" id="commandInput"></div>
     </div>
     {{ render_footer() | safe }}
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>

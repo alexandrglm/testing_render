@@ -7,6 +7,14 @@ body {
     background-color: #2e2e2e;
     margin: 0;
     height: 100vh;
+    overflow: hidden;
+    color: whitesmoke;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.5rem;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
 }
 #output-container {
     flex-grow: 1;

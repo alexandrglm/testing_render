@@ -1,107 +1,82 @@
-const WebShell = {
-    socket: io.connect('https://justlearn.ing'),
-    
-    outputContainer: document.getElementById('output-container'),
-    output: document.getElementById('output'),
-    
-    commandInput: null,
-    
-    commanderHistorial: [],
-    historialIdx: -1,
+const socket = io.connect('https://justlearn.ing');
 
-    inputActive() {
-        if (this.commandInput) {
-            this.commandInput.focus();
-        }
-    },
+socket.on('commander_output', (data) => {
+    output.innerHTML += `
+        <div>${data.output}</div>
+        <br>
+        <div>
+            <span class="pwd-color">~$</span> 
+            <input type="text" id="commandInput">
+        </div>
+    `;
 
-    updateHistory(command) {
-        if (command) {
-            this.commanderHistorial.unshift(command);
-            this.historialIdx = -1;
-        }
-    },
+    inputAlwaysOn();
+    outputContainer.scrollTop = outputContainer.scrollHeight;
+});
 
-    handleCommand(command) {
-        
-        if (command) {
-            
-            this.updateHistory(command);
-            this.socket.emit('exec_commander', { command });
-            this.commandInput.value = '';
-        }
-    },
+const output = document.getElementById('output');
+const outputContainer = document.getElementById('output-container');
 
-    renderNewPrompt() {
-        
-        this.output.innerHTML += `<div><span class="pwd-color">shell: ~$</span> <input type="text" id="commandInput"></div>`;
-        this.commandInput = document.getElementById('commandInput');
-        
-        this.inputActive();
-    },
 
-    initEvents() {
-
-        document.addEventListener('keypress', (e) => {
-            
-            if (e.target.id === 'commandInput' && e.key === 'Enter') {
-                this.handleCommand(e.target.value.trim());
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            
-            if (e.target.id === 'commandInput') {
-                
-                if (e.key === 'ArrowUp') {
-                    
-                    e.preventDefault();
-                    
-                    if (this.historialIdx < this.commanderHistorial.length - 1) {
-                        
-                        this.historialIdx++;
-                        
-                        e.target.value = this.commanderHistorial[this.historialIdx];
-                    }
-                
-                } else if (e.key === 'ArrowDown') {
-                    
-                    e.preventDefault();
-                    
-                    if (this.historialIdx > 0) {
-                        
-                        this.historialIdx--;
-                        
-                        e.target.value = this.commanderHistorial[this.historialIdx];
-                    
-                    } else {
-                        
-                        this.historialIdx = -1;
-                        
-                        e.target.value = '';
-                    }
-                }
-            }
-        });
-
-        document.addEventListener('mousedown', (e) => {
-            if (e.target.id !== 'commandInput') {
-                e.preventDefault();
-                this.inputActive();
-            }
-        });
-
-        this.socket.on('commander_output', (data) => {
-            this.output.innerHTML += `<div>${data.output}</div><br>`;
-            this.renderNewPrompt();
-            this.outputContainer.scrollTop = this.outputContainer.scrollHeight;
-        });
-    },
-
-    init() {
-        this.renderNewPrompt();
-        this.initEvents();
+function inputAlwaysOn() {
+    const commandInput = document.getElementById('commandInput');
+    if (commandInput) {
+        commandInput.focus();
     }
-};  
+}
 
-WebShell.init();
+document.addEventListener('mousedown', (e) => {
+    const commandInput = document.getElementById('commandInput');
+    if (commandInput && e.target !== commandInput) {
+        e.preventDefault();
+        commandInput.focus();
+    }
+});
+inputAlwaysOn();
+
+let commanderHistorial = [];
+let historialIdx = -1;
+
+function handleCommand(command) {
+    if (command) {
+        commanderHistorial.unshift(command);
+        historialIdx = -1;
+
+        socket.emit('exec_commander', { command });
+
+        const commandInput = document.getElementById('commandInput');
+        if (commandInput) {
+            commandInput.value = '';
+        }
+    }
+}
+
+document.addEventListener('keypress', (e) => {
+    if (e.target.id === 'commandInput' && e.key === 'Enter') {
+        const command = e.target.value.trim();
+        handleCommand(command);
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.target.id === 'commandInput') {
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (historialIdx < commanderHistorial.length - 1) {
+                historialIdx++;
+                e.target.value = commanderHistorial[historialIdx];
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historialIdx > 0) {
+                historialIdx--;
+                e.target.value = commanderHistorial[historialIdx];
+            } else {
+                historialIdx = -1;
+                e.target.value = '';
+            }
+        }
+    }
+});
+
+

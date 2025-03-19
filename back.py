@@ -177,11 +177,6 @@ def commander(data):
         
         command = data.get('command', '').strip()
 
-        if command == 'clear':
-
-            emit('commander_output', {'output': ''.clear()})
-            return
-
         if len(command) > 60:
             
             emit('commander_output', {'output': f'Hey, dude! Queries are too long.'})
