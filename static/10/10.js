@@ -6,7 +6,19 @@
 
 */
 
-const socket = io.connect('127.0.0.1:8080');
+
+
+fetch('API_Secrets')
+    .then(response => response.json())
+    .then(data => {
+        const uri = data.uri;
+        
+        const socket = io.connect(`${uri}`);
+        
+        socket.on('connect', () => {
+            console.log('API Secrets is working');
+        });
+    })
 
 const output = document.getElementById('output');
 
