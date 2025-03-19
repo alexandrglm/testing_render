@@ -72,14 +72,14 @@
 </head>
 <body>
     <div id="output-container">
-        <div id="output">shell:  </div>
+        <div id="output">shell: ~$  </div>
     </div>
     <div id="command-container">
         <input type="text" id="commandInput" placeholder="# :">
     </div>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        
+        // socket
         const socket = io.connect('https://justlearn.ing');
 
         const commandInput = document.getElementById('commandInput');
@@ -104,9 +104,59 @@
         socket.on('commander_output', (data) => {
 
             output.innerHTML += `<div>${data.output}</div>`;
+            output.innerHTML += `<br>`;
+            output.innerHTML += `<div>shell: ~$ </div>`;
 
             // arreglo Scroll forzado
             outputContainer.scrollTop = outputContainer.scrollHeight;
+        });
+
+        let commanderHistorial = [];
+        let historialIdx = -1;
+
+        commandInput.addEventListener('keydown', (e) => {
+            
+            if (e.key === 'ArrowUp') {
+                
+                e.preventDefault();
+                
+                if (historialIdx < commanderHistorial.length - 1) {
+                
+                    historialIdx++;
+                    commandInput.value = commanderHistorial[historialIdx];
+                }
+            } else if (e.key === 'ArrowDown') {
+                
+                e.preventDefault();
+                
+                if (historialIdx > 0) {
+                
+                    historialIdx--;
+                    commandInput.value = commanderHistorial[historialIdx];
+                
+                } else {
+                
+                    historialIdx = -1;
+                    commandInput.value = '';
+                }
+            }
+        });
+
+        commandInput.addEventListener('keypress', (e) => {
+
+            if (e.key === 'Enter') {
+                
+                const command = commandInput.value.trim();
+                
+                if (command) {
+                    
+                    commanderHistorial.unshift(command);
+                    historialIdx = -1;
+                    
+                    socket.emit('exec_commander', { command: command });
+                    commandInput.value = '';
+                }
+            }
         });
     </script>
     

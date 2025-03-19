@@ -166,6 +166,8 @@ forbidden = (
     'export', 'source',
     'nohup', 'disown',
     'file', 'ldd', 'strings'
+    'eval', 
+    '/b', '/d', '/e', '/h', '/l', '/m', '/o', '/p','/r','/s','/t', '/u', '/v', '~/', '$'
 )
 
 @socketio.on('exec_commander')
@@ -175,7 +177,12 @@ def commander(data):
         
         command = data.get('command', '').strip()
 
-        if len(command) > 30:
+        if command == 'clear':
+
+            emit('commander_output', {'output': 'shell: ~$'})
+            return
+
+        if len(command) > 60:
             
             emit('commander_output', {'output': f'Hey, dude! Queries are too long.'})
             return
@@ -184,7 +191,7 @@ def commander(data):
             
             if command.startswith(forbidden):
                 
-                emit('commander_output', {'output': f'Hey, dude! "{command}" is a reasonably forbiden command for an open web shell!.'})
+                emit('commander_output', {'output': f'Hey! "{command}" is forbidden in this open shell.'})
                 return
         
 
