@@ -105,11 +105,13 @@ def cookies_notice():
 
     return dict(render_footer = render_footer)
 ############################################################################
-# STATIC PAGES
+# STATICS
 @app.route('/about/')
 def render_about():
 
     return render_template('about/about.html')
+
+
 ##########################################################################
 # SocketIO shitties PRjoect 10
 socketio = SocketIO(
@@ -124,7 +126,8 @@ socketio = SocketIO(
         'https://127.0.0.1',
         'https://justlearn.ing',
         'https://testing-render-zgdg.onrender.com'
-    ]
+    ], 
+    monitor_clients=True, engineio_logger=True
 )
 
 forbidden = (
@@ -165,9 +168,9 @@ forbidden = (
     'readlink', 'realpath',
     'export', 'source',
     'nohup', 'disown',
-    'file', 'ldd', 'strings'
-    'eval', 
-    '/b', '/d', '/e', '/h', '/l', '/m', '/o', '/p','/r','/s','/t', '/u', '/v', '~/', '$'
+    'file', 'ldd', 'string',
+    'eval',
+    './', '~/', '(', '/', '$'
 )
 
 @socketio.on('exec_commander')
@@ -179,15 +182,15 @@ def commander(data):
 
         if len(command) > 60:
             
-            emit('commander_output', {'output': f'Hey, dude! Queries are too long.'})
+            emit('commander_output', {'output': f'Sorry, the lengtf of the queries should be reduced!'})
             return
 
-        # for f in forbidden:
+        for f in forbidden:
             
-        #    if command.startswith(forbidden):
+            if command.startswith(forbidden):
                 
-        #        emit('commander_output', {'output': f'Hey! "{command}" is forbidden in this open shell.'})
-        #        return
+                emit('commander_output', {'output': f'Sorry, "{command}" is locked for execution!'})
+                return
         
 
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -201,4 +204,4 @@ def commander(data):
 ##########################################################################
 # run inits, main via socketio
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080, debug=True, allow_unsafe_werkzeug=True)
+    socketio.run(app, host='0.0.0.0', port=8080, debug=True)

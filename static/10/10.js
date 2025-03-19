@@ -6,7 +6,7 @@
 
 */
 
-const socket = io.connect('https://justlearn.ing');
+const socket = io.connect('127.0.0.1:8080');
 
 const output = document.getElementById('output');
 
@@ -104,7 +104,7 @@ socket.on('commander_output', (data) => {
 
 
 const initialLine = document.createElement('div');
-initialLine.innerHTML = `<span class="pwd-color">~$</span>`;
+initialLine.innerHTML = `<span class="pwd-color">WebShell~$</span>`;
 initialLine.appendChild(commandInput);
 output.appendChild(initialLine);
 
