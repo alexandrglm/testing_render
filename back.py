@@ -126,13 +126,22 @@ socketio = SocketIO(
         'https://testing-render-zgdg.onrender.com'
     ]
 )
-
+forbidden = [
+    'rm', 'touch', 'dd', 'sudo', 'kill', ':(){ :|:& };:',
+]
 @socketio.on('exec_commander')
 def commander(data):
 
     try:
         
-        command = data.get('command', '')
+        command = data.get('command', '').strip()
+
+        for forbid in forbidden:
+            if command.startswith(forbidden):
+                
+                emit('commander_output', {'output': f'Hey, dude! "{command}" is a reasonably forbiden command for an open web shell!.'})
+
+                return
         
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         
