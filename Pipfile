@@ -13,6 +13,7 @@ markup = "*"
 markupsafe = "*"
 markdown = "*"
 pymdown-extensions = "*"
+flask-socketio = "*"
 
 [dev-packages]
 

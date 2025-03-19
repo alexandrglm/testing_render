@@ -1,18 +1,19 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, March. 13th
+# Date:         2025, March. 19th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
+from flask_socketio import SocketIO, emit
 from markupsafe import Markup
 import os
 import importlib
 import datetime
 from functools import wraps
 import json
-
+import threading
+import subprocess
 
 app = Flask(__name__)
-
 
 projects = [
     {'id': '01', 'title': 'The Most Complex "Simple Hello World" site', 'desc': 'No frills, no HTML fuss—just Python.'},
@@ -24,6 +25,7 @@ projects = [
     {'id': '07', 'title': '(Where) Is-ISS?', 'desc': 'Yet another ISS live tracking tool using "requests" and JSON, but simplest.'},
     {'id': '08', 'title': 'Profile Info Getter/Setter', 'desc': 'An excuse to learn about __init_, __main__, @property decorators and so on, and so forth, by serving a fully "Profiles/Records" framework.'},
     {'id': '09', 'title': 'Study Framework 1: MarkDown Web Server', 'desc': 'Parsing Markdown into HTML. A basic framework with auto-generated indexes for a documentation showroom.'},
+    {'id': '10', 'title': 'WebShell', 'desc': 'With no eval() usage at back-end implementation! :-D'},
     {'id': '404', 'title': 'Not Every Mistake is Truly a Mistake', 'desc': 'Sometimes, mistakes are masterpieces, unlike this error 404 page. '}
 ]
 
@@ -40,25 +42,25 @@ for project in projects:
     project_id = project['id']
     module_name = f'project{project_id}'
     module_path = f'{module_name}.py'
-    
+
     if os.path.exists(module_path):
 
         try:
 
             project_module = importlib.import_module(module_name)
             print(f'Project {project_id}: Module OK!')
-            
+
             blueprint_name = f'project{project_id}'
             project_blueprint = getattr(project_module, blueprint_name)
             print(f'Project {project_id}: Blueprinted OK!')
-            
+
             app.register_blueprint(project_blueprint, url_prefix=f'/{project_id}')
             print(f'Project {project_id} blueprint router: OK!')
-        
+
         except ImportError as e:
 
             print(f'ERROR: {project_id} loading errros found!: {e}')
-        
+
         except AttributeError as e:
 
             print(f'ERROR: No {project_id} blueprints found!: {e}')
@@ -67,10 +69,10 @@ for project in projects:
 # When a project doesn't need its own .py, static routes for each project
 @app.route('/<project_id>/')
 def render_project(project_id):
-    
+
     try:
         return render_template(f'{project_id}/index_{project_id}.html')
-    
+
     except:
 
         print(f'ERROR: Can\'t render {project_id}!')
@@ -81,11 +83,11 @@ def render_project(project_id):
 def css_template(project_id, filename):
 
     css_path = f'{project_id}/{filename}.css.jinja'
-    
+
     if not os.path.exists(os.path.join(app.template_folder, css_path)):
-        
+
         return "Not found, use static/<project_id> route", 404
-    
+
     return render_template(css_path), 200, {'Content-Type': 'text/css'}
 ############################################################################
 # Static files routes
@@ -97,10 +99,10 @@ def static_files(filename):
 # Cookies management
 @app.context_processor
 def cookies_notice():
-    
+
     def render_footer():
         return Markup(render_template('_footer.html'))
-    
+
     return dict(render_footer = render_footer)
 ############################################################################
 # STATIC PAGES
@@ -108,7 +110,33 @@ def cookies_notice():
 def render_about():
 
     return render_template('about/about.html')
+##########################################################################
+# SocketIO shitties PRjoect 10
+socketio = SocketIO(app)
 
-# server init, 0.0.0.0 required for Render, deact. debug before committing
+@socketio.on('exec_commander')
+def commander(data):
+
+    try:
+
+        command = data.get('command', '')
+
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+
+        output = result.stdout if result.returncode == 0 else result.stderr
+
+        emit('commander_output', {'output': output})
+
+    except Exception as e:
+
+        emit('commander_output', {'output': f"Error Command Exec: {str(e)}"})
+
+
+
+# run inits: Sockets - Flask main
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    socketio.run(app, host='0.0.0.0', port=8080, debug=True)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=True)
