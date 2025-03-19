@@ -68,8 +68,7 @@ A collection of experimental web services and tools:
 | 07  | **(Where) Is-ISS?**                        | Yet another ISS live tracking tool using `requests` and JSON—the simplest one yet.                     |
 | 08  | **Profile Info Getter/Setter**             | Learning `__init__`, `__main__`, and `@property` decorators by serving a "Profiles/Records" framework. |
 | 09  | **Study Framework 1: Markdown Web Server** | Parses Markdown into HTML with auto-generated indexes for a documentation showroom.                    |
-| 10  | **WebSockets Shell**                       | A web-shell initial project using WebSockets. No __eval()__ used. Real and open. 
-|
+| 10  | **WebSockets Shell**                       | A web-shell initial project using WebSockets. No __eval()__ used. Real and open.                             |
 | 404 | **Not Every Mistake is Truly a Mistake**   | Sometimes, mistakes are masterpieces... but not this error 404 page.                                   |
 
 
