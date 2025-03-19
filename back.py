@@ -112,7 +112,7 @@ def render_about():
     return render_template('about/about.html')
 ###################################################
 # SECRETS to FRONT
-@project10.route('/10/API_Secrets')
+@app.route('/10/API_Secrets')
 def handling_secrets():
 
     uri = os.environ.get('uri')
