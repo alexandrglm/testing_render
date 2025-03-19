@@ -119,7 +119,9 @@ socketio = SocketIO(
         'http://localhost:8080',
         'https://localhost:8080',
         'http://0.0.0.0:8080',
-        'https://0.0.0.0:8080'
+        'https://0.0.0.0:8080',
+        'https://justlearn.ing',
+        'https://testing-render-zgdg.onrender.com'
     ]
 )
 
