@@ -110,15 +110,6 @@ def cookies_notice():
 def render_about():
 
     return render_template('about/about.html')
-###################################################
-# SECRETS to FRONT
-@app.route('/10/API_Secrets')
-def handling_secrets():
-
-    uri = os.environ.get('uri')
-
-    return jsonify( { 'uri': uri } )
-
 ##########################################################################
 # SocketIO shitties: Project 10
 socketio = SocketIO(

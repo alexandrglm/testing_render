@@ -3,19 +3,13 @@ let socket;
 fetch('API_Secrets')
     .then(response => response.json())
     .then(data => {
+        
         const uri = data.uri;
-        
         socket = io.connect(`${uri}`);
-        
-        socket.on('connect', () => {
-            console.log('API Secrets is working');
-        });
+        socket.on('connect');
 
         initializeApp();
     })
-    .catch(error => {
-        console.error('Error al obtener los secrets:', error);
-    });
 
 function initializeApp() {
     const output = document.getElementById('output');
@@ -34,7 +28,7 @@ function initializeApp() {
     commandInput.style.border = 'none';
     commandInput.style.outline = 'none';
     commandInput.style.padding = '0';
-    commandInput.style.margin = '0 0 0 1em';
+    commandInput.style.margin = '0 0 0 1.5em';
     commandInput.style.display = 'inline-block';
     commandInput.style.width = 'calc(100% - 10ch)';
     commandInput.style.caretColor = '#8fbc8f';
@@ -48,7 +42,6 @@ function initializeApp() {
             commanderHistorial.unshift(command);
             historialIdx = -1;
 
-            // Usa el socket aquí
             socket.emit('exec_commander', { command });
 
             commandInput.value = '';
@@ -88,7 +81,7 @@ function initializeApp() {
         }
     });
 
-    // Escucha los eventos del socket
+
     socket.on('commander_output', (data) => {
         const outputLine = document.createElement('div');
         outputLine.textContent = data.output;
