@@ -112,7 +112,7 @@ def render_about():
     return render_template('about/about.html')
 ##########################################################################
 # SocketIO shitties PRjoect 10
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 @socketio.on('exec_commander')
 def commander(data):
