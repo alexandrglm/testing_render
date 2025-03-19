@@ -118,25 +118,18 @@ socketio = SocketIO(app)
 def commander(data):
 
     try:
-
+        
         command = data.get('command', '')
-
+        
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-
-
+        
         output = result.stdout if result.returncode == 0 else result.stderr
-
         emit('commander_output', {'output': output})
-
+    
     except Exception as e:
-
+        
         emit('commander_output', {'output': f"Error Command Exec: {str(e)}"})
-
-
 
 # run inits: Sockets - Flask main
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    socketio.run(app, host='0.0.0.0', port=8080, debug=True, allow_unsafe_werkzeug=True)
