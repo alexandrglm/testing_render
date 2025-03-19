@@ -126,9 +126,48 @@ socketio = SocketIO(
         'https://testing-render-zgdg.onrender.com'
     ]
 )
-forbidden = [
+
+forbidden = (
     'rm', 'touch', 'dd', 'sudo', 'kill', ':(){ :|:& };:',
-]
+    'chmod', 'chown', 'mkfs', 'mount', 'umount', 'chroot',
+    'reboot', 'shutdown', 'halt',
+    'ln', 'mkdir', 'mv',
+    'wget', 'curl', 
+    'nc', 'ncat',
+    'at', 'cron', 'crontab',
+    'bash', 'sh', 'zsh',
+    'python', 'perl', 'ruby',
+    'free', 'top', 'vmstat', 'ps',
+    'fallocate', 'truncate',
+    'sync', 'ssh', 'ftp', 'sftp', 'tftp', 'screen', 'time',
+    'passwd', 'gpg',
+    'telnet', 'netstat', 'route', 'ip', 'ifconfig', 'iwconfig', 'iw', 'ping', 'traceroute', 'tracert',
+    'fsck', 'fdisk', 'parted', 'gdisk', 'mkswap',
+    'cat', 'echo', 'printf', 'tee', 'head', 'tail', 'paste', 'join',
+    'find', 'locate', 'grep', 'sed', 'awk',
+    'gzip', 'gunzip', 'bzip2', 'bunzip2', 'tar', 'zip', 'unzip',
+    'gcc', 'g++', 'make',
+    'ldconfig', 'ldd', 'objdump', 'nm',
+    'strace', 'ltrace',
+    'iptables', 'ufw',
+    'systemctl', 'service',
+    'useradd', 'userdel', 'groupadd', 'groupdel',
+    'dpkg', 'apt',
+    'vi', 'vim', 'nano', 'emacs',
+    'xargs', 'sort', 'uniq', 'cut', 'tr',
+    'ld', 'ar', 'ranlib', 'strip',
+    'tcpdump', 'wireshark',
+    'mke2fs',
+    'losetup', 'mdadm', 'dmsetup',
+    'setfacl', 'getfacl',
+    'chattr', 'lsattr',
+    'rename', 'install',
+    'readlink', 'realpath',
+    'export', 'source',
+    'nohup', 'disown',
+    'file', 'ldd', 'strings'
+)
+
 @socketio.on('exec_commander')
 def commander(data):
 
@@ -136,13 +175,19 @@ def commander(data):
         
         command = data.get('command', '').strip()
 
-        for forbid in forbidden:
+        if len(command) > 30:
+            
+            emit('commander_output', {'output': f'Hey, dude! Queries are too long.'})
+            return
+
+        for f in forbidden:
+            
             if command.startswith(forbidden):
                 
                 emit('commander_output', {'output': f'Hey, dude! "{command}" is a reasonably forbiden command for an open web shell!.'})
-
                 return
         
+
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         
         output = result.stdout if result.returncode == 0 else result.stderr
