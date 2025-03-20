@@ -8,6 +8,9 @@
     <script src="https://unpkg.com/aframe-event-set-component@5.1.0/dist/aframe-event-set-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://unpkg.com/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+
+    <script src="https://unpkg.com/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
+
     <script src="https://gftruj.github.io/hand.tracking.controls.extras/dist/aframe-hand-tracking-controls-extras.js"></script>
 </head>
 <body>
@@ -262,11 +265,13 @@
 
 </head>
 <body>
-    <a-scene vr-mode-ui="enabled: true" background="color: black">
+    <a-scene vr-mode-ui="enabled: true" background="color: black" physics="debug: true">
+
         <a-entity id="esfera" geometry="primitive: sphere; radius: 500" material="shader: kaleidoscope-1; side: double"></a-entity>
 
         <a-entity id="cubo" geometry="primitive: box" material="shader: kaleidoscope-1" position="0 1.6 -3" rotation="0 45 0"
-                  grabbable>
+                  dynamic-body="mass: 2; linearDamping: 0.1; angularDamping: 0.1" grabbable>
+
             <a-animation attribute="rotation"
                          dur="10000"
                          repeat="indefinite"
@@ -275,16 +280,47 @@
             </a-animation>
         </a-entity>
 
-        <a-entity id="leftHand" hand-tracking-controls="hand: left;" hand-tracking-extras></a-entity>
-        <a-entity id="rightHand" hand-tracking-controls="hand: right;" hand-tracking-extras></a-entity>
+
+        <a-entity id="rightHand" hand-controls="hand: right" laser-controls="hand: right">
+
+            <a-entity id="grabPoint" position="0 0 -0.1" visible="false"></a-entity>
+        </a-entity>
+
 
         <a-entity light="type: ambient; intensity: 1"></a-entity>
         <a-entity light="type: point; intensity: 2; color: #FF00FF" position="3 5 2"></a-entity>
         <a-entity light="type: point; intensity: 2; color: #00FFFF" position="-3 -5 -2"></a-entity>
 
+
         <a-entity camera look-controls wasd-controls position="0 1.6 0">
             <a-entity laser-controls="hand: right"></a-entity>
         </a-entity>
     </a-scene>
+
+    <script>
+
+        const cubo = document.getElementById('cubo');
+        const grabPoint = document.getElementById('grabPoint');
+        let isGrabbing = false;
+
+        document.getElementById('rightHand').addEventListener('gripdown', () => {
+            if (!isGrabbing) {
+
+                cubo.setAttribute('dynamic-body', 'mass: 0');
+                cubo.setAttribute('position', grabPoint.getAttribute('position'));
+                cubo.setAttribute('constraint', 'target: #grabPoint; type: lock');
+                isGrabbing = true;
+            }
+        });
+
+        document.getElementById('rightHand').addEventListener('gripup', () => {
+            if (isGrabbing) {
+
+                cubo.removeAttribute('constraint');
+                cubo.setAttribute('dynamic-body', 'mass: 2');
+                isGrabbing = false;
+            }
+        });
+    </script>
 </body>
 </html>
