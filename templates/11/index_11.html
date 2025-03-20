@@ -1,49 +1,290 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 11: WebXR</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.1.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+    <script src="https://gftruj.github.io/hand.tracking.controls.extras/dist/aframe-hand-tracking-controls-extras.js"></script>
+</head>
+<body>
     <script>
-      AFRAME.registerShader('premium-kaleidoscope', {
-        schema: { time: { type: 'time', is: 'uniform' } },
-        vertexShader: `
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform float time;
-          varying vec2 vUv;
-          void main() {
-            float angle = atan(vUv.y - 0.5, vUv.x - 0.5) * 12.0;
-            float radius = length(vUv - vec2(0.5));
-            float pattern = sin(angle + time * 0.003) * cos(radius * 20.0 + time * 0.003);
-            vec3 color1 = vec3(0.8, 0.2, 0.5) * sin(time * 0.002 + pattern);
-            vec3 color2 = vec3(0.2, 0.8, 0.5) * cos(time * 0.002 - pattern);
-            vec3 finalColor = mix(color1, color2, 0.5 + 0.5 * sin(time * 0.002));
-            gl_FragColor = vec4(finalColor, 1.0);
-          }
-        `
-      });
+        AFRAME.registerShader('kaleidoscope-1', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                float angle = atan(vUv.y - 0.5, vUv.x - 0.5) * 20.0;
+                float radius = length(vUv - vec2(0.5));
+                float pattern = sin(angle + time * 0.005) * cos(radius * 25.0 + time * 0.005);
+                vec3 color1 = vec3(0.8, 0.2, 0.5) * sin(time * 0.003 + pattern);
+                vec3 color2 = vec3(0.2, 0.8, 0.5) * cos(time * 0.003 - pattern);
+                vec3 finalColor = mix(color1, color2, 0.5 + 0.5 * sin(time * 0.003));
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+            `
+        });
+        
 
-      AFRAME.registerComponent('animated-kaleidoscope', {
-        init: function () {
-          this.el.setAttribute('geometry', 'primitive: sphere; radius: 10');
-          this.el.setAttribute('material', 'shader: premium-kaleidoscope; side: double');
-        }
-      });
+        AFRAME.registerShader('kaleidoscope-2', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float spiral = sin(10.0 * (r + a + time * 0.01));
+                vec3 color = vec3(0.5 + 0.5 * spiral, 0.5 + 0.5 * cos(spiral), 0.5 + 0.5 * sin(spiral));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-3', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float radial = sin(10.0 * r + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * radial, 0.5 + 0.5 * cos(radial), 0.5 + 0.5 * sin(radial));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-4', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float fractal = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * fractal, 0.5 + 0.5 * cos(fractal), 0.5 + 0.5 * sin(fractal));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-5', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float wave = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * wave, 0.5 + 0.5 * cos(wave), 0.5 + 0.5 * sin(wave));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-6', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float colorful = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * colorful, 0.5 + 0.5 * cos(colorful), 0.5 + 0.5 * sin(colorful));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-7', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float swirl = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * swirl, 0.5 + 0.5 * cos(swirl), 0.5 + 0.5 * sin(swirl));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-8', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float star = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * star, 0.5 + 0.5 * cos(star), 0.5 + 0.5 * sin(star));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-9', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float galaxy = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * galaxy, 0.5 + 0.5 * cos(galaxy), 0.5 + 0.5 * sin(galaxy));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
+        
+        AFRAME.registerShader('kaleidoscope-10', {
+            schema: { time: { type: 'time', is: 'uniform' } },
+            vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+            `,
+            fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+                vec2 p = vUv - vec2(0.5);
+                float r = length(p);
+                float a = atan(p.y, p.x);
+                float cosmic = sin(10.0 * r + time * 0.01) * cos(10.0 * a + time * 0.01);
+                vec3 color = vec3(0.5 + 0.5 * cosmic, 0.5 + 0.5 * cos(cosmic), 0.5 + 0.5 * sin(cosmic));
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `
+        });
     </script>
-  </head>
-  <body>
-    <a-scene background="color: black">
-      <a-entity position="0 0 0">
-        <a-entity animated-kaleidoscope></a-entity>
-      </a-entity>
-      <a-entity light="type: ambient; intensity: 1"></a-entity>
-      <a-entity light="type: point; intensity: 2; color: #FF00FF" position="3 5 2"></a-entity>
-      <a-entity light="type: point; intensity: 2; color: #00FFFF" position="-3 -5 -2"></a-entity>
-      <a-entity camera wasd-controls look-controls position="0 0 0"></a-entity>
+    <script>
+        const shaders = ['kaleidoscope-1', 'kaleidoscope-2', 'kaleidoscope-3', 'kaleidoscope-4', 'kaleidoscope-5', 'kaleidoscope-6', 'kaleidoscope-7', 'kaleidoscope-8', 'kaleidoscope-9', 'kaleidoscope-10'];
+        let currentIndex = 0;
+
+        function changeShader() {
+            const esfera = document.getElementById('esfera');
+            if (esfera) {
+                esfera.setAttribute('material', 'shader', shaders[currentIndex]);
+
+                currentIndex = (currentIndex + 1) % shaders.length;
+            }
+        }
+
+        setInterval(changeShader, 15000);
+    </script>
+
+</head>
+<body>
+    <a-scene vr-mode-ui="enabled: true" background="color: black">
+        <a-entity id="esfera" geometry="primitive: sphere; radius: 500" material="shader: kaleidoscope-1; side: double"></a-entity>
+
+        <a-entity id="cubo" geometry="primitive: box" material="shader: kaleidoscope-1" position="0 1.6 -3" rotation="0 45 0"
+                  grabbable>
+            <a-animation attribute="rotation"
+                         dur="10000"
+                         repeat="indefinite"
+                         to="0 405 0"
+                         easing="linear">
+            </a-animation>
+        </a-entity>
+
+        <a-entity id="leftHand" hand-tracking-controls="hand: left;" hand-tracking-extras></a-entity>
+        <a-entity id="rightHand" hand-tracking-controls="hand: right;" hand-tracking-extras></a-entity>
+
+        <a-entity light="type: ambient; intensity: 1"></a-entity>
+        <a-entity light="type: point; intensity: 2; color: #FF00FF" position="3 5 2"></a-entity>
+        <a-entity light="type: point; intensity: 2; color: #00FFFF" position="-3 -5 -2"></a-entity>
+
+        <a-entity camera look-controls wasd-controls position="0 1.6 0">
+            <a-entity laser-controls="hand: right"></a-entity>
+        </a-entity>
     </a-scene>
-  </body>
+</body>
 </html>
