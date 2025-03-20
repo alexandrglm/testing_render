@@ -19,7 +19,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 */
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: '&copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
+    attribution: 'Source: Esri, Maxar, Earthstar Geographics'
 }).addTo(map);
 
 var issMarker = L.marker([0, 0], {icon: issIcon}).addTo(map);
@@ -31,7 +31,7 @@ function updateISSPosition() {
             var lat = data.latitude;
             var lon = data.longitude;
             issMarker.setLatLng([lat, lon]);
-            map.setView([lat, lon], 4); // El Zoom de la actualización, cuidado
+            map.setView([lat, lon], 4);
         })
         .catch(error => console.error('DEBUG: No data received:', error));
 }

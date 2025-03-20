@@ -26,6 +26,7 @@ projects = [
     {'id': '08', 'title': 'Profile Info Getter/Setter', 'desc': 'An excuse to learn about __init_, __main__, @property decorators and so on, and so forth, by serving a fully "Profiles/Records" framework.'},
     {'id': '09', 'title': 'Study Framework 1: MarkDown Web Server', 'desc': 'Parsing Markdown into HTML. A basic framework with auto-generated indexes for a documentation showroom.'},
     {'id': '10', 'title': 'WebShell', 'desc': 'With no eval() usage at back-end implementation! :-D'},
+    {'id': '11', 'title': 'WebXR framework', 'desc': ''},
     {'id': '404', 'title': 'Not Every Mistake is Truly a Mistake', 'desc': 'Sometimes, mistakes are masterpieces, unlike this error 404 page. '}
 ]
 

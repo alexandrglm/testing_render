@@ -11,13 +11,13 @@ import requests
 project07 = Blueprint('project07', __name__)
 ##################
 @project07.route('/07/')
-
 def render_project_07():
     return render_template('07/index_07.html')
 
-@project07.route('/07/iss_position')
+@project07.route('/iss_position')
 
 def iss_position():
+    
     try:
         url = 'http://api.open-notify.org/iss-now.json'
         response = requests.get(url)
