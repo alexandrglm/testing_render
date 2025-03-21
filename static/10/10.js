@@ -1,17 +1,45 @@
+// Preloading socket url via promise - secret
 let socket;
 
-fetch('API_Secrets')
-    .then(response => response.json())
-    .then(data => {
-        
-        const uri = data.uri;
-        socket = io.connect(`${uri}`);
-        socket.on('connect');
+async function socketInit() {
+    try {
 
+        const response = await fetch('API_Secrets');
+        
+        const data = await response.json();
+
+
+        const shell_uri = data.shell_uri;
+
+        socket = io.connect(`${shell_uri}`);
+
+
+        await new Promise((resolve, reject) => {
+            socket.on('connect', () => {
+                console.log('DEBUG: Promise OK, Secret OK, Socket OK');
+                resolve();
+            });
+
+            socket.on('connect_error', (error) => {
+                console.error('DEBUG: Promise ERROR - ', error);
+                reject(error);
+            });
+        });
+        
         initializeApp();
-    })
+
+    } catch (error) {
+        
+        console.error('DEBUG: Promise OK, Socket ERROR (maybe URL???)', error);
+    
+    }
+}
+
+socketInit();
+
 
 function initializeApp() {
+    
     const output = document.getElementById('output');
     const outputContainer = document.getElementById('output-container');
 
@@ -34,11 +62,14 @@ function initializeApp() {
     commandInput.style.caretColor = '#8fbc8f';
 
     function inputAlwaysOn() {
+    
         commandInput.focus();
     }
 
     function handleCommand(command) {
+    
         if (command) {
+    
             commanderHistorial.unshift(command);
             historialIdx = -1;
 
@@ -56,18 +87,27 @@ function initializeApp() {
     });
 
     commandInput.addEventListener('keydown', (e) => {
+    
         if (e.key === 'ArrowUp') {
             e.preventDefault();
+    
             if (historialIdx < commanderHistorial.length - 1) {
                 historialIdx++;
+    
                 commandInput.value = commanderHistorial[historialIdx];
             }
+    
         } else if (e.key === 'ArrowDown') {
+    
             e.preventDefault();
+    
             if (historialIdx > 0) {
                 historialIdx--;
+    
                 commandInput.value = commanderHistorial[historialIdx];
+    
             } else {
+    
                 historialIdx = -1;
                 commandInput.value = '';
             }
@@ -81,14 +121,18 @@ function initializeApp() {
         }
     });
 
-
     socket.on('commander_output', (data) => {
+    
         const outputLine = document.createElement('div');
+    
         outputLine.textContent = data.output;
+    
         output.appendChild(outputLine);
 
         const newLine = document.createElement('div');
+    
         newLine.innerHTML = `<br><span class="pwd-color">~$</span>`;
+    
         newLine.appendChild(commandInput);
 
         output.appendChild(newLine);
@@ -99,8 +143,11 @@ function initializeApp() {
     });
 
     const initialLine = document.createElement('div');
+    
     initialLine.innerHTML = `<span class="pwd-color">WebShell~$</span>`;
+    
     initialLine.appendChild(commandInput);
+    
     output.appendChild(initialLine);
 
     inputAlwaysOn();

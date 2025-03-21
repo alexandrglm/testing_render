@@ -22,7 +22,7 @@
                 <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 <li><a href="#">Courses</a></li>
-                <li><a href="{{ url_for('render_about') }}">About</a></li>
+                <li><a href="{{ url_for('render_statics', pathName='about') }}">About</a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +32,7 @@
                 <div class="item-2">
                     <img src="{{ url_for('static', filename=project.id + '/' + project.id + '.png') }}" alt="Project Image">
                     <div class="metadata">
-                        <h1 class="title">{{ loop.index }}. {{ project.title }}</h1>
+                        <h1 class="title">{{ project.id }}. {{ project.title }}</h1>
                         <p class="desc">{{ project.desc }}</p>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
         {% endfor %}
     </div>
     {{ render_footer() | safe }}
-    <p class="updated-text">Last updated:<strong> March 12, 2025</strong></p>
+    <p class="updated-text">Last updated:<strong> March 21tst, 2025</strong></p>
     <script src="{{ url_for('static', filename='navbar-main.js') }}"></script>
 </body>
 </html>
