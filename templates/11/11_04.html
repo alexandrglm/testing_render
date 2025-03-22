@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ scene.title }}</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/aframe-environment-component@1.5.0/dist/aframe-environment-component.min.js "></script>
+</head>
+<body>
+    <script src="{{ url_for('static', filename='11/engines/11_02/11_02_shaderLoader_a_primitiva.js') }}"></script>
+    <a-scene>
+        <!-- Componente de entorno -->
+        <a-entity environment="preset: forest; 
+                               lighting: point;
+                               shadow: true;
+                               fog: 0.5;
+                               dressing: trees;
+                               dressingAmount: 30;
+                               dressingColor: #228B22;
+                               ground: hills;
+                               groundColor: #8B4513;
+                               groundTexture: walkernoise;
+                               groundYScale: 4;
+                               groundSize: 50;
+                               skyType: gradient;
+                               skyColor: #87CEEB;
+                               horizonColor: #FFA500;">
+        </a-entity>
+    
+
+        <a-entity geometry="primitive: plane; width: 50; height: 50" 
+                  rotation="-90 0 0" 
+                  material="shader: 3; color: #1E90FF; opacity: 0.8; repeat: 5 5">
+        </a-entity>
+    
+        <a-entity light="type: directional; intensity: 0.8; color: #FFD700; castShadow: true" 
+                  position="5 10 -5">
+        </a-entity>
+    
+        <a-entity light="type: ambient; intensity: 0.3; color: #FFFFFF"></a-entity>
+    
+        <a-entity fog="type: exponential; color: #D3D3D3; density: 0.02"></a-entity>
+    
+
+        <a-entity geometry="primitive: dodecahedron; radius: 2" 
+                  material="color: #696969" 
+                  position="-3 0 -10">
+        </a-entity>
+        
+        <a-entity geometry="primitive: dodecahedron; radius: 3" 
+                  material="color: #808080" 
+                  position="4 0 -8">
+        </a-entity>
+    
+    
+        <a-entity geometry="primitive: cylinder; height: 6; radius: 0.6" 
+                  material="color: #8B4513" 
+                  position="7 3 -15">
+            <a-entity geometry="primitive: cone; radiusBottom: 2; height: 4" 
+                      material="color: #006400" 
+                      position="0 3 0">
+            </a-entity>
+        </a-entity>
+    
+        <!-- Cámara y controles -->
+        <a-entity camera position="0 2 5" look-controls wasd-controls></a-entity>
+    
+    </a-scene>
+    
+</body>
+</html>

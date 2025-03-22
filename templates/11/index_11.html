@@ -3,51 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 11: WebXR</title>
-    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-event-set-component@5.1.0/dist/aframe-event-set-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
-    <script src="https://unpkg.com/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
-    <script src="https://gftruj.github.io/hand.tracking.controls.extras/dist/aframe-hand-tracking-controls-extras.js"></script>
+    <title>Project 11 Index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='11/11.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Todos los shaders -->
-    <script src="{{ url_for('static', filename='11/engines/shaders/shaders.js') }}"></script> 
-
-    <a-scene vr-mode-ui="enabled: true" background="color: black" physics="debug: true">
-        <!-- Eventos y scripts para modificaciones de objetos/elementos por su código -->
-        <script src="{{ url_for('static', filename='11/engines/shaders/shaderEvents.js') }}"></script>
-        
-
-        <a-entity id="esfera" geometry="primitive: sphere; radius: 200" material="shader: 1; side: double"></a-entity>
-
-        <!-- Cubo -->
-        <a-entity id="cubo" geometry="primitive: box" material="shader: 16" position="0 1.6 -3" rotation="0 45 45">
-            <script src="{{ url_for('static', filename='11/engines/cuboRota.js') }}"></script>
-            <script src="{{ url_for('static', filename='11/engines/cuboPosiciones.js') }}"></script>
-        </a-entity>
-
-        <!-- primitva plano-->
-        <a-entity id="plano" geometry="primitive: plane; width: 50; height: 25" material="shader: planoShader" position="0 -2 -20" rotation="10 0 0"></a-entity>
-
-        <!-- Luces -->
-        <a-entity light="type: ambient; intensity: 1"></a-entity>
-        <a-entity light="type: point; intensity: 2; color: #FF00FF" position="3 5 2"></a-entity>
-        <a-entity light="type: point; intensity: 2; color: #00FFFF" position="-3 -5 -2"></a-entity>
-
-        <!-- Cámara y controles VR -->
-        <a-entity camera look-controls wasd-controls position="0 0 0">
-            <a-entity id="leftHand" hand-controls="hand: left" laser-controls="hand: left">
-                <a-entity id="grabPoint" position="0 0 0" visible="false"></a-entity>
-            </a-entity>
-            <a-entity id="rightHand" hand-controls="hand: right" laser-controls="hand: right">
-                <a-entity id="grabPoint" position="0 0 0" visible="false"></a-entity>
-            </a-entity>
-        </a-entity>
-    </a-scene>
-    <script src="{{ url_for('static', filename='11/engines/controls.js') }}"></script>
-    <script src="{{ url_for('static', filename='11/engines/cuboTracking.js') }}"></script>
-
+    <div class="container">
+        {% for scene in scenes %}
+            {% set scene_id = '%02d' % loop.index %}
+            <a href="{{ url_for('project11.render_scene', scene_id=scene_id) }}" class="item">
+                <div class="item-2">
+                    <img src="{{ url_for('static', filename='11/11_' + scene_id + '.png') }}" alt="Scene thumb.">
+                    <div class="metadata">
+                        <h1 class="title">{{ scene.title }}</h1>
+                        <p class="desc">{{ scene.desc }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    {{ render_footer() | safe }}
 </body>
 </html>

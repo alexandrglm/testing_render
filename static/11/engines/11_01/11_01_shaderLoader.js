@@ -20,8 +20,7 @@ const fragmentShader = `
     uniform vec2 iResolution;
     uniform float iTime;
 
-    float grid(vec2 uv, float battery)
-    {
+    float grid(vec2 uv, float battery) {
         vec2 size = vec2(uv.y, uv.y * uv.y * 0.2) * 0.01;
         uv += vec2(0.0, iTime * 10.0 * (battery + 0.05));
         uv = abs(fract(uv) - 0.5);
@@ -30,17 +29,14 @@ const fragmentShader = `
         return clamp(lines.x + lines.y, 0.0, 3.0);
     }
 
-    void mainImage(out vec4 fragColor, in vec2 fragCoord)
-    {
+    void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         vec2 uv = (2.0 * fragCoord.xy - iResolution.xy) / iResolution.y;
         float battery = 1.0;
-
 
         float fog = smoothstep(0.1, -0.02, abs(uv.y + 0.2));
         vec3 col = vec3(1, 0.1, 0.001);
 
-        if (uv.y < -0.2)
-        {
+        if (uv.y < -0.2) {
             uv.y = 3.0 / (abs(uv.y + 0.2) + 0.05);
             uv.x *= uv.y * 0.5;
 
@@ -57,16 +53,12 @@ const fragmentShader = `
 
             float gridVal = grid(uv, battery);
             col = mix(col, vec3(0.5, 1., 0.22), gridVal);
-        }
-        else
-
+        } else {
             vec3 colorHorizonte = vec3(0.5, 1.0, 0.22);
             vec3 colorCielo = vec3(0.5, 0.0, 0.5);
 
-
             col = mix(colorHorizonte, colorCielo, smoothstep(-0.9, 1.0, uv.y));
         }
-
 
         col += fog * fog * fog;
         col = mix(vec3(col.r, col.r, col.r) * 0.5, col, battery * 0.7);
@@ -114,23 +106,19 @@ fbScene.add(fbPlane);
 
 fbPlane.scale.set(window.innerWidth / window.innerHeight, 1, 1);
 
-
 // Movimiento del puntero = Movimiento de escena sobre frambuffer
 let mouseX = 0;
 let mouseY = 0;
 
-
 window.addEventListener('mousemove', (event) => {
-
     mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-
 
     fbPlane.material.map.offset.set(-mouseX * (zoomFactor - 1) / 2, -mouseY * (zoomFactor - 1) / 2);
 });
 
-
 function animate() {
+    
     requestAnimationFrame(animate);
 
     material.uniforms.iTime.value = performance.now() / 1000;
@@ -144,6 +132,7 @@ function animate() {
 animate();
 
 window.addEventListener("resize", () => {
+
     const width = window.innerWidth;
     const height = window.innerHeight;
     renderer.setSize(width, height);

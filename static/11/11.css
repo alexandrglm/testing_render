@@ -1,0 +1,105 @@
+body {
+    font-family: "Lato", sans-serif;
+    background-color: #ffffff;
+    background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: repeat;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    width: 240px;
+    text-align: center;
+    box-shadow: 
+        0px 4px 8px rgba(0, 0, 0, 0.1),
+        0px 8px 16px rgba(0, 0, 0, 0.1), 
+        0px 12px 24px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-decoration: none;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    position: relative;
+}
+
+.item:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #85858580;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.3s ease-in-out;
+    transform: translateY(0);
+}
+
+.item:hover img {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0px 8px 20px rgba(82, 82, 82, 0.897);
+    filter: brightness(1.2);
+}
+
+.item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    border: 3px dotted rgba(0, 0, 0, 0.61);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    box-shadow: 10px 10px  5px rgb(100, 75, 75);
+}
+
+.item:hover::before {
+    opacity: 1;
+}
+
+.metadata {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px;
+}
+
+.metadata .title {
+    font-family: "Merriweather", serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.metadata .desc {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #666666;
+    line-height: 1.4;
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+    justify-content: center;
+}

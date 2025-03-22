@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ scene.title }}</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+    <script src="{{ url_for('static', filename='11/engines/11_02/11_02_shaderLoader_a_primitiva.js') }}"></script>
+    <a-scene>
+        <a-entity id="shader-plane" geometry="primitive: plane; width: 8; height: 4" position="0 1.6 -3" threejs-shader></a-entity>
+        <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
+    </a-scene>
+</body>
+</html>

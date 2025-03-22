@@ -69,7 +69,8 @@ A collection of experimental web services and tools:
 | 08  | **Profile Info Getter/Setter**             | Learning `__init__`, `__main__`, and `@property` decorators by serving a "Profiles/Records" framework.       |
 | 09  | **Study Framework 1: Markdown Web Server** | Parses Markdown into HTML with auto-generated indexes for a documentation showroom.                          |
 | 10  | **WebSockets Shell**                       | A web-shell initial project using WebSockets. No __eval()__ used. Real and open.                             |
-| 11  | **WebXR / WebGL test framework**           | First approach to developing VR/Augmented Reality environments using WebXR. Library used: A-FRAME /  THREE.JS|                             
+| 11  | **3D / VR Showcase test**                  | First approach to developing VR/Augmented Reality environments. Library used: A-FRAME /  THREE.JS
+|                             
 | 404 | **Not Every Mistake is Truly a Mistake**   | Sometimes, mistakes are masterpieces... but not this error 404 page.                                         |
 
 
