@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Shader Demo</title>
+    <!-- Incluye THREE de los copmonents de A-Frame -->
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.1.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="https://gftruj.github.io/hand.tracking.controls.extras/dist/aframe-hand-tracking-controls-extras.js"></script>
+</head>
+<body>
+    <a-scene vr-mode-ui="enabled: true" background="color: black">
+
+        <script>
+            AFRAME.registerShader('sueloShader', {
+                schema: {
+                    iTime: { type: 'time', is: 'uniform' },
+                },
+
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+
+                fragmentShader: `
+                    precision highp float;
+
+                    uniform float iTime;
+                    varying vec2 vUv;
+
+                    float grid(vec2 uv, float battery)
+                    {
+                        vec2 size = vec2(uv.y, uv.y * uv.y * 0.2) * 0.01;
+                        uv += vec2(0.0, iTime * 10.0 * (battery + 0.05));
+                        uv = abs(fract(uv) - 0.5);
+                        vec2 lines = smoothstep(size, vec2(0.0), uv);
+                        lines += smoothstep(size * 5.0, vec2(0.0), uv) * 0.4 * battery;
+                        return clamp(lines.x + lines.y, 0.0, 3.0);
+                    }
+
+                    void main() {
+                        vec2 uv = vUv * 2.0; // Escalar las coordenadas UV
+                        float battery = 1.0;
+
+                        // Coordenadas plano a esfera sin math.pi
+                        float theta = uv.x * 2.0 * 3.14159265359; // 180º *2 
+                        float phi = uv.y * 3.14159265359; 
+
+                        // grid
+                        float fog = smoothstep(0.1, -0.02, abs(sin(phi) - 0.5));
+                        vec3 col = vec3(1, 0.1, 0.001);
+
+                        if (sin(phi) < 0.5)
+                        {
+                            float adjustedPhi = 3.0 / (abs(sin(phi) - 0.5) + 0.05);
+                            float adjustedTheta = theta * adjustedPhi * 0.5;
+
+                            adjustedTheta += iTime * 10.0 * (battery + 0.05);
+                    
+                            float fila = floor(adjustedPhi);
+                            float columna = floor(adjustedTheta);
+
+                            vec3 colorTesela1 = vec3(0.0, 0.0, 0.5);
+                            vec3 colorTesela2 = vec3(0.5, 0.0, 0.5);
+
+                            float patron = mod(fila + columna, 2.0);
+                            col = (patron < 1.0) ? colorTesela1 : colorTesela2;
+                            float gridVal = grid(vec2(adjustedTheta, adjustedPhi), battery);
+                            col = mix(col, vec3(0.5, 1., 0.22), gridVal);
+                        }
+                        else
+                        {
+                            // Horizonte y cielo
+                            vec3 colorHorizonte = vec3(0.5, 1.0, 0.22);
+                            vec3 colorCielo = vec3(0.5, 0.0, 0.5);
+
+                            col = mix(colorHorizonte, colorCielo, smoothstep(0.5, 1.0, sin(phi))); // Ajustar para el horizonte
+                        }
+
+                        col += fog * fog * fog;
+                        col = mix(vec3(col.r, col.r, col.r) * 0.5, col, battery * 0.7);
+
+                        gl_FragColor = vec4(col, 1.0);
+                    }
+                `
+            });
+        </script>
+
+        <a-entity id="esfera" geometry="primitive: sphere; radius: 20" material="shader: sueloShader; side: double"></a-entity>
+
+        <a-entity light="type: ambient; intensity: 1"></a-entity>
+        <a-entity light="type: point; intensity: 2; color: #FF00FF" position="3 5 2"></a-entity>
+        <a-entity light="type: point; intensity: 2; color: #00FFFF" position="-3 -5 -2"></a-entity>
+        <a-entity camera look-controls wasd-controls position="0 1.6 2">
+            <a-entity id="leftHand" hand-controls="hand: left" laser-controls="hand: left">
+                <a-entity id="grabPoint" position="0 0 0" visible="false"></a-entity>
+            </a-entity>
+            <a-entity id="rightHand" hand-controls="hand: right" laser-controls="hand: right">
+                <a-entity id="grabPoint" position="0 0 0" visible="false"></a-entity>
+            </a-entity>
+        </a-entity>
+        </a-scene>
+    <script>
+        // Movimiento con joysticks del Meta Quest
+        const camera = document.querySelector('[camera]');
+        const movementSpeed = 0.1;
+
+        document.querySelector('a-scene').addEventListener('thumbstickmoved', (event) => {
+            const { x, y } = event.detail;
+            const direction = new THREE.Vector3(x, 0, -y).normalize();
+            camera.setAttribute('position', {
+                x: camera.getAttribute('position').x + direction.x * movementSpeed,
+                y: camera.getAttribute('position').y + direction.y * movementSpeed,
+                z: camera.getAttribute('position').z + direction.z * movementSpeed
+            });
+        });
+    </script>
+</body>
+</html>
