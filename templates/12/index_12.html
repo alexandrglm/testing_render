@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 12: (py)MongoDB Atlas WebShell</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='12/12.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div id="output-container">
+        <div id="command-output">
+            <div id="output"># (Py)MongoDB Atlas WebShell v.0.1:<br></div>
+        </div>
+
+        <div id="json-viewer">
+            <pre id="json-response"># Atlas raw responses: </pre>
+        </div>
+    </div>
+    <div id="command-container">
+        <input type="text" id="commandInput" placeholder="Command / Queries / Data input ...">
+    </div>
+    <script src="{{ url_for('static', filename='12/12.js') }}"></script>
+</body>
+{{ render_footer() | safe }}
+</html>

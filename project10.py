@@ -78,12 +78,12 @@ def commander(data):
             emit('commander_output', {'output': f'Sorry, the lengtf of the queries should be reduced!'})
             return
 
-        for f in forbidden:
+        # for f in forbidden:
             
-            if command.startswith(forbidden):
+            # if command.startswith(forbidden):
                 
-                emit('commander_output', {'output': f'Sorry, "{command}" is locked for execution!'})
-                return
+                # emit('commander_output', {'output': f'Sorry, "{command}" is locked for execution!'})
+                # return
         
 
         result = subprocess.run(command, shell=True, capture_output=True, text=True)

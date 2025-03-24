@@ -12,5 +12,6 @@
         <a-entity id="shader-plane" geometry="primitive: plane; width: 8; height: 4" position="0 1.6 -3" threejs-shader></a-entity>
         <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
     </a-scene>
+    {{ render_footer() | safe }}
 </body>
 </html>

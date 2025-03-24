@@ -5,3 +5,5 @@ pillow
 markupsafe
 pymdown-extensions
 flask-socketio
+pymongo
+dotenv
