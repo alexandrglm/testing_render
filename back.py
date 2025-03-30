@@ -123,7 +123,14 @@ def cookies_notice():
         return Markup(render_template('_footer.html'))
 
     return dict(render_footer = render_footer)
+    
+############################################################################
+# favicon
+@app.route('/favicon.ico')
+def favicon():
 
+    return send_from_directory('static', 'favicon.ico', mimetype='img/vnd.microsoft.icon') 
+    
 ############################################################################
 # SOCKETIO CONFIGS
 socketio = SocketIO(
