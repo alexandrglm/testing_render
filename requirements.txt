@@ -7,3 +7,6 @@ pymdown-extensions
 flask-socketio
 pymongo
 dotenv
+selenium
+webdriver-manager
+html2text
