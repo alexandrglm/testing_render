@@ -774,7 +774,7 @@ def save_template():
     ################
     try:
 
-        template_path = (LOCAL_RULESETS, f'{data['name']}.json')
+        template_path = (LOCAL_RULESETS, f"{data['name']}.json")
 
         with open(template_path, 'w') as f:
             json.dump({
