@@ -1,0 +1,114 @@
+{
+  "element_mappings": {
+    "div.item-title": "h1"
+  },
+  "exclusion_patterns": [
+    {
+      "raw": "\\[APPLY NOW\\]\\(.*?\\)|\\[LEARN MORE\\]\\(.*?\\)",
+      "is_regex": true
+    },
+    {
+      "raw": "\\[\\s]\\(.*?\\)",
+      "is_regex": true
+    },
+    {
+      "raw": "[Log in](/users/sign_in)\n\n  - [Log in](/users/sign_in)",
+      "is_regex": false,
+      "lines": [
+        "[Log in](/users/sign_in)",
+        "",
+        "  - [Log in](/users/sign_in)"
+      ]
+    },
+    {
+      "raw": "\\[PT.*?\\]\\(.*?\\)",
+      "is_regex": true
+    },
+    {
+      "raw": "\\[(Previous|Next) Guide\\]\\(.*?\\)",
+      "is_regex": true
+    },
+    {
+      "raw": "\\*\\*\\[\\!\\[\\(([^)]*)\\)\\]\\(([^)]*)\\)",
+      "is_regex": true
+    },
+    {
+      "raw": "[Log in](/users/sign_in)",
+      "is_regex": false,
+      "lines": [
+        "[Log in](/users/sign_in)"
+      ]
+    },
+    {
+      "raw": "- [Log in](/users/sign_in)",
+      "is_regex": false,
+      "lines": [
+        "- [Log in](/users/sign_in)"
+      ]
+    },
+    {
+      "raw": "Guide Tasks",
+      "is_regex": false,
+      "lines": [
+        "Guide Tasks"
+      ]
+    },
+    {
+      "raw": "- Read Tutorial\n  - Watch Guide Video\n  - Complete the Exercise",
+      "is_regex": false,
+      "lines": [
+        "- Read Tutorial",
+        "  - Watch Guide Video",
+        "  - Complete the Exercise"
+      ]
+    },
+    {
+      "raw": "- Read Tutorial",
+      "is_regex": false,
+      "lines": [
+        "- Read Tutorial"
+      ]
+    },
+    {
+      "raw": "- Watch Guide Video",
+      "is_regex": false,
+      "lines": [
+        "- Watch Guide Video"
+      ]
+    },
+    {
+      "raw": "- Complete the Exercise",
+      "is_regex": false,
+      "lines": [
+        "- Complete the Exercise"
+      ]
+    },
+    {
+      "raw": "Video locked",
+      "is_regex": false,
+      "lines": [
+        "Video locked"
+      ]
+    },
+    {
+      "raw": "This video is viewable to users with a Bottega Bootcamp license",
+      "is_regex": false,
+      "lines": [
+        "This video is viewable to users with a Bottega Bootcamp license"
+      ]
+    },
+    {
+      "raw": "Already a Bottega Student? [Sign In](/users/sign_in)",
+      "is_regex": false,
+      "lines": [
+        "Already a Bottega Student? [Sign In](/users/sign_in)"
+      ]
+    },
+    {
+      "raw": "\\[!\\[\\]\\([^)]+\\)\\]\\([^)]+\\)",
+      "is_regex": true
+    }
+  ],
+  "description": "",
+  "last_modified": "2025-03-31T21:26:23.408912"
+}
