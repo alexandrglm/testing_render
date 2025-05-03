@@ -73,10 +73,10 @@ def commander(data):
         
         command = data.get('command', '').strip()
 
-        if len(command) > 60:
+        # if len(command) > 60:
             
-            emit('commander_output', {'output': f'Sorry, the lengtf of the queries should be reduced!'})
-            return
+            # emit('commander_output', {'output': f'Sorry, the lengtf of the queries should be reduced!'})
+            # return
 
         # for f in forbidden:
             

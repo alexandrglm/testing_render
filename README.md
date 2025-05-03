@@ -1,37 +1,22 @@
 # Web Services Test & Showroom
 
-## Updated to 2025, April.
+Welcome to this repository, designed to be deployed on my server as a showcase for web services, utilizing a Python-Flask backend, with a frontend built using HTML, CSS, and React (featuring real-time TSX/Sass compilation).
 
-****
+This project is hosted on Render.com **using a free-tier account**, which may result in longer loading times due to the limitations of the free plan.
 
-Welcome to **Web Services Test**, a repository designed for experimenting with web services using a Python backend, along with various frontend implementations.
+To address these and other limitations, some projects are specifically designed to bypass most of these constraints, including:
 
-****
+- Web-based Server Terminal
+- Cron Jobs with React Deployments
+- Free Persistent Storage storing files into MongoDB
+- SocketIO Multi-threading
+- Pre-loaded Dependencies
 
-## 📌 Project Structure
+Apart from fully-developed projects, various sketches, ideas, and proof-of-concept applications can be found, built using technologies I'm currently studying, as this repo serves as my personal toybox.
 
-```
-/testing_render
-├── back.py            # Main backend server
-├── requirements.txt   # Python dependencies
-├── static/            # Static assets for each project
-│   ├── 01/
-│   ├── ...
-│   ├── 404/
-├── templates/         # HTML web renders for each project
-│   ├── 01/
-│   ├── ...
-│   ├── 404/
-│   ├── main.html
-├── data/              # Project-specific data storage
-│   ├── 01/
-│   ├── ...
-│   ├── 404/
-├── projectXX.py       # Project XX backend logic
-```
+Feel free to explore, experiment, and contribute to the evolution of this web services playground!
 
-- **Backend**: Python
-- **Frontend**: HTML, CSS, JavaScript
+---
 
 ## ⚙️ How to Run
 
@@ -45,14 +30,15 @@ To run them locally:
    pip install -r requirements.txt
    ```
 
-2. Start the backend at `localhost:8080`:
+2. Server is fully self-deployed (including React compilation, needed bash scripts and others) by starting the main `back.py`:
    
    ```bash
    python back.py
    ```
-
+__* You may need to configure an .env file including every needed secret settings in order to get a fully working projects.__
 ---
 
+***
 ## 📂 Projects
 
 A collection of experimental web services and tools:
@@ -72,6 +58,33 @@ A collection of experimental web services and tools:
 | 11  | **3D / VR Showcase test**                  | First approach to developing VR/Augmented Reality environments. Library used: A-FRAME /  THREE.js                                |
 | 12  | **(py)MongoDB Atlas WebShell**             | A MongoDb Atlas webshell for database manipulation using PyMongo (sync) and SocketIO in async mode.                              |
 | 13  | **Studying Tools 2: Advanced Web Scraper** | URL-to-Markdown concept tool with custom CSS remapping (Custom DIVs, Bootstrap, components). MongoDB used as persistent storage. |
+| 14  | **React Deploys (1): Bottega's VSCode Analytics** | Bottega\'s React 14 web app for student VSCode analytics, adapted to React 18+ and served via Flask. |
 | 404 | **Not Every Mistake is Truly a Mistake**   | Sometimes, mistakes are masterpieces... but not this error 404 page.                                                             |
 
+---
+
+## 📌 Project Structure
+
+- **Backend**: Python, Flask.
+- **Frontend**: HTML, CSS, JavaScript. React (TSX/SCSS compilers)
+```
+/testing_render
+├── back.py            # Main backend server
+├── requirements.txt   # Python dependencies
+├── build.sh           # React deployment script
+├── static/            # Static assets for each project
+│   ├── 01/
+│   ├── ...
+│   ├── 404/
+├── templates/         # HTML web renders for each project
+│   ├── 01/
+│   ├── ...
+│   ├── 404/
+│   ├── main.html
+├── data/              # Project-specific data storage (React deploys)
+│   ├── 01/
+│   ├── ...
+│   ├── 404/
+├── projectXX.py       # Project XX backend logic, as blueprints.
+```
 

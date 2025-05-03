@@ -1,19 +1,20 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, March. 31th
+# Date:         2025, May. 3rd
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
 from markupsafe import Markup
 import os
+import subprocess
 import importlib
 from project10 import commander
 from project12 import project12, socketio_opers
 
 app = Flask(__name__)
 
-
 projects = [
+    {'id': '14', 'title': 'React Deploys (1): Bottega\'s VSCode Analytics', 'desc': 'Bottega\'s React 14 web app for student VSCode analytics, adapted to React 18+ and served via Flask.'},
     {'id': '13', 'title': 'Studying Tools 2: Advanced Web Scraper       ', 'desc': 'URL-to-Markdown concept tool with custom CSS remapping (Custom DIVs, Bootstrap, components). MongoDB used as persistent storage.'},    
     {'id': '12', 'title': '(py)MongoDB Atlas WebShell                   ', 'desc': 'A MongoDb Atlas webshell for database manipulation using PyMongo (sync) and SocketIO in async mode.'},
     {'id': '11', 'title': '3D / VR Showcase test                        ', 'desc': 'First approach to developing VR/Augmented Reality environments.'},
@@ -40,10 +41,12 @@ static_pages = [
 # main route
 @app.route('/')
 def home():
+
     return render_template('main.html', projects=projects)
 #############
 # Projects are integred as "modules"  by using Flask-Blueprint
 for project in projects:
+    
     project_id = project['id']
     module_name = f'project{project_id}'
     module_path = f'{module_name}.py'
@@ -151,6 +154,34 @@ socketio.on_event('exec_commander', commander)
 # Project 12: (py)MongoShell
 os.environ['GEVENT_SUPPORT'] = 'True'
 socketio_opers(socketio)
+
+############################################################################
+# REACT AUTO-DEPLOYMENTS
+#############
+# Project 14 React deploy script auto-start
+def react_14_build():
+    
+    script_path = os.path.join(os.path.dirname(__file__), 'build.sh')
+    
+    if os.path.exists(script_path):
+    
+        try:
+    
+            print('DEBUG 14 -> Exec BUILD.SH')
+
+            subprocess.run(['bash', script_path], check=True)
+            
+            print('DEBUG 14 - Build.sh OK!!!')
+    
+        except subprocess.CalledProcessError as e:
+            
+            print(f"DEBUG 14 -> ERROR EXEC BUILD.SH: {e}")
+    
+    else:
+    
+        print(f'DEBUG 14 -> BUILD.SH NOT FOUND!!! : {script_path}')
+
+react_14_build()
 
 ############################################################################
 # Flask init (Via SocketIo)

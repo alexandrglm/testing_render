@@ -10,3 +10,5 @@ dotenv
 selenium
 webdriver-manager
 html2text
+python-dotenv
+gunicorn
