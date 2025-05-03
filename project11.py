@@ -1,5 +1,5 @@
 ############################################################################
-# Project 1011: WebShell project using websockets
+# Project 11: A-Frame / THREE.js / OpenXR tests
 #
 #
 ################f
