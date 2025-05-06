@@ -3,21 +3,33 @@
   --primary: #bbff00;
   --off-white: #f6f6f6;
   --sans: "Noto Sans JP", sans-serif;
+  --maxAncho: 1200px;
+  --borders: 3px
+
+}
+
+@mixin flexs($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--borders)
 }
 
 body {
+  @include flexs();
   font-family: var(--sans);
   margin: 0px;
   background-color: var(--off-white);
 }
 
 .nav {
+  @include flexs();
+  align-items: center;
   width: 100vw;
   height: 150px;
   background-color: var(--highlight);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
 }
 
 .nav > .logo {
@@ -25,20 +37,21 @@ body {
 }
 
 .container {
-  display: flex;
-  justify-content: center;
+  @include flexs();
+  flex: 1;
   padding-top: 42px;
 }
 
 .content {
-  border-radius: 3px;
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.09);
-  width: 1200px;
-  padding: 21px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 42px;
   margin-bottom: 42px;
+  border-radius: var(--borders);
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.09);
+  width: var(--maxAncho);
+  padding: 21px;
+
 
   &__chart {
     width: 100%;
@@ -49,4 +62,28 @@ body {
     text-align: center;
     color: var(--highlight);
   }
+}
+.monospace {
+  @include flexs();
+  flex: 1;
+  width: var(--maxAncho);
+  padding: 21px;
+  margin-bottom: 21px;
+  background-color: var(--off-white);
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.09);
+  border-radius: var(--borders);
+  
+  .title {
+    font-size: 1.5rem;
+    color: var(--highlight);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    // line-height: 1.5
+
+  }
+
+
 }
