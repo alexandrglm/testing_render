@@ -15,17 +15,14 @@ BASE_DIR = Path('/opt/render/project/src') if 'RENDER' in os.environ else Path(_
 STATIC_DIR = BASE_DIR / 'static' / '14'
 TEMPLATE_DIR = BASE_DIR / 'templates' / '14'
 
-def ensure_assets():
-
-    js_path = STATIC_DIR / '14.js'
-    css_path = STATIC_DIR / '14.css'
-    
-    if js_path.exists() and css_path.exists():
-
-        return True
-        
-    print('DEBUG: Timeout error, server is still compiling React app\nPlease, reload again.')
-    return False
+# This snippet (and callbacks) remains commented as long for debugging purposes, as ensuring assets is no longer needed in production.
+# def ensure_assets():
+#     js_path = STATIC_DIR / '14.js'
+#     css_path = STATIC_DIR / '14.css'
+#     if js_path.exists() and css_path.exists():
+#         return True
+#     print('DEBUG: Timeout error, server is still compiling React app\nPlease, reload again.')
+#     return False
 
 
 @project14.route('/')
@@ -37,9 +34,9 @@ def index():
 
         return 'DEBUG: API key error -> Please, set up your .env file including your own Bottega\'s API key as API_BOTTEGA = x', 500
 
-    if not ensure_assets():
-
-        return 'DEBUG: Error loading assets. Check server logs', 500
+    # This callback (and its function snippet) remains commented for debugging purposes,  as long as ensuring assets is no longer needed in production.
+    # if not ensure_assets():
+    #     return 'DEBUG: Error loading assets. Check server logs', 500
     
     return render_template('14/index_14.html', api_key=api_key)
 
