@@ -8,6 +8,9 @@ from markupsafe import Markup
 import os
 import subprocess
 import importlib
+import requests
+import time
+import threading
 from project10 import commander
 from project12 import project12, socketio_opers
 
@@ -184,7 +187,33 @@ def react_14_build():
 react_14_build()
 
 ############################################################################
+# Flask keep-alive
+################
+def serverIP():
+
+    print('Getting IP ...')
+
+    while True:
+
+        try:
+
+            elKeep = requests.get('http://ipecho.net/plain')
+
+            print(f'DEBUG -> Server IP is:  {elKeep.text.strip()}')
+
+        except Exception as e:
+
+            print(f'DEBUG -> Error getting IP : {e}')
+            
+        time.sleep(20)
+ 
+
+############################################################################
 # Flask init (Via SocketIo)
 ################
 if __name__ == '__main__':
+
+    threadIP = threading.Thread(target=serverIP, daemon=True)
+    threadIP.start()
+
     socketio.run(app, host='0.0.0.0', port=8080, debug=True, use_reloader=False, allow_unsafe_werkzeug=True)
