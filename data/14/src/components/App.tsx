@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ActivityChart from "./ActivityChart";
   
-// Nos lo llevamos a secrets
+// Nos lo llevamos a secrets. Any es lo más feo que se le puede hacer a TS pero no atino modo de determinar que el contenido esperado es String
 const API_TOKEN: string = (window as any).API_TOKEN;
 
 const NAME = "Alexandr Gomez";
@@ -50,14 +50,17 @@ const App = () => {
   };
 
   const content = isLoading ? (
-    <div>Loading data...</div>
+    <div>
+      <h1>Hello World. This is my first React deployment using Flask</h1>
+      <h3>App rights belong to Bottega. Thanks.</h3>
+    </div>
   ) : (
     <div>
       <div className="content__chart">
         <ActivityChart labels={dates} name={`hours`} series={series} />
       </div>
 
-      <div className="content__title">Activity Chart for {NAME}</div>
+      <div className="content__title">VSCode Analytics for {NAME}</div>
     </div>
   );
 
