@@ -1,6 +1,6 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 3rd
+# Date:         2025, May. 6th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
@@ -78,7 +78,7 @@ for project in projects:
 
 ############################################################################
 # When a project doesn't need its own .py, static routes for each project
-@app.route('/<project_id>/')
+@app.route('/<int:project_id>/')
 def render_project(project_id):
 
     try:
@@ -110,16 +110,23 @@ def static_files(filename):
 # STATIC PAGES
 @app.route('/<path:pathName>/')
 def render_statics(pathName):
+   
     page = next((p for p in static_pages if p['pathName'] == pathName), None)
 
     if page:
-        return render_template(page['link'])
+
+        try:
+            
+            return render_template(page['link'])
     
+        except Exception as e:
+
+            print(f'DEBUG: Can\'t render {page}!')
+            return render_template('404/index_404.html')
+
     else:
 
-        print(f'DEBUG: Can\'t render {page}!')
         return render_template('404/index_404.html')
-    
 
 ############################################################################
 # Cookies management
@@ -199,21 +206,21 @@ def serverIP():
 
             elKeep = requests.get('http://ipecho.net/plain')
 
-            print(f'DEBUG -> Server IP is:  {elKeep.text.strip()}')
+            print(f'DEBUG -> Server IP is:  {elKeep.text}')
 
         except Exception as e:
 
             print(f'DEBUG -> Error getting IP : {e}')
             
         time.sleep(20)
- 
 
 ############################################################################
 # Flask init (Via SocketIo)
 ################
 if __name__ == '__main__':
 
+    # preserved for studying purposes (Render masks daemons, serverIP is invoked direcly on running)
     threadIP = threading.Thread(target=serverIP, daemon=True)
     threadIP.start()
-
+    
     socketio.run(app, host='0.0.0.0', port=8080, debug=True, use_reloader=False, allow_unsafe_werkzeug=True)
