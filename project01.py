@@ -18,6 +18,8 @@ def render_project_01():
     p2 = P('Hello World, by the way.')
     
     heading_4 = Headings('This is how this hello world page is build', heading_type=4)
+
+    navbar = Navbar()
     
     footer = Footer()
 
@@ -120,6 +122,7 @@ class Site(HtmlRender):
     site.joining_web_elements(heading_4)
     site.joining_web_elements(Code(code_content, code_style))
     site.joining_web_elements(p2)
+    site.joining_web_elements(navbar)
     site.joining_web_elements(footer)
     
 
@@ -158,6 +161,13 @@ class Code(HtmlRender):
 
     def render_html(self):
         return f'<pre><code style="{self.style}">{self.content}</code></pre>'
+
+class Navbar(HtmlRender):
+    def __init__(self):
+        super().__init__('')
+
+    def render_html(self):
+        return render_template('_navbar.html')
 
 class Footer(HtmlRender):
     def __init__(self):

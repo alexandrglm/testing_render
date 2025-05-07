@@ -4,8 +4,8 @@
   --off-white: #f6f6f6;
   --sans: "Noto Sans JP", sans-serif;
   --maxAncho: 1200px;
-  --borders: 3px
-
+  --borders: 3px;
+  --superAncho: 150vw;
 }
 
 @mixin flexs($direction: column) {
@@ -26,14 +26,14 @@ body {
 .nav {
   @include flexs();
   align-items: center;
-  width: 100vw;
+  width: var(--superAncho);
   height: 150px;
   background-color: var(--highlight);
 
 }
 
 .nav > .logo {
-  width: 300px;
+  width: 500px;
 }
 
 .container {

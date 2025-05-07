@@ -120,6 +120,7 @@
     </a-scene>
     <script src="{{ url_for('static', filename='11/engines/11_03/controls.js') }}"></script>
     <script src="{{ url_for('static', filename='11/engines/11_03/cuboTracking.js') }}"></script>
+    {% include '_navbar.html' | safe %}
     {{ render_footer() | safe }}
 </body>
 </html>

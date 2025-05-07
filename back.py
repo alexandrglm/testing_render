@@ -88,7 +88,7 @@ for project in projects:
 
 ############################################################################
 # When a project doesn't need its own .py, static routes for each project
-@app.route('/<int:project_id>/')
+@app.route('/<project_id>/')
 def render_project(project_id):
 
     try:
@@ -116,9 +116,10 @@ def css_template(project_id, filename):
 def static_files(filename):
 
     return send_from_directory('static', filename)
-############################################################################
-# STATIC PAGES
-@app.route('/<path:pathName>/')
+
+# ############################################################################
+# # STATIC PAGES
+@app.route('/site/<path:pathName>/')
 def render_statics(pathName):
 
     pathName = pathName.strip('/')
@@ -132,7 +133,7 @@ def render_statics(pathName):
             template_file = os.path.join(app.template_folder, page['link'])
             
             if not os.path.exists(template_file):
-            
+           
                 print(f'DEBUG (Statics/Back) -> Check Static Pages logic - Dictionary : {template_file}')
                 return render_template('404/index_404.html')
             
@@ -145,7 +146,6 @@ def render_statics(pathName):
             
             return render_template('404/index_404.html')
     else:
-        print('putadon')
         return render_template('404/index_404.html')
 
 

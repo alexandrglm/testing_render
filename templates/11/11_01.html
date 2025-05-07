@@ -10,6 +10,7 @@
 <body>
     <canvas id="webgl-canvas"></canvas>
     <script src="{{ url_for('static', filename='11/engines/11_01/11_01_shaderLoader.js') }}"></script>
+    {% include '_navbar.html' | safe %}
     {{ render_footer() | safe }}
 </body>
 </html>

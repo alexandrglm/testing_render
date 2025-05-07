@@ -22,6 +22,7 @@
         <input type="text" id="commandInput" placeholder="Command / Queries / Data input ...">
     </div>
     <script src="{{ url_for('static', filename='12/12.js') }}"></script>
+    {% include '_navbar.html' | safe %}
+    {{ render_footer() | safe }}
 </body>
-{{ render_footer() | safe }}
 </html>

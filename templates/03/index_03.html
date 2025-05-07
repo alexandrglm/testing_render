@@ -61,5 +61,7 @@
     </div>
     {{ render_footer() | safe }}  
 <script src="{{ url_for('static', filename='03/03.js') }}" defer></script>
+{% include '_navbar.html' | safe %}
+{{ render_footer() | safe }}
 </body>
 </html>
