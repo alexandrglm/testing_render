@@ -12,12 +12,13 @@
             font-family: 'Helvetica', 'Arial', sans-serif;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
+            z-index: 11000;
             max-width: 500px;
             width: 90%;
             font-size: 14px;
             backdrop-filter: blur(8px);
             border: 1px solid rgba(0, 0, 0, 0.1);
+            display: none;
         }
         .cookie-consent-banner p {
             margin: 0 0 15px;
@@ -72,36 +73,45 @@
         }
     </style>
     <div id="cookie-consent-banner" class="cookie-consent-banner">
-        <p>This site doesn’t use cookies, but, isn’t it cool how Jinja handles footers and embedded content? Learning to make cookie notices was quite this idea!</p>
+        <p>This site doesn't use cookies, but isn't it cool how Jinja handles footers?</p>
         <div class="buttons">
-            <button id="accept-cookies">Got it, looks great!</button>
-            <button id="reject-cookies">I don’t read, just click</button>
+            <button id="accept-cookies">Got it!</button>
+            <button id="reject-cookies">Close</button>
         </div>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cookieConsentBanner = document.getElementById('cookie-consent-banner');
-            const acceptCookiesButton = document.getElementById('accept-cookies');
-            const rejectCookiesButton = document.getElementById('reject-cookies');
+            const cookieBanner = document.getElementById('cookie-consent-banner');
+            const acceptBtn = document.getElementById('accept-cookies');
+            const rejectBtn = document.getElementById('reject-cookies');
 
-            if (localStorage.getItem('cookieConsent') === null) {
-                cookieConsentBanner.style.display = 'block';
-            } else {
-                cookieConsentBanner.style.display = 'none';
+            // Mostrar solo si no hay decisión previa
+            if (!localStorage.getItem('cookieDecision')) {
+                cookieBanner.style.display = 'block';
+                
+                // Cerrar al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!cookieBanner.contains(e.target)) {
+                        cookieBanner.style.display = 'none';
+                        localStorage.setItem('cookieDecision', 'dismissed');
+                    }
+                }, { once: true });
             }
 
-            // When Accepted
-            acceptCookiesButton.addEventListener('click', function() {
-                localStorage.setItem('cookieConsent', 'accepted');
-                cookieConsentBanner.style.display = 'none';
-                // action oon backend
-            });
-
-            // When Declined
-            rejectCookiesButton.addEventListener('click', function() {
-                localStorage.setItem('cookieConsent', 'rejected');
-                cookieConsentBanner.style.display = 'none';
-                // action oon backend
+            // Manejar botones
+            [acceptBtn, rejectBtn].forEach(btn => {
+                btn.addEventListener('click', function() {
+                    cookieBanner.style.display = 'none';
+                    localStorage.setItem('cookieDecision', this.id.replace('-cookies', ''));
+                    
+                    // Animación de desvanecimiento
+                    cookieBanner.style.transition = 'opacity 0.3s';
+                    cookieBanner.style.opacity = '0';
+                    setTimeout(() => {
+                        cookieBanner.style.display = 'none';
+                    }, 300);
+                });
             });
         });
     </script>

@@ -160,7 +160,7 @@
     <!-- Using "latest" (5.3.3), but be careful if a big update comes-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='13/13.js') }}"></script>
+    {% include '_navbar.html' | safe %}
     {{ render_footer() | safe }}
 </body>
-{{ render_footer() | safe }}
 </html>

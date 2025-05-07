@@ -13,8 +13,9 @@
     <div id="output-container">
         <div id="output"></div>
     </div>
-    {{ render_footer() | safe }}
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='10/10.js') }}"></script>
+    {% include '_navbar.html' | safe %}
+    {{ render_footer() | safe }}
 </body>
 </html>

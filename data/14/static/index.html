@@ -16,4 +16,6 @@
       window.API_TOKEN = "{{ api_key }}";
     </script>
     <script src="{{ url_for('static', filename='14/14.js') }}"></script>
+    {% include '_navbar.html' | safe %}
+    {{ render_footer() | safe }}
 </html>
