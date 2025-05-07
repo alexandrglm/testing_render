@@ -142,7 +142,6 @@
             const statusElement = document.getElementById('status');
             
             statusElement.textContent = 'Sending...';
-            statusElement.style.fontWeight = 'bold';
             statusElement.style.color = '#0073aa';
 
             try {
@@ -186,7 +185,6 @@
 
                 statusElement.textContent = error.message;
                 statusElement.style.color = '#3abe00f';
-                statusElement.style.fontWeight = 'bold';
                 console.error('Debug FrontEnd -> Error sending message (check server logs, reasons)', error);
             
             }
