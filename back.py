@@ -1,11 +1,14 @@
 ############################################################################
+# STATIC PAGES
+############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 6th
+# Date:         2025, May. 7th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
 from markupsafe import Markup
 import os
+import re
 import subprocess
 import importlib
 import requests
@@ -13,6 +16,12 @@ import time
 import threading
 from project10 import commander
 from project12 import project12, socketio_opers
+import smtplib
+from email.mime.text import MIMEText
+from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -35,7 +44,8 @@ projects = [
 ]
 
 static_pages = [
-    {'pathName' : 'about', 'link' : 'about/about.html'}
+    {'pathName' : 'about', 'link' : 'about/about.html'},
+    {'pathName' : 'contact', 'link' : 'contact/contact.html'}
 ]
 
 ############################################################################
@@ -97,7 +107,7 @@ def css_template(project_id, filename):
 
     if not os.path.exists(os.path.join(app.template_folder, css_path)):
 
-        return "DEBUG: CSS Jinja Not found, use static/<project_id> route", 404
+        return 'DEBUG (CSS Jinja/Back) Check CSS Jinja Routes', 404
 
     return render_template(css_path), 200, {'Content-Type': 'text/css'}
 ############################################################################
@@ -110,23 +120,107 @@ def static_files(filename):
 # STATIC PAGES
 @app.route('/<path:pathName>/')
 def render_statics(pathName):
-   
+
+    pathName = pathName.strip('/')
+
     page = next((p for p in static_pages if p['pathName'] == pathName), None)
 
     if page:
 
         try:
+                        
+            template_file = os.path.join(app.template_folder, page['link'])
+            
+            if not os.path.exists(template_file):
+            
+                print(f'DEBUG (Statics/Back) -> Check Static Pages logic - Dictionary : {template_file}')
+                return render_template('404/index_404.html')
             
             return render_template(page['link'])
-    
+        
+        
         except Exception as e:
-
-            print(f'DEBUG: Can\'t render {page}!')
+            
+            print(f'DEBUG (Static/Back) -> Error with {page} page : {str(e)}')
+            
             return render_template('404/index_404.html')
-
     else:
-
+        print('putadon')
         return render_template('404/index_404.html')
+
+
+############################################################################
+# CONTACT PAGE -> API, VALIDATIONS, SMTP
+@app.route('/sendmail/', methods=['POST'])
+def contact_email():
+
+    try:
+
+        # All validations (json, requireds, pass, configs), and then, exceptions, also resported in console/frontend
+        if not request.is_json:
+            print('DEBUG Contact -> Error Sending -> JSON error')
+            return jsonify({'error': 'Content-Type must be application/json'}), 400
+
+        mail_data = request.get_json()
+
+        all_required_fields = ['name', 'email', 'message']
+
+        if not all(field in mail_data for field in all_required_fields):
+
+            return jsonify({'error': 'Missing required fields'}), 400
+
+        smtp_password = os.getenv('SMTP_PASSWORD')
+        if not smtp_password:
+            print('DEBUG Contact -> .env error -> Password is missing')
+            raise ValueError('DEBUG: SMTP config (pass) not set')
+        
+
+        smtp_config = {
+            'server': os.getenv('SMTP_SERVER'),
+            'port': int(os.getenv('SMTP_PORT')),
+            'user': os.getenv('SMTP_USER'),
+            'password': smtp_password.strip(),
+            'account': os.getenv('SMTP_ACCOUNT', os.getenv('SMTP_USER'))
+        }
+
+
+        msg = MIMEText(
+        f'''New message received from Contact form!
+
+        -----------------------------------------
+        From:    {mail_data['name'].strip()} - {mail_data['email'].strip()}
+        Date: {datetime.now().strftime('%Y, %m. %d - %H:%M:%S')}
+        -----------------------------------------
+
+        - Message -
+        {mail_data['message'].strip()}
+
+        -----------------------------------------
+        ''')
+    
+        msg['Subject'] = f'JustLearning CONTACT from -> {mail_data["name"]}'
+        msg['From'] = smtp_config['user']
+        msg['To'] = smtp_config['account']
+
+        with smtplib.SMTP(smtp_config['server'], smtp_config['port']) as server:
+            
+            server.starttls()
+            server.login(smtp_config['user'], smtp_config['password'])
+            
+            server.send_message(msg)
+
+        return jsonify({'message': 'Message sent!'}), 200
+
+    except ValueError as e:
+
+        print(f'DEBUG (Contact) -> Config fail! (env?): {str(e)}')
+        return jsonify({'error': str(e)}), 500
+    
+    except Exception as e:
+    
+        print(f'Unexpected error: {str(e)}')
+        return jsonify({'error': 'Internal server error (is server on?)'}), 500
+    
 
 ############################################################################
 # Cookies management
@@ -219,8 +313,8 @@ def serverIP():
 ################
 if __name__ == '__main__':
 
-    # preserved for studying purposes (Render masks daemons, serverIP is invoked direcly on running)
     threadIP = threading.Thread(target=serverIP, daemon=True)
     threadIP.start()
     
     socketio.run(app, host='0.0.0.0', port=8080, debug=True, use_reloader=False, allow_unsafe_werkzeug=True)
+
