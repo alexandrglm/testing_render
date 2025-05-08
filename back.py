@@ -1,8 +1,6 @@
 ############################################################################
-# STATIC PAGES
-############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 7th
+# Date:         2025, May. 8th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
@@ -20,6 +18,9 @@ import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
+from fastapi import FastAPI, Request
+from pymongo import MongoClient
+import socket
 
 load_dotenv()
 
@@ -231,7 +232,103 @@ def cookies_notice():
         return Markup(render_template('_footer.html'))
 
     return dict(render_footer = render_footer)
-     
+############################################################################
+# SERVER LOGS
+##################
+# MONGO as persistant
+MONGO_USER = os.getenv('MONGO_USER')
+MONGO_PASS = os.getenv('MONGO_PASS')
+MONGO_HOST_1 = os.getenv('MONGO_HOST_1')
+MONGO_HOST_2 = os.getenv('MONGO_HOST_2')
+MONGO_HOST_3 = os.getenv('MONGO_HOST_3')
+MONGO_PORT = os.getenv('MONGO_PORT')
+MONGO_SETS = os.getenv('MONGO_SETS')
+MONGO_SERVER_DB = os.getenv('MONGO_DB', 'server_logs')
+MONGO_SERVER_COLLECTION = os.getenv('MONGO_SERVER_COLLECTION', 'clients')
+
+MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST_1}:{MONGO_PORT},{MONGO_HOST_2}:{MONGO_PORT},{MONGO_HOST_3}:{MONGO_PORT}/?replicaSet={MONGO_SETS}&authSource=admin'
+
+
+try:
+
+    mongodb_client = MongoClient(MONGO_URI)
+    mongo_db = mongodb_client[MONGO_SERVER_DB]
+    
+    print('DEBUG (Server/Mongo) -> MongoDB connection OK!')
+
+except Exception as e:
+
+    print(f'DEBUG (Server/Mongo) -> MongoDB connection error: {str(e)}')
+    mongo_db = None
+
+
+##################
+# Server logger 
+##################
+# EXCLUSIONES
+EX_EXTENSIONS = ['.md', '.markdown', '.png', '.jpg', '.jpeg', '.gif', '.ico', '.svg', '.webp', '.woff', '.woff2', '.ttf', '.eot']
+EX_MIME = []
+EX_PATHS = []
+
+@app.before_request
+def track_all_requests_with_exclusions():
+    if mongo_db is None:
+        return
+
+    try:
+
+        path = request.path.lower()
+        accept_header = (request.headers.get('Accept') or '').lower()
+        content_type = (request.headers.get('Content-Type') or '').lower()
+
+        ##################
+        # Exclusions applied as empty returns
+        if path in EX_PATHS:         
+            return
+        if any(path.endswith(ext) for ext in EX_EXTENSIONS):
+            return
+        if any(accept_header.startswith(prefix) for prefix in EX_MIME):
+            return
+
+
+
+        client_ip = request.remote_addr
+        
+        forwarded_for = request.headers.get("X-Forwarded-For", "")
+        
+        real_ip = forwarded_for.split(",")[0].strip() if forwarded_for else client_ip        
+        
+        try:
+            client_host = socket.gethostbyaddr(real_ip)[0]
+        
+        except socket.herror:
+            client_host = 'Unknown'
+
+
+        visit_data = {
+            "timestamp": datetime.utcnow(),
+            "ip": real_ip,
+            "host": client_host,
+            "user_agent": request.headers.get("User-Agent"),
+            "referer": request.headers.get("Referer"),
+            "method": request.method,
+            "path": path,
+            "full_url": request.url,
+            "port": request.environ.get('REMOTE_PORT'),
+            "accept": accept_header,
+            "content_type": content_type,
+            "query_string": request.query_string.decode('utf-8') if request.query_string else None,
+            "remote_user": request.remote_user,
+            "content_length": request.content_length,
+        }
+
+        result = mongo_db[MONGO_SERVER_COLLECTION].insert_one(visit_data)
+        print(f'[VISIT] {datetime.utcnow()} - IP: {real_ip} - Host: {client_host} - Method: {request.method} - Path: {path}')
+
+    except Exception as e:
+        
+        print(f'[VISIT ERROR] {datetime.utcnow()} - Error logging visit: {str(e)}')
+  
 ############################################################################
 # SOCKETIO CONFIGS
 socketio = SocketIO(
@@ -263,7 +360,7 @@ socketio_opers(socketio)
 # REACT AUTO-DEPLOYMENTS
 #############
 # Project 14 React deploy script auto-start
-def react_14_build():
+def react_p14_build():
     
     script_path = os.path.join(os.path.dirname(__file__), 'build.sh')
     
@@ -271,28 +368,26 @@ def react_14_build():
     
         try:
     
-            print('DEBUG 14 -> Exec BUILD.SH')
+            print('DEBUG (React Build) -> Exec BUILD.SH')
 
             subprocess.run(['bash', script_path], check=True)
             
-            print('DEBUG 14 - Build.sh OK!!!')
+            print('DEBUG (React Build) - Build.sh OK!!!')
     
         except subprocess.CalledProcessError as e:
             
-            print(f"DEBUG 14 -> ERROR EXEC BUILD.SH: {e}")
+            print(f"DEBUG (React Build) -> ERROR EXEC BUILD.SH: {e}")
     
     else:
     
         print(f'DEBUG 14 -> BUILD.SH NOT FOUND!!! : {script_path}')
 
-react_14_build()
+react_p14_build()
 
 ############################################################################
 # Flask keep-alive
 ################
 def serverIP():
-
-    print('Getting IP ...')
 
     while True:
 

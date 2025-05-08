@@ -163,14 +163,17 @@
     }
 
     /* intento de formar una cápsula */
+    #menu:first-child, 
     #menu a:first-child {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
     }
+    #menu:last-child,
     #menu a:last-child {
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
     }
+    #menu:not(:last-child),
     #menu a:not(:last-child) {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -225,9 +228,9 @@
         /* EL BOTON HACE MAGIA */
 
 </style>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+
         const navbar = document.getElementById('floating-navbar');
         const toggleButton = document.getElementById('buttonToggle');
         const menu = document.getElementById('menu');
@@ -235,25 +238,21 @@
         let isDragging = false;
         let offsetX, offsetY;
 
-
         setTimeout(() => {
-            navbar.style.left = 'calc(100vw - 120px)'; // here, the last position, calculated
+            navbar.style.left = 'calc(100vw - 120px)';
         }, 100);
-
 
         menu.classList.remove('visible');
 
-
         const adjustMenuPosition = () => {
-
             const btnRect = toggleButton.getBoundingClientRect();
             const viewportCenter = window.innerWidth / 2;
-            
+
             menu.style.left = btnRect.left > viewportCenter ? 'auto' : '0';
             menu.style.right = btnRect.left > viewportCenter ? '0' : 'auto';
         };
 
-        // All the events-listeners 
+        
         toggleButton.addEventListener('click', (e) => {
             e.stopPropagation();
             adjustMenuPosition();
@@ -261,38 +260,66 @@
         });
 
         document.addEventListener('click', (e) => {
-       
             if (!navbar.contains(e.target)) menu.classList.remove('visible');
-       
         });
 
-        toggleButton.addEventListener('mousedown', (e) => {
-            if (e.button !== 0) return;
+        
+        const startDrag = (e) => {
+            if (e.button !== 0 && e.type !== 'touchstart') return;
             isDragging = true;
             navbar.style.transition = 'none';
-            offsetX = e.clientX - navbar.getBoundingClientRect().left;
-            offsetY = e.clientY - navbar.getBoundingClientRect().top;
+
+            if (e.type === 'mousedown') {
+                offsetX = e.clientX - navbar.getBoundingClientRect().left;
+                offsetY = e.clientY - navbar.getBoundingClientRect().top;
+            } else if (e.type === 'touchstart') {
+                offsetX = e.touches[0].clientX - navbar.getBoundingClientRect().left;
+                offsetY = e.touches[0].clientY - navbar.getBoundingClientRect().top;
+            }
+
             navbar.style.cursor = 'grabbing';
-        });
+        };
 
-        document.addEventListener('mousemove', (e) => {
-       
+        const dragNavbar = (e) => {
             if (!isDragging) return;
-            navbar.style.left = `${e.clientX - offsetX}px`;
-            navbar.style.top = `${e.clientY - offsetY}px`;
-       
+
+            let x, y;
+
+            if (e.type === 'mousemove') {
+                x = e.clientX - offsetX;
+                y = e.clientY - offsetY;
+            } else if (e.type === 'touchmove') {
+                x = e.touches[0].clientX - offsetX;
+                y = e.touches[0].clientY - offsetY;
+            }
+
+            navbar.style.left = `${x}px`;
+            navbar.style.top = `${y}px`;
+
             adjustMenuPosition();
-        });
+        };
 
-        document.addEventListener('mouseup', () => {
-       
+        const stopDrag = () => {
             isDragging = false;
-       
             navbar.style.cursor = '';
-       
             navbar.style.transition = 'left 0.3s ease, top 0.3s ease';
-        });
+        };
 
+        /*
+         * toggles for Mouse / Touchscreen
+         * 
+         *
+         */ 
+        toggleButton.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', dragNavbar);
+        document.addEventListener('mouseup', stopDrag);
+
+        toggleButton.addEventListener('touchstart', startDrag);
+        document.addEventListener('touchmove', dragNavbar);
+        document.addEventListener('touchend', stopDrag);
+
+
+        
         window.addEventListener('resize', adjustMenuPosition);
     });
 </script>
