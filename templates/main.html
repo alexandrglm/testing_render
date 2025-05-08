@@ -14,21 +14,9 @@
 <body>
     <header>
         <nav>
-            <!--
-            <div class="burger">
-                <i class="fa-solid fa-code logo"></i>
-            </div>
-            --->
             <div class="site-title">
                 <h1>Just Learning!</h1>
             </div>
-            <!--
-                <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="#">Courses</a></li>
-                <li><a href="{{ url_for('render_statics', pathName='about') }}">About</a></li>
-            </ul>
-            --->
         </nav>
     </header>
     <div class="container">
@@ -44,10 +32,7 @@
             </a>
         {% endfor %}
     </div>
-    <p class="updated-text">Last updated:<strong> May 8h, 2025.</strong></p>
-    <!-- old navbar
-    <script src="{{ url_for('static', filename='navbar-main.js') }}"></script>
-    -->
+    <p class="updated-text">Last updated:<strong> May 9th, 2025.</strong></p>
     {% include '_navbar.html' | safe %}
     {{ render_footer() | safe }}
 </body>

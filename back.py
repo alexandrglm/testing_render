@@ -1,12 +1,11 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 8th
+# Date:         2025, May. 9th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
 from markupsafe import Markup
 import os
-import re
 import subprocess
 import importlib
 import requests
@@ -18,7 +17,6 @@ import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
 from pymongo import MongoClient
 import socket
 
@@ -152,6 +150,13 @@ def render_statics(pathName):
 
 ############################################################################
 # CONTACT PAGE -> API, VALIDATIONS, SMTP
+
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = os.getenv('SMTP_PORT')
+SMTP_USER = os.getenv('SMTP_USER')
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
+SMTP_ACCOUNT = os.getenv('SMTP_ACCOUNT')
+
 @app.route('/sendmail/', methods=['POST'])
 def contact_email():
 
@@ -170,18 +175,18 @@ def contact_email():
 
             return jsonify({'error': 'Missing required fields'}), 400
 
-        smtp_password = os.getenv('SMTP_PASSWORD')
-        if not smtp_password:
+
+        if not SMTP_PASSWORD:
             print('DEBUG Contact -> .env error -> Password is missing')
             raise ValueError('DEBUG: SMTP config (pass) not set')
         
 
         smtp_config = {
-            'server': os.getenv('SMTP_SERVER'),
-            'port': int(os.getenv('SMTP_PORT')),
-            'user': os.getenv('SMTP_USER'),
-            'password': smtp_password.strip(),
-            'account': os.getenv('SMTP_ACCOUNT', os.getenv('SMTP_USER'))
+            'server': SMTP_SERVER,
+            'port': int(SMTP_PORT),
+            'user': SMTP_USER,
+            'password': SMTP_PASSWORD.strip(),
+            'account': SMTP_ACCOUNT
         }
 
 
@@ -219,7 +224,7 @@ def contact_email():
     
     except Exception as e:
     
-        print(f'Unexpected error: {str(e)}')
+        print(f'DEBUG (Contact/SMTP)  ->  Unexpected error: {str(e)}')
         return jsonify({'error': 'Internal server error (is server on?)'}), 500
     
 
@@ -265,15 +270,21 @@ except Exception as e:
 ##################
 # Server logger 
 ##################
+
 # EXCLUSIONES
 EX_EXTENSIONS = ['.md', '.markdown', '.png', '.jpg', '.jpeg', '.gif', '.ico', '.svg', '.webp', '.woff', '.woff2', '.ttf', '.eot']
 EX_MIME = []
 EX_PATHS = []
+
 EX_IP = os.getenv('SERVER_EX_IP')
+EX_IP = [ip.strip() for ip in EX_IP.split(',') if ip.strip()]
+print(f'Excluded IPs: {EX_IP}') 
 
 @app.before_request
 def track_all_requests_with_exclusions():
+
     if mongo_db is None:
+        print('DEBUG (logging) -> No MongoDB configured! (Check .env/MongoDB config)')
         return
 
     try:
@@ -294,17 +305,16 @@ def track_all_requests_with_exclusions():
         if any(path.endswith(ext) for ext in EX_EXTENSIONS):
             return
         if any(accept_header.startswith(prefix) for prefix in EX_MIME):
-            return  
+            return
         if real_ip in EX_IP:
+            print(f'[VISIT] -> Excluded from logs: {real_ip}')
             return
         
-
         try:
             client_host = socket.gethostbyaddr(real_ip)[0]
         
         except socket.herror:
             client_host = 'Unknown'
-
 
         visit_data = {
             "timestamp": datetime.utcnow(),
@@ -326,11 +336,11 @@ def track_all_requests_with_exclusions():
         result = mongo_db[MONGO_SERVER_COLLECTION].insert_one(visit_data)
         print(f'[VISIT] {datetime.utcnow()} - IP: {real_ip} - Host: {client_host} - Method: {request.method} - Path: {path}')
 
+
     except Exception as e:
         
         print(f'[VISIT ERROR] {datetime.utcnow()} - Error logging visit: {str(e)}')
-  
-############################################################################
+###########################################################################
 # SOCKETIO CONFIGS
 socketio = SocketIO(
     app, cors_allowed_origins=[
