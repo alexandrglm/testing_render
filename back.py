@@ -269,6 +269,7 @@ except Exception as e:
 EX_EXTENSIONS = ['.md', '.markdown', '.png', '.jpg', '.jpeg', '.gif', '.ico', '.svg', '.webp', '.woff', '.woff2', '.ttf', '.eot']
 EX_MIME = []
 EX_PATHS = []
+EX_IP = os.getenv('SERVER_EX_IP')
 
 @app.before_request
 def track_all_requests_with_exclusions():
@@ -281,6 +282,11 @@ def track_all_requests_with_exclusions():
         accept_header = (request.headers.get('Accept') or '').lower()
         content_type = (request.headers.get('Content-Type') or '').lower()
 
+
+        client_ip = request.remote_addr
+        forwarded_for = request.headers.get("X-Forwarded-For", "")
+        real_ip = forwarded_for.split(",")[0].strip() if forwarded_for else client_ip  
+
         ##################
         # Exclusions applied as empty returns
         if path in EX_PATHS:         
@@ -288,16 +294,11 @@ def track_all_requests_with_exclusions():
         if any(path.endswith(ext) for ext in EX_EXTENSIONS):
             return
         if any(accept_header.startswith(prefix) for prefix in EX_MIME):
+            return  
+        if real_ip in EX_IP:
             return
-
-
-
-        client_ip = request.remote_addr
         
-        forwarded_for = request.headers.get("X-Forwarded-For", "")
-        
-        real_ip = forwarded_for.split(",")[0].strip() if forwarded_for else client_ip        
-        
+
         try:
             client_host = socket.gethostbyaddr(real_ip)[0]
         
