@@ -1,43 +1,22 @@
 # Web Services Test & Showroom
 
-Welcome to this repository, designed to be deployed on my server as a showcase for web services, utilizing a Python-Flask backend, with a frontend built using HTML, CSS, and React (featuring real-time TSX/Sass compilation).
+Welcome to this repository, designed to be deployed on my server as a showcase for web services, utilizing a Python-Flask backend, with a frontend built using Flask-Jinja, also React for some projects.
 
 This project is hosted on Render.com **using a free-tier account**, which may result in longer loading times due to the limitations of the free plan.
 
 To address these and other limitations, some projects are specifically designed to bypass most of these constraints, including:
 
 - Web-based Server Terminal
-- Cron Jobs with React Deployments
+- Cron Jobs to maintain server always up
 - Free Persistent Storage storing files into MongoDB
-- SocketIO Multi-threading
-- Pre-loaded Dependencies
+- SocketIO Multi-threading tasks
+- Pre-loaded Dependencies for a faster compilation time
 
 Apart from fully-developed projects, various sketches, ideas, and proof-of-concept applications can be found, built using technologies I'm currently studying, as this repo serves as my personal toybox.
 
 Feel free to explore, experiment, and contribute to the evolution of this web services playground!
 
 ---
-
-## ⚙️ How to Run
-
-These web services are available online: [JustLearn.ing](https://justlearn.ing/)
-
-To run them locally:
-
-1. Install dependencies:
-   
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. Server is fully self-deployed (including React compilation, needed bash scripts and others) by starting the main `back.py`:
-   
-   ```bash
-   python back.py
-   ```
-__* You may need to configure an .env file including every needed secret settings in order to get a fully working projects.__
----
-
 ***
 ## 📂 Projects
 
@@ -66,25 +45,109 @@ A collection of experimental web services and tools:
 ## 📌 Project Structure
 
 - **Backend**: Python, Flask.
-- **Frontend**: HTML, CSS, JavaScript. React (TSX/SCSS compilers)
+- **Frontend**: HTML, CSS, JavaScript. React (TSX/SaSS compilers)
 ```
 /testing_render
 ├── back.py            # Main backend server
+|
 ├── requirements.txt   # Python dependencies
+|
 ├── build.sh           # React deployment script
+|
+├── data/              # Project-specific data storage (React deploys, files outside from /static/, ...)
+│   ├── 01/
+│   ├── ...
+│   └── 404/
+|
+├── node_modules       # NPM requirements included for a faster server up
+|
+├── server/            # Server modules
+│   ├── mail.py
+│   └── ...
+|
 ├── static/            # Static assets for each project
 │   ├── 01/
 │   ├── ...
-│   ├── 404/
+│   └── 404/
+|
 ├── templates/         # HTML web renders for each project
 │   ├── 01/
 │   ├── ...
 │   ├── 404/
-│   ├── main.html
-├── data/              # Project-specific data storage (React deploys)
-│   ├── 01/
-│   ├── ...
-│   ├── 404/
-├── projectXX.py       # Project XX backend logic, as blueprints.
+│   └── main.html
+|
+└── projectXX.py       # Project XX backend logic, as blueprints.
 ```
+---
+
+## ⚙️ How to Run
+
+These web services are available online: [JustLearn.ing](https://justlearn.ing/)
+
+To run them locally:
+
+1. Install dependencies:
+   
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Server is fully self-deployed (including React compilation, needed bash scripts and others) by starting the main `back.py`:
+   
+   ```bash
+   python back.py
+   ```
+
+3. Configue the secrets like this:
+
+
+### .env file
+```
+Server things:
+
+SERVER_CORS -> Big string, comma-separated, with allowed CORS domain:ports
+
+SERVER_EX_IP -> Excluded IP list, non-quotted, comma-separated, for exclusions in logs
+SERVER_EX_HOST -> Excluded HOST (non-quotted, comma-separated). Full and Partial host domain capable.
+
+SMTP_ACCOUNT -> Mail used for Contact Form daemon
+SMTP_PASSWORD
+SMTP_PORT
+SMTP_SERVER
+SMTP_USER
+
+
+MONGO_SERVER_DB -> Logs are backuped using Atlas-MongoDB specific collection and DB
+MONGO_SERVER_COLLECTION 
+
+
+MongoDB Atlas things (Server logs, project13, persistant storage, ...):
+
+Mind about how MongoDB URIs are used in many scripts:
+
+MONGO_URI = f'mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST_1}:{MONGO_PORT},{MONGO_HOST_2}:{MONGO_PORT},{MONGO_HOST_3}:{MONGO_PORT}/?replicaSet={MONGO_SETS}&authSource=admin'
+
+
+MONGO_HOST_1 -> Your own Cluster on Atlas-MongoDB Host-00-00
+MONGO_HOST_2 -> Your own Cluster on Atlas-MongoDB Host-00-01
+MONGO_HOST_3 -> Your own Cluster on Atlas-MongoDB Host-00-02
+MONGO_PORT
+MONGO_SETS
+MONGO_USER
+MONGO_PASS
+
+Project 10: Web Shell
+shell_uri -> Must contain domain or ip:port, otherwise WebShell wont enable prompt
+
+Project 13: Scrappy
+PROJECT13_DB -> MongoDB database name for DB in use.
+PROJECT13_FILTERS -> MongoDB collection name for scrap filters.
+PROJECT13_PAGES -> MongoDB collection name for a persistant storage of scraped pages.
+
+
+Project 14:
+API_BOTTEGA= Bottega Student API for VSCode Analytics App (you may use the public API 211e3ba5-273a-489c-a376-691c68db7527 )
+```
+
+---
 

@@ -11,8 +11,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='14/14.css') }}">
   </head>
   <body>
-  <h1> DEBUG (React/Project 14) -> React deployment was not found! (Check build.sh)</h1>
+    <div id="root" class="app-wrapper"></div>
+    <script>
+      window.API_TOKEN = "{{ api_key }}";
+    </script>
+    <script src="{{ url_for('static', filename='14/14.js') }}"></script>
     {% include '_navbar.html' | safe %}
     {{ render_footer() | safe }}
-  </body>
 </html>
