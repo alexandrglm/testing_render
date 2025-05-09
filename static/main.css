@@ -1,32 +1,30 @@
 @media screen and (max-width: 768px) {
-    nav {
-        justify-content: space-between;
+    .site-title > .logo {
+        height: 50px;
     }
+}
 
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 80px;
-        left: 0;
-        width: 100%;
-        background: #222222ac;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 0;
-        z-index: 100;
+@media screen and (max-width: 480px) {
+    .site-title > .logo {
+        height: 40px;
     }
-
-    .nav-active {
-        display: flex;
+    
+    .container {
+        padding: 20px 10px;
+        gap: 15px;
     }
-
-    .site-title {
-        text-align: center;
-        flex-grow: 1;
+    
+    .item {
+        width: 150px;
+        padding: 15px;
     }
-
-    .burger {
-        display: flex;
+    
+    .metadata .title {
+        font-size: 1.1em;
+    }
+    
+    .metadata .desc {
+        font-size: 0.8em;
     }
 }
 
@@ -35,7 +33,6 @@ body {
     font-family: "Lato", sans-serif;
     background-color: #ffffff;
     background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
-    /*background: url(./bgMain2.jpg) no-repeat center center fixed;*/
     background-size: cover;
     background-repeat: repeat;
     color: #000000;
@@ -75,6 +72,76 @@ header p {
     gap: 20px;
     padding: 40px 20px;
 }
+
+
+/* NavBar shitties */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a8d;
+    padding: 10px 25px;
+    height: 80px; 
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 2px solid #2f2f2f;
+}
+
+
+
+.site-title {
+    font-family: "Merriweather", serif;
+    font-size: clamp(1rem, 1vw, 1rem);
+    font-weight: 900;
+    color: rgba(245, 245, 245, 0.858);
+    margin-left: 15px;
+    flex-grow: 1;
+    text-align: center;
+    position: relative;
+    text-shadow: 
+        0 0 20px rgba(255, 105, 180, 0.8),
+        0 0 25px rgba(0, 191, 255, 0.8),
+        0 0 35px rgba(255, 255, 0, 0.6), 
+        0 0 55px rgba(0, 255, 0, 0.4);
+}
+
+.site-title > .logo {
+    display: block;
+    height: 60px;
+    width: auto;
+    transition: transform 0.3 ease;
+}
+
+.site-title > .logo img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+}
+
+.site-title::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 105, 180, 0.993),
+        rgba(0, 191, 255, 0.912),
+        rgba(255, 255, 0, 0.1),
+        rgba(0, 255, 0, 0.1)
+    );
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(10px);
+}
+
 
 /* title cards*/
 .item {
@@ -182,113 +249,6 @@ header p {
     color: #555555;
 }
 
-/* NavBar shitties */
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #1a1a1a8d;
-    padding: 10px 25px;
-    font-family: "Lato", sans-serif;
-    height: 80px; 
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    box-sizing: border-box;
-    border-bottom: 2px solid #2f2f2f;
-}
-
-.burger {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin: 4px;
-    transition: 0.3s;
-}
-
-/* Pre-Burger */
-.logo {
-    font-size: 2rem;
-    color: whitesmoke;
-    /* text-shadow: 
-        0 0 5px rgba(255, 105, 180, 0.8),
-        0 0 10px rgba(0, 191, 255, 0.8),
-        0 0 20px rgba(255, 255, 0, 0.6), 
-        0 0 40px rgba(0, 255, 0, 0.4); */
-    backdrop-filter: blur(4px);
-    padding: 10px;
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 20px rgba(218, 255, 130, 0.621);
-}
-
-.logo:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 30px rgb(124, 179, 124);
-}
-
-
-.site-title {
-    font-family: "Merriweather", serif;
-    font-size: clamp(1rem, 1vw, 1rem);
-    font-weight: 900;
-    color: rgba(245, 245, 245, 0.858);
-    margin-left: 15px;
-    flex-grow: 1;
-    text-align: center;
-    position: relative;
-    text-shadow: 
-        0 0 20px rgba(255, 105, 180, 0.8),
-        0 0 25px rgba(0, 191, 255, 0.8),
-        0 0 35px rgba(255, 255, 0, 0.6), 
-        0 0 55px rgba(0, 255, 0, 0.4);
-}
-
-
-.site-title::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 105, 180, 0.993),
-        rgba(0, 191, 255, 0.912),
-        rgba(255, 255, 0, 0.1),
-        rgba(0, 255, 0, 0.1)
-    );
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    border-radius: 50%;
-    filter: blur(10px);
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-    margin-right: 20px;
-}
-
-.nav-links li {
-    display: inline-block;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #e4ff60;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: 0.3s;
-    padding: 8px 12px;
-}
-
-.nav-links a:hover {
-    color: #ff3700;
-}
 
 /* footer no Jinja */
 .updated-text {
