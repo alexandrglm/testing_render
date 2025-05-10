@@ -128,7 +128,7 @@ class ServerLogger:
         
         if ex_reasons: 
 
-            print(f'\n[DEBUG VISIT] -> Excluded from logs: {real_ip}\nReasons: {', '.join(ex_reasons)}\n')
+            print(f'\n[DEBUG VISIT] -> Excluded from logs: {real_ip}\nReasons: {", ".join(ex_reasons)}\n')
             return
 
 
