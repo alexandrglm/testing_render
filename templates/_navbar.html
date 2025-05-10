@@ -136,12 +136,14 @@
         margin: 0.8em 0 0 0;
         display: none;
         flex-direction: column;
-        background: linear-gradient(135deg, #d4ff00 0%, #869200 100%);
+        background: linear-gradient(135deg,rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         min-width: 180px;
         overflow: hidden;
         z-index: 10000;
+        border-top-left-radius: 20px; /* Hay que ponerlos por cojones, si no CSS no     #menu:first-child,   #menu a:first-child no funcionan! */
+        border-top-right-radius: 20px;
     }
 
     #menu.visible {
@@ -153,7 +155,7 @@
     #menu a {
         padding: 15px 25px;
         text-decoration: none;
-        color: #4c2200;
+        color: whitesmoke;
         position: relative;
         font-size: 1.1em;
         text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
@@ -224,8 +226,6 @@
         z-index: -1;
         opacity: 0.6;
     }
-
-        /* EL BOTON HACE MAGIA */
 
 </style>
 <script>

@@ -1,6 +1,6 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 9th
+# Date:         2025, May. 11th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
@@ -15,6 +15,7 @@ from server.mail import start_server_email
 from server.logs import start_server_logs
 from server.keep import start_server_keep
 from server.reacts import react_p14_build
+from server.nukebots import serving_bots
 
 load_dotenv()
 
@@ -43,10 +44,34 @@ static_pages = [
     {'pathName' : 'contact', 'link' : 'contact/contact.html'}
 ]
 
+allowed_root_files = [
+    {'filename' : 'robots.txt'},
+    {'filename' : 'version.txt'}
+]
+
 ############################################################################
-# Main web, projects logic
+# MAIN ROUTES
 ############################################################################
-# main route
+# 0. PRE-FILTERING
+@app.before_request
+
+def filtering_bots():
+    
+    bot_detected = serving_bots()
+
+    if bot_detected:
+
+        try:
+            
+            print('DEBUG [SERVER/Pre-Filtering] WORKING!!!s')
+            return bot_detected
+
+        except Exception as e:
+            
+            print(f'DEBUG [SERVER/Pre-Filtering] -> ERROR :  {str(e)}')
+            
+############################################################################
+# 1. MAIN INDEX HTML
 @app.route('/')
 def home():
 
@@ -56,11 +81,11 @@ def home():
     
     except Exception as e:
 
-        print('DEBUG (Server/main routes) -> / not rendering!!!!')
+        print(f'DEBUG (Server/main route) -> ERROR / not rendering!!! : {str(e)}')
         return render_template('404/index_404.html')
 
-#############
-# Projects are integred as "modules"  by using Flask-Blueprint
+############################################################################
+# 2. PROJECTS
 for project in projects:
     
     project_id = project['id']
@@ -78,33 +103,32 @@ for project in projects:
             project_blueprint = getattr(project_module, blueprint_name)
             print(f'Project {project_id}: Blueprinted OK!')
 
-            app.register_blueprint(project_blueprint, url_prefix=f'/{project_id}')
+            app.register_blueprint(project_blueprint, url_prefix=f'/project/{project_id}')
             print(f'Project {project_id} blueprint routes: OK!')
 
         except ImportError as e:
 
-            print(f'ERROR: {project_id} loading errros found!: {e}')
+            print(f'ERROR: {project_id} loading errros found!: {str(e)}')
 
         except AttributeError as e:
 
-            print(f'ERROR: No {project_id} blueprints found!: {e}')
+            print(f'ERROR: No {project_id} blueprints found!: {str(e)}')
 
-############################################################################
-# PROJECTS BUILDER
-# When a project doesn't need its own .py, static routes for each project
-@app.route('/<project_id>/')
+
+@app.route('/project/<project_id>/')
 def render_project(project_id):
 
     try:
+    
         return render_template(f'{project_id}/index_{project_id}.html')
 
     except Exception as e:
 
-        print(f'DEBUG (Projects) Can\'t render {project_id}! :  {e}')
+        print(f'DEBUG (Projects) Can\'t render {project_id}! :  {str(e)}')
         return render_template('404/index_404.html')
 
-#############
-# "If CSS Jinja is used" routes
+############################################################################
+# 3. CSS.jinja ROUTES
 @app.route('/templates/<project_id>/<filename>.css')
 def css_template(project_id, filename):
 
@@ -116,30 +140,34 @@ def css_template(project_id, filename):
 
     return render_template(css_path), 200, {'Content-Type': 'text/css'}
 
-#############
-# Static files routes
+############################################################################
+# 4. STATIC FILES
 @app.route('/static/<path:filename>')
-def static_files(filename):
+def static_files(staticFilename):
 
     try:
 
-        return send_from_directory('static', filename)
+        return send_from_directory('static', staticFilename)
 
     except Exception as e:
 
-        print(f'DEBUG (Server/Statics files) -> Static FILE or PATH error : {e}')
+        print(f'DEBUG (Server/Statics files) -> Static FILE or PATH error : {str(e)}')
         return render_template('404/index_404.html')
 
 
-
-# ############################################################################
-# # STATIC PAGES
-@app.route('/site/<path:pathName>/')
+############################################################################
+# 5. STATIC PAGES
+@app.route('/<path:pathName>/')
 def render_statics(pathName):
 
     pathName = pathName.strip('/')
 
     page = next((p for p in static_pages if p['pathName'] == pathName), None)
+
+    if pathName.startswith('project/') or pathName == 'static':
+
+        return render_template('404/index_404.html')
+
 
     if page:
 
@@ -162,9 +190,38 @@ def render_statics(pathName):
     
     else:
     
-        print(f'DEBUG (Static/Back) -> UNDEFINED ERROR : {str(e)}')
+        print(f'DEBUG (Static/Back) -> UNDEFINED ERROR ')
         return render_template('404/index_404.html')
+# ############################################################################
+# 6. ALLOWED STATIC FILES ON /
+@app.route('/<filename>')
+def root_statics(filename):
 
+    allowed_files =  [ file['filename'] for file in allowed_root_files  ]
+
+    if filename in allowed_files:
+    
+        filepath = os.path.join('.', filename)
+    
+        if os.path.exists(filepath):
+    
+            try:
+                
+                return send_from_directory('.', filename)
+    
+            except Exception as e:
+   
+                print(f'DEBUG (Statics on /) -> Error serving {filename}: {str(e)}')
+    
+        else:
+   
+            print(f'DEBUG (Statics on /) -> {filename} allowed NOT FOUND on /!')
+
+    else:
+    
+        print(f'DEBUG (Statics on /) -> {filename} is NOT allowed for /!')
+
+    return render_template('404/index_404.html')
 
 ############################################################################
 # Cookies management

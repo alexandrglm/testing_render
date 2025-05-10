@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Services Showcase</title>
+    <title>Just Learning! - Dev Showcase</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
     </header>
     <div class="container">
         {% for project in projects %}
-            <a href="/{{ project.id }}/" class="item">
+            <a href="/project/{{ project.id }}/" class="item">
                 <div class="item-2">
                     <img src="{{ url_for('static', filename=project.id + '/' + project.id + '.png') }}" alt="Project Image">
                     <div class="metadata">
@@ -34,7 +34,7 @@
             </a>
         {% endfor %}
     </div>
-    <p class="updated-text">Last updated:<strong> May 9th, 2025.</strong></p>
+    <p class="updated-text">Last updated:<strong> May 11th, 2025.</strong></p>
     {% include '_navbar.html' | safe %}
     {{ render_footer() | safe }}
 </body>

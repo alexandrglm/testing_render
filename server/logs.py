@@ -1,4 +1,6 @@
-# modules/server_logger.py
+############################################################################
+# SERVER LOGS
+#############
 import os
 import socket
 from datetime import datetime
@@ -6,9 +8,8 @@ from flask import request
 from pymongo import MongoClient
 
 # Exclusions
-EX_EXTENSION = ['.md', '.markdown', '.png', '.jpg', '.jpeg', 
-                                  '.gif', '.ico', '.svg', '.webp', '.woff', 
-                                  '.woff2', '.ttf', '.eot']
+EX_EXTENSION = ['.png', '.jpg', '.jpeg', '.gif', '.ico', '.svg', '.webp', '.woff', '.woff2', '.ttf', '.eot']
+                            
 EX_MIME = []
 
 EX_PATH = []
@@ -17,7 +18,6 @@ EX_IP = os.getenv('SERVER_EX_IP', '')
 
 EX_HOST = os.getenv('SERVER_EX_HOST', '')
 
-EX_REASON = None
 
 # MongoDB
 MONGO_USER = os.getenv('MONGO_USER')
@@ -103,32 +103,32 @@ class ServerLogger:
         
         '''
 
-        ex_reasons = []
+        EX_REASONS = []
 
         if (path in self.EX_PATH):
              
-            ex_reasons.append(f'path exclusion ({path})')
+            EX_REASONS.append(f'path exclusion ({path})')
             
         elif any( path.endswith(ext) for ext in self.EX_EXTENSION):
             
-            ex_reasons.append(f'extension exclusion ({path})')
+            EX_REASONS.append(f'extension exclusion ({path})')
             
         elif any(accept_header.startswith(prefix) for prefix in self.EX_MIME):
 
-            ex_reasons.append(f'MIME type exclusion ({accept_header})')
+            EX_REASONS.append(f'MIME type exclusion ({accept_header})')
             
         elif real_ip in self.EX_IP:
             
-            ex_reasons.append(f'IP exclusion ({real_ip})')
+            EX_REASONS.append(f'IP exclusion ({real_ip})')
             
         elif self._host_sanitization(client_host):
 
-            ex_reasons.append(f'HOST exclusion ({client_host})')
+            EX_REASONS.append(f'HOST exclusion ({client_host})')
 
         
-        if ex_reasons: 
+        if EX_REASONS: 
 
-            print(f'\n[DEBUG VISIT] -> Excluded from logs: {real_ip}\nReasons: {", ".join(ex_reasons)}\n')
+            print(f'\n[DEBUG VISIT] -> Excluded from logs: {real_ip}\nReasons: {", ".join(EX_REASONS)}\n')
             return
 
 

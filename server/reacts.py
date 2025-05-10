@@ -22,7 +22,7 @@ def react_p14_build():
     
         except subprocess.CalledProcessError as e:
             
-            print(f"DEBUG (React Build) -> ERROR EXEC BUILD.SH: {e}")
+            print(f"DEBUG (React Build) -> ERROR EXEC BUILD.SH: {str(e)}")
     
     else:
     

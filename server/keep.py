@@ -14,6 +14,6 @@ def start_server_keep():
 
         except Exception as e:
 
-            print(f'DEBUG -> Error getting IP : {e}')
+            print(f'DEBUG -> Error getting IP : {str(e)}')
             
         time.sleep(20)
