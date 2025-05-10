@@ -5,7 +5,9 @@ from flask import Flask, send_file, request, abort
 import os
 
 
-BOT_KEYS = ['bot', 'spider', 'crawler', 'scraper', 'gpt', 'claude', 'google', 'bing', 'CCBot', 'CC']
+SERVER_BOT_KEYS = ['bot', 'spider', 'crawler', 'scraper', 'gpt', 'claude', 'google', 'bing', 'CCBot', 'CC']
+
+SERVER_BOT_ALLOWED = os.getenv('SERVER_BOT_ALLOWED', '')
 
 BOT_BOMB = 'static/server.map.xz'
 
@@ -15,7 +17,13 @@ def serving_bots():
     bot_user_agent = request.headers.get('User-Agent').lower()
     bot_ip = request.remote_addr
 
-    if any( keyword.lower() in bot_user_agent for keyword in BOT_KEYS ):
+    allowed_bots = [ allowed.strip() for allowed in SERVER_BOT_ALLOWED.split(',') if allowed.strip() ]
+
+    if any( allowed.lower() in bot_user_agent for allowed in allowed_bots):
+
+        return None
+    
+    if any( keyword.lower() in bot_user_agent for keyword in SERVER_BOT_KEYS ):
 
         print(f'\n[NUKEBOT!!!] -> New bot aimed: {bot_ip} - UserAgent: {bot_user_agent} ')
 
