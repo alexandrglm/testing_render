@@ -17,6 +17,8 @@ EX_IP = os.getenv('SERVER_EX_IP', '')
 
 EX_HOST = os.getenv('SERVER_EX_HOST', '')
 
+EX_REASON = None
+
 # MongoDB
 MONGO_USER = os.getenv('MONGO_USER')
 MONGO_PASS = os.getenv('MONGO_PASS')
@@ -95,15 +97,38 @@ class ServerLogger:
         - MIME Type / File Header -> 
         - IP -> Extracted from .env EX_IP string (non-quoted)
         - Host -> Sanitized by _host_sanitization
-        '''        
-        if (path in self.EX_PATH or
-            any(path.endswith(ext) for ext in self.EX_EXTENSION) or
-            any(accept_header.startswith(prefix) for prefix in self.EX_MIME) or
-            real_ip in self.EX_IP or
-            self._host_sanitization(client_host)):
+        
+        Logging debug process started:
+        - Why reason? -> then -> explained reason
+        
+        '''
 
+        ex_reasons = []
 
-            print(f'[VISIT] -> Excluded from logs: {real_ip}')
+        if (path in self.EX_PATH):
+             
+            ex_reasons.append(f'path exclusion ({path})')
+            
+        elif any( path.endswith(ext) for ext in self.EX_EXTENSION):
+            
+            ex_reasons.append(f'extension exclusion ({path})')
+            
+        elif any(accept_header.startswith(prefix) for prefix in self.EX_MIME):
+
+            ex_reasons.append(f'MIME type exclusion ({accept_header})')
+            
+        elif real_ip in self.EX_IP:
+            
+            ex_reasons.append(f'IP exclusion ({real_ip})')
+            
+        elif self._host_sanitization(client_host):
+
+            ex_reasons.append(f'HOST exclusion ({client_host})')
+
+        
+        if ex_reasons: 
+
+            print(f'\n[DEBUG VISIT] -> Excluded from logs: {real_ip}\nReasons: {', '.join(ex_reasons)}\n')
             return
 
 
@@ -127,9 +152,11 @@ class ServerLogger:
         try:
        
             self.MONGO_SERVER_DB[os.getenv('MONGO_SERVER_COLLECTION', 'clients')].insert_one(visit_data)
+            
             print(f'[VISIT] {datetime.utcnow()} - IP: {real_ip} - Host: {client_host} - Method: {request.method} - Path: {path}')
        
         except Exception as e:
+
             print(f'[VISIT ERROR] {datetime.utcnow()} - Error logging visit: {str(e)}')
 
 
