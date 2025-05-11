@@ -70,7 +70,7 @@ def img_profiler(client_id, is_temp=False):
                 with open(default_image_path, 'rb') as default_file:
                     file.write(default_file.read())
 
-    return f'/08/data/08/{image_name}'
+    return f'/project/08/data/08/{image_name}'
 
 #################
 # JSON part
@@ -270,7 +270,6 @@ class UserData:
         return f'{self._ident_id}'
 
     @property
-
     def img_profile(self):
 
         if self._client_id == "default":
@@ -283,8 +282,9 @@ class UserData:
 
 
             if os.path.exists(image_path):
-                return f'/08/data/08/{image_name}'
+                return f'/project/08/data/08/{image_name}'
             
             else:
 
                 return url_for('static', filename='08/default.jpg')
+                

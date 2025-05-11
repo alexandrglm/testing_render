@@ -1,4 +1,7 @@
 document.getElementById("convertButton").addEventListener("click", function() {
+    
+    const fetchPath = '/project/04'
+
     let colorInputText = document.getElementById("inputColourText").value.trim().toUpperCase();
 
     let color1, color2, color3, color4;
@@ -29,7 +32,7 @@ document.getElementById("convertButton").addEventListener("click", function() {
     console.log("Sending JSON:", colorJSON); 
 
     // Fecth, POST
-    fetch('/04/convert', {
+    fetch(`${fetchPath}/convert`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

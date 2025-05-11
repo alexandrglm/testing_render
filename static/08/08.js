@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //////////////////////////////////////////////////////////
     //  Variables
     //////////////////
+    const fetchPath = "/project/08"
     const createButton = document.getElementById("createButton");
     const userPicker = document.getElementById("userPicker");
     const saveButton = document.getElementById("saveButton");
@@ -22,10 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
     //  Fetch Profiles
     //////////////////
     function fetchProfiles() {
-        fetch("/08/profile")
+        fetch(`${fetchPath}/profile`)
             .then(response => response.json())
             .then(data => {
-                userPicker.innerHTML = '<option value="">Choose a User</option>';
+                userPicker.innerHTML = '<option value="">Choose an User</option>';
                 data.forEach(user => {
                     let option = document.createElement("option");
                     option.value = user.client_id;
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         dobField.value = "";
         idField.value = "";
         userPicker.value = "";
-        profileImage.src = "/08/data/08/default.jpeg";
+        profileImage.src = `${fetchPath}/data/08/default.jpeg`;
     }
 
     //////////////////////////////////////////////////////////
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("viewerFullName").querySelector("span").textContent = "";
         document.getElementById("viewerID").querySelector("span").textContent = "";
         document.getElementById("viewerDOB").querySelector("span").textContent = "";
-        profileImage.src = "/08/data/08/default.jpeg";
+        profileImage.src = `${fetchPath}/data/08/default.jpeg`;
         editButton.style.display = "none";
     }
 
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("viewerID").querySelector("span").textContent = user.ident_id || "N/A";
         document.getElementById("viewerDOB").querySelector("span").textContent = user.dob.replace("Born on ", "") || "N/A";
 
-        profileImage.src = user.img_profile || "/data/08/default.jpeg";
+        profileImage.src = user.img_profile || `${fetchPath}/data/08/default.jpeg`;
         editButton.style.display = "block";
 
         editButton.onclick = function () {
@@ -95,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch("/08/profile")
+        fetch(`${fetchPath}/profile`)
             .then(response => response.json())
             .then(data => {
                 let user = data.find(user => user.client_id == clientId);
@@ -113,12 +114,12 @@ document.addEventListener("DOMContentLoaded", function () {
         resetViewer();
         resetEditor();
 
-        fetch("/08/profile")
+        fetch(`${fetchPath}/profile`)
             .then(response => response.json())
             .then(data => {
                 let newId = data.length > 0 ? Math.max(...data.map(user => parseInt(user.client_id))) + 1 : 1;
                 clientIdField.value = newId;
-                fetch(`/08/profile/new/${newId}`)
+                fetch(`${fetchPath}/profile/new/${newId}`)
                     .then(response => response.json())
                     .then(data => {
                         profileImage.src = data.img_profile || "";
@@ -141,11 +142,11 @@ document.addEventListener("DOMContentLoaded", function () {
             JS_ID: idField.value
         };
     
-        let url = `/08/profile`;
+        let url = `${fetchPath}/profile`;
         let method = "POST";
     
         if (clientId) {
-            url = `/08/profile/${clientId}`;
+            url = `${fetchPath}/profile/${clientId}`;
             method = "PUT";
         }
     
@@ -160,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
             if (!clientId) {
                 let newClientId = data.client_id;
-                fetch(`/08/profile/rename_image/${newClientId}`, { method: "PUT" })
+                fetch(`${fetchPath}/profile/rename_image/${newClientId}`, { method: "PUT" })
                     .catch(error => console.error("Error renaming image:", error));
             }
     
@@ -175,17 +176,50 @@ document.addEventListener("DOMContentLoaded", function () {
     //  Delete Profile
     //////////////////
     deleteButton.addEventListener("click", function () {
-        let clientId = clientIdField.value;
+        
+        let clientId = clientIdField.value.trim();
 
-        fetch(`/08/profile/${clientId}`, { method: "DELETE" })
-        .then(response => response.json())
+
+        // if ( clientId === undefined || clientId === null || clientId === NaN ){
+            
+        //     console.log('[DEBUG] -> Client selector Broken (check 08.js' )
+        //     return
+        
+        // }
+
+        if ( !clientId || clientId === '0' || clientId === '' ) {
+            console.log('[DEBUG] -> Select a profile first')
+            return
+        
+        }
+
+        if (!confirm('Are you sure you want to delete this record???')) {
+
+            return
+        }
+
+
+
+        fetch(`${fetchPath}/profile/${clientId}`, { 
+            method: "DELETE", 
+            headers: {"Content-Type": "application/json"} 
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             alert("Profile successfully deleted.");
             fetchProfiles();
             resetEditor();
             resetViewer();
         })
-        .catch(error => console.error("Error:", error));
+        .catch(error => {
+            console.error("Error:", error);
+            alert(`Error deleting profile: ${error.message}`);
+        });
     });
 
     //////////////////////////////////////////////////////////

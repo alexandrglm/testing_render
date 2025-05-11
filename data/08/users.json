@@ -25,10 +25,26 @@
     },
     {
         "client_id": 4,
-        "first_name": "Kirr",
+        "first_name": "Kirr.sadasdads",
         "last_name": "Eagan",
         "dob": "1975-01-01",
         "ident_id": "74601582a",
+        "img_profile": "img_generated"
+    },
+    {
+        "client_id": 7,
+        "first_name": "Se\u00f1ora",
+        "last_name": "Rubia",
+        "dob": "1234-11-22",
+        "ident_id": "4554",
+        "img_profile": "img_generated"
+    },
+    {
+        "client_id": 8,
+        "first_name": "Lola",
+        "last_name": "Flores",
+        "dob": "0002-11-11",
+        "ident_id": "654654",
         "img_profile": "img_generated"
     }
 ]

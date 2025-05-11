@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    
+    
     const socket = io();
     const output = document.getElementById('output');
     const jsonResponse = document.getElementById('json-response');

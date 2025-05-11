@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 0 -  ACE's
     
+    const fetchPath = '/project/13'
+
     // editor ace
     const editor = ace.edit("markdown-editor");
     editor.setTheme("ace/theme/chrome");
@@ -341,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadTemplates() {
         try {
-            const response = await fetch('/13/filtersmappers/');
+            const response = await fetch(`${fetchPath}/filtersmappers/`);
             if (!response.ok) {
                 throw new Error('Failed to load templates');
             }
@@ -374,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!templateName) return;
 
         try {
-            const response = await fetch(`/13/mapper/${templateName}`);
+            const response = await fetch(`${fetchPath}/mapper/${templateName}`);
             if (!response.ok) {
                 throw new Error('Failed to load ruleset');
             }
@@ -406,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch('/13/save-template', {
+            const response = await fetch(`${fetchPath}/save-template`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -453,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             showStatus('Processing...', 'info');
             
-            const response = await fetch('/13/scrappy', {
+            const response = await fetch(`${fetchPath}/scrappy`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
