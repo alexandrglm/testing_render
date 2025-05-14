@@ -1,11 +1,12 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 11th
+# Date:         2025, May. 14th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
 from markupsafe import Markup
 import os
+import time
 import importlib
 import threading
 from project10 import commander
@@ -15,7 +16,9 @@ from server.mail import start_server_email
 from server.logs import start_server_logs
 from server.keep import start_server_keep
 from server.reacts import react_p14_build
-from server.nukebots import serving_bots
+from server.nukebots import start_nukebots
+from server.telegram import telelog
+from server.panel import start_admin
 
 load_dotenv()
 
@@ -49,29 +52,34 @@ allowed_root_files = [
     {'filename' : 'version.txt'}
 ]
 
+
 ############################################################################
-# MAIN ROUTES
+# 0. SERVER STARTUP
+#############
+
+
+#############
+# 0.0 Logs 
+start_admin(app)
+
+#############
+# 0.2 Logs 
+start_server_logs(app)
+
+#############
+# 0.1 NukeBots
+start_nukebots(app)
+
+#############
+# 0.4 Telegram
+telelog.init_app(app)
+
+#############
+# 0.3 SMTP
+start_server_email(app)
+            
 ############################################################################
-# 0. PRE-FILTERING
-@app.before_request
-
-def filtering_bots():
-    
-    bot_detected = serving_bots()
-
-    if bot_detected:
-
-        try:
-            
-            print('DEBUG [SERVER/Pre-Filtering] WORKING!!!s')
-            return bot_detected
-
-        except Exception as e:
-            
-            print(f'DEBUG [SERVER/Pre-Filtering] -> ERROR :  {str(e)}')
-            
-############################################################################
-# 1. MAIN INDEX HTML
+# 1. MAIN ROUTES
 @app.route('/')
 def home():
 
@@ -84,8 +92,9 @@ def home():
         print(f'DEBUG (Server/main route) -> ERROR / not rendering!!! : {str(e)}')
         return render_template('404/index_404.html')
 
+
 ############################################################################
-# 2. PROJECTS
+# 2. PROJECTS ROUTES
 for project in projects:
     
     project_id = project['id']
@@ -126,7 +135,7 @@ def render_project(project_id):
 
         print(f'DEBUG (Projects) Can\'t render {project_id}! :  {str(e)}')
         return render_template('404/index_404.html')
-
+    
 ############################################################################
 # 3. CSS.jinja ROUTES
 @app.route('/templates/<project_id>/<filename>.css')
@@ -153,7 +162,6 @@ def static_files(staticFilename):
 
         print(f'DEBUG (Server/Statics files) -> Static FILE or PATH error : {str(e)}')
         return render_template('404/index_404.html')
-
 
 ############################################################################
 # 5. STATIC PAGES
@@ -192,6 +200,8 @@ def render_statics(pathName):
     
         print(f'DEBUG (Static/Back) -> UNDEFINED ERROR ')
         return render_template('404/index_404.html')
+
+
 # ############################################################################
 # 6. ALLOWED STATIC FILES ON /
 @app.route('/<filename>')
@@ -224,7 +234,7 @@ def root_statics(filename):
     return render_template('404/index_404.html')
 
 ############################################################################
-# Cookies management
+# 7. COOKIES 
 @app.context_processor
 def cookies_notice():
 
@@ -233,40 +243,72 @@ def cookies_notice():
 
     return dict(render_footer = render_footer)
 
+
 ###########################################################################
-# SOCKETIO CONFIGS
+# 8. SOCKETIO/Flask - CORS CONFIGS
 SERVER_CORS = os.getenv('SERVER_CORS')
 
 socketio = SocketIO(
     app, cors_allowed_origins=[ origin.strip() for origin in SERVER_CORS.split(',') if origin.strip() ],
     monitor_clients=True, engineio_logger=True
 )
+
 ############################################################################
-# MODULES & PROJECT CALLBACKS
-#############
-# Server logger 
-start_server_logs(app)
-#############
-# CONTACT PAGE -> API, VALIDATIONS, SMTP
-start_server_email(app)
-#############
-# Project 10: WebShell (via Socketio)
-socketio.on_event('exec_commander', commander)
-#############
-# Project 12: (py)MongoShell (via its own socketio def)
-os.environ['GEVENT_SUPPORT'] = 'True'
-socketio_opers(socketio)
+# 9. REACT - PROJECT CALLBACKS
 #############
 # Project 14 (React)
 react_p14_build()
+#############
+# Project 12: (py)MongoShell (via its own socketio def)
+os.environ['GEVENT_SUPPORT'] = 'True'
+#############
+# Project 10: WebShell (via Socketio)
+socketio.on_event('exec_commander', commander)
+socketio_opers(socketio)
+
 
 ############################################################################
-# Flask init (Via SocketIo)
+# 10. Flask init + Last callbacks
 ################
 if __name__ == '__main__':
 
-    threadIP = threading.Thread(target=start_server_keep, daemon=True)
-    threadIP.start()
-    
-    socketio.run(app, host='0.0.0.0', port=8080, debug=True, use_reloader=False, allow_unsafe_werkzeug=True)
+    services = {
+        'keep': threading.Thread(target=start_server_keep, daemon=True),
+        'telegram': threading.Thread(target=telelog.start_polling, daemon=True),
+        'logs': threading.Thread(target=lambda: start_server_logs(app), daemon=True)
+    }
 
+
+    services['telegram'].start()
+    time.sleep(2) 
+
+    for name, service in services.items():
+        
+        if name != 'telegram':
+            service.start()
+
+    
+    try:
+        
+        print('DEBUG [All] -> Starting server ...')
+        
+        socketio.run(
+            app, 
+            host='0.0.0.0', 
+            port=8080, 
+            debug=True, 
+            use_reloader=False,
+            allow_unsafe_werkzeug=True
+        )
+
+    except KeyboardInterrupt:
+        
+        print('\nStopping modules safely ...\n')
+        telelog.stop()
+    
+    except Exception as e:
+
+        app.logger.error(f'Error fatal: {str(e)}')
+    
+    finally:
+        print('\nServer stopped!')

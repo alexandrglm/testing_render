@@ -11,6 +11,7 @@ from flask import jsonify, request
 load_dotenv()
 
 class ContactMail:
+    
     def __init__(self):
         
         self.smtp_config = {
