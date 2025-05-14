@@ -1,6 +1,6 @@
 ############################################################################
 # Project:      Web Services demo back-end
-# Date:         2025, May. 14th
+# Date:         2025, May. 15th
 ############################################################################
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_socketio import SocketIO
@@ -22,7 +22,9 @@ from server.panel import start_admin
 
 load_dotenv()
 
+
 app = Flask(__name__)
+
 
 projects = [
     {'id': '14', 'title': 'React Deploys (1): Bottega\'s VSCode Analytics', 'desc': 'Bottega\'s React 14 web app for student VSCode analytics, adapted to React 18+ and served via Flask.'},
@@ -44,7 +46,8 @@ projects = [
 
 static_pages = [
     {'pathName' : 'about', 'link' : 'about/about.html'},
-    {'pathName' : 'contact', 'link' : 'contact/contact.html'}
+    {'pathName' : 'contact', 'link' : 'contact/contact.html'},
+    {'pathName' : 'admin', 'link' : 'admin/panel.html'}
 ]
 
 allowed_root_files = [
@@ -311,4 +314,5 @@ if __name__ == '__main__':
         app.logger.error(f'Error fatal: {str(e)}')
     
     finally:
+
         print('\nServer stopped!')
