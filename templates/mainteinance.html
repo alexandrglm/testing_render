@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server under manteinance</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+       body {
+            margin: 0;
+            padding: 0;
+            font-family: "Merriweather", serif;
+            font-weight: 400;
+            font-style: normal;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            display: block;
+        }
+
+        .mainteinanceWrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .canvas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            pointer-events: none;
+        }
+
+        .canvas img {
+            width: 80vw;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
+        }
+
+        .manteinanceHeading {
+            text-align: center;
+            text-shadow:
+                0 0 20px rgba(0, 0, 0, 0.8),
+                0 0 25px rgba(0, 0, 0, 0.8),
+                0 0 35px rgba(0, 0, 0, 0.6), 
+                0 0 55px rgba(0, 0, 0, 0.4);
+            max-width: 90vw;
+            margin: -4em;
+        }
+
+        .manteinanceHeading h1,
+        .manteinanceHeading h2 {
+            color: whitesmoke;
+        }
+
+        .manteinanceHeading h1 {
+            font-size: clamp(2rem, 3vw, 3rem);
+            margin-bottom: 0.5em;
+        }
+
+        .manteinanceHeading h2 {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="webgl-canvas"></canvas>
+    <div class="mainteinanceWrapper"> 
+        
+        <div class="canvas">
+            <img src="{{ url_for('static', filename='logo_web.png') }}" alt="Logo web">
+        </div>
+        
+        <div class="manteinanceHeading"> 
+            <h1>Wooops ... Server is under manteinance</h1>
+            <h2>We are giving our server a super important makeover, it will be worth the wait! </h2>
+        </div>
+
+    </div>
+    <script>
+        // POSICIONES Y SHADER PARA PRIMITIVAS PLANAS!
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("webgl-canvas") });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        // document.body.appendChild(renderer.domElement);
+
+        const geometry = new THREE.PlaneGeometry(2, 2);
+
+        const vertexShader = `
+            void main() {
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            precision highp float;
+
+            uniform vec2 iResolution;
+            uniform float iTime;
+
+            float grid(vec2 uv, float battery) {
+                vec2 size = vec2(uv.y, uv.y * uv.y * 0.2) * 0.01;
+                uv += vec2(0.0, iTime * 10.0 * (battery + 0.05));
+                uv = abs(fract(uv) - 0.5);
+                vec2 lines = smoothstep(size, vec2(0.0), uv);
+                lines += smoothstep(size * 5.0, vec2(0.0), uv) * 0.4 * battery;
+                return clamp(lines.x + lines.y, 0.0, 3.0);
+            }
+
+            void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+                vec2 uv = (2.0 * fragCoord.xy - iResolution.xy) / iResolution.y;
+                float battery = 1.0;
+
+                float fog = smoothstep(0.1, -0.02, abs(uv.y + 0.2));
+                vec3 col = vec3(1, 0.1, 0.001);
+
+                if (uv.y < -0.2) {
+                    uv.y = 3.0 / (abs(uv.y + 0.2) + 0.05);
+                    uv.x *= uv.y * 0.5;
+
+                    uv += vec2(0.0, iTime * 10.0 * (battery + 0.05));
+
+                    float fila = floor(uv.y);
+                    float columna = floor(uv.x);
+
+                    vec3 colorTesela1 = vec3(0.0, 0.0, 0.5);
+                    vec3 colorTesela2 = vec3(0.5, 0.0, 0.5);
+
+                    float patron = mod(fila + columna, 2.0);
+                    col = (patron < 1.0) ? colorTesela1 : colorTesela2;
+
+                    float gridVal = grid(uv, battery);
+                    col = mix(col, vec3(0.5, 1., 0.22), gridVal);
+                } else {
+                    vec3 colorHorizonte = vec3(0.5, 1.0, 0.22);
+                    vec3 colorCielo = vec3(0.5, 0.0, 0.5);
+
+                    col = mix(colorHorizonte, colorCielo, smoothstep(-0.9, 1.0, uv.y));
+                }
+
+                col += fog * fog * fog;
+                col = mix(vec3(col.r, col.r, col.r) * 0.5, col, battery * 0.7);
+
+                fragColor = vec4(col, 1.0);
+            }
+
+            void main() {
+                mainImage(gl_FragColor, gl_FragCoord.xy);
+            }
+        `;
+
+        const material = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            uniforms: {
+                iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                iTime: { value: 0.0 }
+            }
+        });
+
+        const plane = new THREE.Mesh(geometry, material);
+        scene.add(plane);
+
+        camera.position.z = 1;
+
+        /*
+        Framebuffer para trabajar un movimiento con el puntero,
+        el frambuffer trabaja a una resoluciór superior a la proyección
+        */
+        const zoomFactor = 2.0;
+        const fbWidth = window.innerWidth * zoomFactor;
+        const fbHeight = window.innerHeight * zoomFactor;
+
+        const renderTarget = new THREE.WebGLRenderTarget(fbWidth, fbHeight);
+
+        // Escena que proyecta la parte q el framebuffer le muestra
+        const fbScene = new THREE.Scene();
+        const fbCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        fbCamera.position.z = 1;
+
+        const fbMaterial = new THREE.MeshBasicMaterial({ map: renderTarget.texture });
+        const fbPlane = new THREE.Mesh(geometry, fbMaterial);
+        fbScene.add(fbPlane);
+
+        fbPlane.scale.set(window.innerWidth / window.innerHeight, 1, 1);
+
+        // Movimiento del puntero = Movimiento de escena sobre frambuffer
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            fbPlane.material.map.offset.set(-mouseX * (zoomFactor - 1) / 2, -mouseY * (zoomFactor - 1) / 2);
+        });
+
+        function animate() {
+            
+            requestAnimationFrame(animate);
+
+            material.uniforms.iTime.value = performance.now() / 1000;
+
+            renderer.setRenderTarget(renderTarget);
+            renderer.render(scene, camera);
+
+            renderer.setRenderTarget(null);
+            renderer.render(fbScene, fbCamera);
+        }
+        animate();
+
+        window.addEventListener("resize", () => {
+
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            material.uniforms.iResolution.value.set(width, height);
+
+            renderTarget.setSize(width * zoomFactor, height * zoomFactor);
+
+            fbPlane.scale.set(width / height, 1, 1);
+        });
+    </script>
+</body>
+</html>
