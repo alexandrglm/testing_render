@@ -59,16 +59,12 @@
             width: 80vw;
             height: auto;
             display: block;
-            filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
+            filter: drop-shadow(1px 2px 6px rgba(0, 0, 0, 1));
         }
 
         .manteinanceHeading {
             text-align: center;
-            text-shadow:
-                0 0 20px rgba(0, 0, 0, 0.8),
-                0 0 25px rgba(0, 0, 0, 0.8),
-                0 0 35px rgba(0, 0, 0, 0.6), 
-                0 0 55px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 0 3px rgba(0, 0, 0, 1);
             max-width: 90vw;
             margin: -4em;
         }
@@ -76,18 +72,21 @@
         .manteinanceHeading h1,
         .manteinanceHeading h2 {
             color: whitesmoke;
+
         }
 
         .manteinanceHeading h1 {
-            font-size: clamp(2rem, 3vw, 3rem);
+            font-size: 3rem;
             margin-bottom: 0.5em;
+            min-width: 90%;
         }
 
         .manteinanceHeading h2 {
-            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-size: 1.5rem;
         }
 
     </style>
+
 </head>
 <body>
     <canvas id="webgl-canvas"></canvas>
@@ -98,13 +97,13 @@
         </div>
         
         <div class="manteinanceHeading"> 
-            <h1>Wooops ... Server is under manteinance</h1>
-            <h2>We are giving our server a super important makeover, it will be worth the wait! </h2>
+            <h1>Server is under mainteinance</h1>
+            <h2>It's being given a super important makeover, the wait will be worth it!</h2>
         </div>
-
     </div>
+
     <script>
-        // POSICIONES Y SHADER PARA PRIMITIVAS PLANAS!
+        // ESCENA BÁSICA PARA EL SHADER FULLSCREEN
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -182,29 +181,37 @@
             vertexShader,
             fragmentShader,
             uniforms: {
+                iTime: { value: 0 },
                 iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-                iTime: { value: 0.0 }
             }
         });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        camera.position.z = 1;
+
+        function animateSky(time) {
+            requestAnimationFrame(animateSky);
+            material.uniforms.iTime.value = time * 0.001;
+            renderer.render(scene, camera);
+        }
+
+        animateSky();
 
         const plane = new THREE.Mesh(geometry, material);
         scene.add(plane);
 
         camera.position.z = 1;
 
-        /*
-        Framebuffer para trabajar un movimiento con el puntero,
-        el frambuffer trabaja a una resoluciór superior a la proyección
-        */
-        const zoomFactor = 2.0;
+        const zoomFactor = 1.5;
         const fbWidth = window.innerWidth * zoomFactor;
         const fbHeight = window.innerHeight * zoomFactor;
 
         const renderTarget = new THREE.WebGLRenderTarget(fbWidth, fbHeight);
 
-        // Escena que proyecta la parte q el framebuffer le muestra
         const fbScene = new THREE.Scene();
-        const fbCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const fbCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2.0);
         fbCamera.position.z = 1;
 
         const fbMaterial = new THREE.MeshBasicMaterial({ map: renderTarget.texture });
@@ -213,19 +220,17 @@
 
         fbPlane.scale.set(window.innerWidth / window.innerHeight, 1, 1);
 
-        // Movimiento del puntero = Movimiento de escena sobre frambuffer
         let mouseX = 0;
         let mouseY = 0;
 
         window.addEventListener('mousemove', (event) => {
             mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            mouseY = -(event.clientY / window.innerHeight) * 1 + 1;
 
             fbPlane.material.map.offset.set(-mouseX * (zoomFactor - 1) / 2, -mouseY * (zoomFactor - 1) / 2);
         });
 
         function animate() {
-            
             requestAnimationFrame(animate);
 
             material.uniforms.iTime.value = performance.now() / 1000;
@@ -239,7 +244,6 @@
         animate();
 
         window.addEventListener("resize", () => {
-
             const width = window.innerWidth;
             const height = window.innerHeight;
             renderer.setSize(width, height);
@@ -248,9 +252,9 @@
             material.uniforms.iResolution.value.set(width, height);
 
             renderTarget.setSize(width * zoomFactor, height * zoomFactor);
-
             fbPlane.scale.set(width / height, 1, 1);
         });
     </script>
+
 </body>
 </html>
