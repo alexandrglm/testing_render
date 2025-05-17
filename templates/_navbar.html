@@ -9,11 +9,11 @@
         <i class="fa-solid fa-code"></i>
     </button>
     <div id="menu">
-        <a href="https://justlearn.ing">Home</a>
+        <a href="{{ url_for('home') }}">Home</a>
         <a href="#">Courses</a>
         <a href="{{ url_for('render_statics', pathName='about') }}">About</a>
         <a href="{{ url_for('render_statics', pathName='contact') }}">Contact</a>
-        <a href="#">Panel</a>
+        <a href="{{ url_for('render_statics', pathName='admin') }}">Panel</a>
     </div>
 </div>
 <style>

@@ -4,7 +4,7 @@
 from flask import send_file, request, abort
 import os
 import re
-from server.sensitive_paths import SERVER_POISONED_PATHS, sensitive_match
+from serverModules.sensitive_paths import SERVER_POISONED_PATHS, sensitive_match
 from dotenv import load_dotenv
 
 load_dotenv()

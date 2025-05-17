@@ -15,13 +15,22 @@ load_dotenv()
 
 ADMIN_SECRETS = os.getenv('ADMIN_SECRETS')
 ADMIN_HASH = os.getenv('ADMIN_HASH')
-ADMIN_SESSION_TIMEOUT = int(os.getenv('ADMIN_SESSION_TIMEOUT', '1800'))  # 30 min
+ADMIN_SESSION_TIMEOUT = int(os.getenv('ADMIN_SESSION_TIMEOUT', '1800'))
 
 ADMIN_SESSION = {
     'is_admin': False,
     'last_activity': None,
     'timeout': ADMIN_SESSION_TIMEOUT
 }
+
+SERVER_MODULES = {
+    'logs': {'enabled': True, 'start_func': lambda app: start_server_logs(app)},
+    'mail': {'enabled': True, 'start_func': lambda app: start_server_email(app)},
+    'nukebots': {'enabled': True, 'start_func': lambda app: start_nukebots(app)},
+    'telegram': {'enabled': True, 'start_func': lambda app: telelog.init_app(app)},
+    'keep': {'enabled': True, 'start_func': lambda app: threading.Thread(target=start_server_keep, daemon=True).start()}
+}
+
 
 def start_admin(app):
     def get_secure_template(template_name):
@@ -273,8 +282,33 @@ def start_admin(app):
         })
         return redirect(url_for('admin_login'))
 
+    
+    # MODULES SERVICE
+    @app.route('/admin/api/modules', methods=['GET', 'POST'])
+    @admin_required
+    def manage_modules():
+        if request.method == 'POST':
+            module_name = request.json.get('module')
+            action = request.json.get('action')  # 'enable' o 'disable'
+            
+            if module_name not in SERVER_MODULES:
+                return jsonify({'status': 'error', 'message': 'Module not found'}), 404
+            
+            SERVER_MODULES[module_name]['enabled'] = (action == 'enable')
+            return jsonify({'status': 'success'})
+        
+        else:  # GET
+            return jsonify({
+                'modules': [
+                    {'name': name, 'enabled': data['enabled']} 
+                    for name, data in SERVER_MODULES.items()
+                ]
+            })
+        
+    
+    
+    
     # Security Middleware
-    @app.before_request
     @app.before_request
     def admin_security_middleware():
         if request.path.startswith('/admin'):

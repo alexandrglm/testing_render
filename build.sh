@@ -5,11 +5,11 @@ FLASK_STATIC="static/14"
 FLASK_TEMPLATES="templates/14"
 
 echo "DEBUG (React) -> Compiling/Deploying ...."
-# echo "1. Cleaning previous NODE/NPM ...."
-# rm -rf node_modules package-lock.json
+echo "1. Cleaning previous NODE/NPM ...."
+rm -rf node_modules package-lock.json
 
-# echo "2. Installing npm dependencies ..."
-# npm install --no-fund --silent
+echo "2. Installing npm dependencies ..."
+npm install --no-fund --silent
 
 # echo "3. Cleaning and creating PATHS ..."
 mkdir -p "$FLASK_STATIC/assets"
@@ -35,8 +35,8 @@ npx sass "$REACT_SRC_DIR/src/style/main.scss" "$FLASK_STATIC/14.css" \
 cp "$REACT_SRC_DIR/static/index.html" "$FLASK_TEMPLATES/index_14.html"
 
 # echo "6. Copying assets, index and cleaning node_modules"
-# cp "$REACT_SRC_DIR/static/index.html" "$FLASK_TEMPLATES/index_14.html"
-# rm -rf node_modules package-lock.json
+cp "$REACT_SRC_DIR/static/index.html" "$FLASK_TEMPLATES/index_14.html"
+rm -rf node_modules package-lock.json
 
 echo "DEBUG (React) REACT TSX/SCSS COMPILED AND DEPLOYED! :-)"
 

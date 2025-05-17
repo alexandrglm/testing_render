@@ -25,8 +25,8 @@ def render_project12():
 ################################
 load_dotenv()
 
-MONGO_USER = os.getenv('MONGO_USER')
-MONGO_PASS = os.getenv('MONGO_PASS')
+MONGO_USER = os.getenv('MONGO_P12_USER')
+MONGO_PASS = os.getenv('MONGO_P12_PASS')
 MONGO_HOST_1 = os.getenv('MONGO_HOST_1')
 MONGO_HOST_2 = os.getenv('MONGO_HOST_2')
 MONGO_HOST_3 = os.getenv('MONGO_HOST_3')
