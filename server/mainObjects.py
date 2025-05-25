@@ -54,146 +54,234 @@ FOR BLOGS:
 
 """
 
-# TESTING DIFFERENT SCHEMAS
 projects = [
     {
-        'order': '404',
-        'type': 'project',
-        'id': '404',
-        'metadata': {
-            'title': 'Not Every Mistake is Truly a Mistake ',
-            'subtitle': '',
-            'desc': 'Sometimes, mistakes are masterpieces, unlike this error 404 page. ',
-            'snapshot': '', 
-            'date': '2025-03-01',
-            'author': 'admin',
-            'category': '404, designs'
-        },
-        'size': 'wide',
-        'hidden': True
+    "order": "14",
+    "type": "project",
+    "id": "14",
+    "metadata": {
+        "title": "React Deploys (1): Bottega's VSCode Analytics",
+        "subtitle": "My Fists React deploy",
+        "desc": "Bottega's React 14 web app for student VSCode analytics, adapted to React 18+ and served via Flask.",
+        "date": "2025-04-18",
+        "author": "",
+        "category": "react, metrics, TSX, SCSS"
+    },
+    "size": "wide",
+    "hidden": False
     },
     {
-        'order': '01',
-        'type': 'project',
-        'id': '01',
-        'metadata': {
-            'title': 'The Most Complex "Simple Hello World" site',
-            'subtitle': 'Hello World Subtitle',
-            'desc': 'No frills, no HTML fuss—just Python',
-            'date': '2025-03-02',
-            'author': 'admin',
-            'category': 'tag1, tag2'
-        },
-        'size': 'default',
-        'hidden': False
+    "order": "13",
+    "type": "project",
+    "id": "13",
+    "metadata": {
+        "title": "Advanced Web Scraper",
+        "subtitle": "Student tools",
+        "desc": "URL-to-Markdown concept tool with custom CSS remapping (Custom DIVs, Bootstrap, components). MongoDB used as persistent storage.",
+        "date": "2025-05-12",
+        "author": "",
+        "category": "webscraping, markdown, mongodb"
+    },
+    "size": "default",
+    "hidden": False
     },
     {
-        'order': '02',
-        'type': 'project',
-        'id': '02',
-        'metadata': {
-            'title': 'CSS Advanced Hello World',
-            'desc': 'A less simpler HelloWorld screen CSS made with parallax effect and floating bubbles, fully over-hardcoded for no reason.',
-            'date': '2025-03-05',
-        },
-        'size': 'wide',
-        'hidden': False
+    "order": "12",
+    "type": "project",
+    "id": "12",
+    "metadata": {
+        "title": "(py)MongoDB Atlas WebShell",
+        "subtitle": "PROJECT",
+        "desc": "A MongoDb Atlas webshell for database manipulation using PyMongo (sync) and SocketIO in async mode.",
+        "date": "2025-03-22",
+        "author": "",
+        "category": "mongodb, pymongo, webshell"
+    },
+    "size": "default",
+    "hidden": False
     },
     {
-        'order': '03',
-        'type': 'blog',
-        'metadata': {
-            'title': 'My first blog post here',
-            'subtitle': 'Blog',
-            'link': 'greetings',
-            'desc': 'Description wrapper for blog post test lorem ipsum bla bla bla',
-            'snapshot': 'greetings.png',
-            'date': '2025-04-25',
-            'author': 'Alexandr Gomez',
-            'category': 'greetings, definitions'
-        },
-        'size': 'default',
-        'hidden': False
+    "order": "11",
+    "type": "project",
+    "id": "11",
+    "metadata": {
+        "title": "3D / VR Showcase test",
+        "subtitle": "PROJECT",
+        "desc": "First approach to developing VR/Augmented Reality environments.",
+        "date": "2025-04-05",
+        "author": "",
+        "category": "vr, 3d, augmented-reality, openVR, openXR, THREE.js"
+    },
+    "size": "default",
+    "hidden": False
     },
     {
-        'order': '04',
-        'type': 'project',
-        'id': '03',
-        'metadata': {
-            'title': 'App Test 01, Logic performed via JS',
-            'subtitle': '',
-            'desc': 'App Test 01: AMSTRAD Color Tool converter using JavaScript.',
-            'date': '2025-03-17',
-            'author': '',
-            'category': 'projects'
-        },
-        'size': 'default',
-        'hidden': False
+    "order": "10",
+    "type": "project",
+    "id": "10",
+    "metadata": {
+        "title": "WebShell",
+        "subtitle": "PROJECT",
+        "desc": "Web-based interactive shell framework with real-time frontend-backend communication using Flask and Socket.IO",
+        "date": "2025-05-20",
+        "author": "",
+        "category": "webshell, flask, socketio"
+    },
+    "size": "default",
+    "hidden": False
     },
     {
-        'order': '05',
-        'type': 'project',
-        'id': '04',
-        'metadata': {
-            'title': 'App Test 02, but Logic performed at Back-End',
-            'subtitle': '',
-            'desc': 'App Test 02: AMSTRAD Color Tool converter using Python. Zero Front-end drama.',
-            'date': '2025-04-01',
-            'category': ''
-        },
-        'size': 'default',
-        'hidden': False
+    "order": "09",
+    "type": "project",
+    "id": "09",
+    "metadata": {
+        "title": "MarkDown Web Server",
+        "subtitle": "Student Tools",
+        "desc": "Parsing Markdown into HTML. A basic framework with auto-generated indexes for a documentation showroom.",
+        "date": "2025-03-15",
+        "author": "",
+        "category": "markdown, webserver, documentation"
+    },
+    "size": "default",
+    "hidden": False
     },
     {
-        'order': '06',
-        'type': 'project',
-        'id': '05',
-        'metadata': {
-            'title': 'InspectorView Demo',
-            'subtitle': '',
-            'desc': 'App Test 01: AMSTRAD Color Tool converter using JavaScript.',
-            'author': 'admin',
-        },
-        'size': 'default',
-        'hidden': False
+    "order": "08",
+    "type": "project",
+    "id": "08",
+    "metadata": {
+        "title": "Simple JSON DataBase Handler",
+        "subtitle": "PROJECT",
+        "desc": "An excuse to learn about dunders, @property decorators, Rest API GET/POST/PUT/PATCH/DETELE methods, and so on, and so forth.",
+        "date": "2025-04-30",
+        "author": "",
+        "category": "json, restapi, python, json, NoSQL"
+    },
+    "size": "default",
+    "hidden": False
     },
     {
-        'order': '07',
-        'type': 'blog',
-        'metadata': {
-            'title': 'My 2nd blog post here',
-            'subtitle': 'Blog',
-            'link': 'more-greetings',
-            'desc': 'Description wrapper for blog post test lorem ipsum bla bla bla',
-            'snapshot': 'greetings.png',
-            'date': '2025-05-25',
-            'category': 'greetings, definitions'
-        },
-        'size': 'wide',
-        'hidden': False
+    "order": "07",
+    "type": "project",
+    "id": "07",
+    "metadata": {
+        "title": "(Where) Is-ISS?",
+        "subtitle": "PROJECT",
+        "desc": "Yet another ISS live tracking tool using \"requests\" and JSON, but simplest.",
+        "date": "2025-05-08",
+        "author": "",
+        "category": "API Rest, tracking, ISS"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "06",
+    "type": "project",
+    "id": "06",
+    "metadata": {
+        "title": "Naiz Headlines, Now",
+        "subtitle": "PROJECT",
+        "desc": "Scraping headlines like if I were a junior devel. Best news and headlines scraping tool using Py. \"requests\" from naiz.eus.",
+        "date": "2025-03-28",
+        "author": "",
+        "category": "scraping, news, headlines"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "05",
+    "type": "project",
+    "id": "05",
+    "metadata": {
+        "title": "InspectorView Demo",
+        "subtitle": "PROJECT",
+        "desc": "Why is this div not centered? Simple concept for a web CSS inspector tool.",
+        "date": "2025-04-12",
+        "author": "",
+        "category": "css, inspector, debug, devtools"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "04",
+    "type": "project",
+    "id": "04",
+    "metadata": {
+        "title": "App Test 02, but Logic performed at Back-End",
+        "subtitle": "App Testing ",
+        "desc": "AMSTRAD Colour Tool converter,but using Python. Zero Front-end drama.",
+        "date": "2025-05-15",
+        "author": "",
+        "category": "backend, python, color-converter"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "03",
+    "type": "project",
+    "id": "03",
+    "metadata": {
+        "title": "App Test 01, Logic performed via JS",
+        "subtitle": "App Testing",
+        "desc": "AMSTRAD Colour Tool converter, JS logic.",
+        "date": "2025-03-10",
+        "author": "",
+        "category": "javascript, frontend, color-converter"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "02",
+    "type": "project",
+    "id": "02",
+    "metadata": {
+        "title": "CSS Advanced Hello World",
+        "subtitle": "PROJECT",
+        "desc": "A less simpler HelloWorld screen CSS made with parallax effect and floating bubbles, fully over-hardcoded for no reason.",
+        "date": "2025-04-25",
+        "author": "",
+        "category": "CSS, helloworld, frontend, CSS animation"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "01",
+    "type": "project",
+    "id": "01",
+    "metadata": {
+        "title": "The Most Complex \"Simple Hello World\" site",
+        "subtitle": "Hello World!",
+        "desc": "No frills, no HTML fuss—just Python.",
+        "date": "2025-05-05",
+        "author": "",
+        "category": "python, backend, Flask, helloworld"
+    },
+    "size": "default",
+    "hidden": False
+    },
+    {
+    "order": "404",
+    "type": "project",
+    "id": "404",
+    "metadata": {
+        "title": "Not Every Mistake is Truly a Mistake",
+        "subtitle": "PROJECT",
+        "desc": "Sometimes, mistakes are masterpieces, unlike this error 404 page.",
+        "date": "2025-03-20",
+        "author": "",
+        "category": "error, 404, page"
+    },
+    "size": "default",
+    "hidden": True
     }
 ]
 
-
-
-
-# projects = [
-#     {'id': '14', 'title': 'React Deploys (1): Bottega\'s VSCode Analytics', 'desc': 'Bottega\'s React 14 web app for student VSCode analytics, adapted to React 18+ and served via Flask.'},
-#     {'id': '13', 'title': 'Studying Tools 2: Advanced Web Scraper       ', 'desc': 'URL-to-Markdown concept tool with custom CSS remapping (Custom DIVs, Bootstrap, components). MongoDB used as persistent storage.'},
-#     {'id': '12', 'title': '(py)MongoDB Atlas WebShell                   ', 'desc': 'A MongoDb Atlas webshell for database manipulation using PyMongo (sync) and SocketIO in async mode.'},
-#     {'id': '11', 'title': '3D / VR Showcase test                        ', 'desc': 'First approach to developing VR/Augmented Reality environments.'},
-#     {'id': '10', 'title': 'WebShell                                     ', 'desc': 'Web-based interactive shell framework with real-time frontend-backend communication using Flask and Socket.IO'},
-#     {'id': '09', 'title': 'Studying Tools 1: MarkDown Web Server        ', 'desc': 'Parsing Markdown into HTML. A basic framework with auto-generated indexes for a documentation showroom.'},
-#     {'id': '08', 'title': 'Simple JSON DataBase Handler                 ', 'desc': 'An excuse to learn about dunders, @property decorators, Rest API GET/POST/PUT/PATCH/DETELE methods, and so on, and so forth.'},
-#     {'id': '07', 'title': '(Where) Is-ISS?                              ', 'desc': 'Yet another ISS live tracking tool using "requests" and JSON, but simplest.'},
-#     {'id': '06', 'title': 'Naiz Headlines, Now                          ', 'desc': 'Scraping headlines like if I were a junior devel. Best news and headlines scraping tool using Py. "requests" from naiz.eus.'},
-#     {'id': '05', 'title': 'InspectorView Demo                           ', 'desc': 'Why is this div not centered? Simple concept for a web CSS inspector tool.'},
-#     {'id': '04', 'title': 'App Test 02, but Logic performed at Back-End ', 'desc': 'App Test 02: AMSTRAD Color Tool converter using Python. Zero Front-end drama.'},
-#     {'id': '03', 'title': 'App Test 01, Logic performed via JS          ', 'desc': 'App Test 01: AMSTRAD Color Tool converter using JavaScript.'},
-#     {'id': '02', 'title': 'CSS Advanced Hello World                     ', 'desc': 'A less simpler HelloWorld screen CSS made with parallax effect and floating bubbles, fully over-hardcoded for no reason.'},
-#     {'id': '01', 'title': 'The Most Complex "Simple Hello World" site   ', 'desc': 'No frills, no HTML fuss—just Python.'},
-#     {'id': '404', 'title': 'Not Every Mistake is Truly a Mistake        ', 'desc': 'Sometimes, mistakes are masterpieces, unlike this error 404 page. '}
-# ]
 
 static_pages = [
     {'pathName' : 'about', 'link' : 'about/about.html'},
@@ -205,4 +293,3 @@ allowed_root_files = [
     {'filename' : 'robots.txt'},
     {'filename' : 'version.txt'}
 ]
-
