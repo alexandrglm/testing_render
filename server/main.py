@@ -23,6 +23,9 @@ from markupsafe import Markup
         - Add main_blog_funcs (routes for self 'snapshots'). Might be exported to a new mainBlog.py logic snippet.
         -
 """
+
+reversed_orders = True
+
 def main_server(app):
     @app.route('/')
     def home():
@@ -41,7 +44,7 @@ def main_server(app):
 
         not_hidden = [p for p in projects if not p.get('hidden', False)]
         
-        not_hidden.sort(key=lambda x: int(x.get('order', '999')))
+        not_hidden.sort(key=lambda x: int(x.get('order', '999')), reverse= reversed_order)
         
         return not_hidden
 
