@@ -1,4 +1,4 @@
-<!-- (stable-server branch in progress) -->
+<!-- (stable-server branch) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,20 +28,20 @@
 
     <div class="cards-wrapper"><!--- Replacing old .container-->
         
-        <!-- STATIC CARDBOADS, NO JINJA, SEPARATED FROM combindes-->
+        <!-- STATIC CARDBOADS, NO JINJA, SEPARATED FROM combindes
         <div class="static-alone card card-wide card-static">
             <div class="metadata">
                 <span class="category">FIRST CARD OUTLINED</span>
                 <h1 class="title">I am an outter-static cardboard</h1>
                 <p class="desc">With its own container bla bla bla lorem ipsum bla bla bla.</p>
             </div>
-        </div>
+        </div> -->
         
         <!-- COMBINED-Jinja CARDBOARDS WRAPPER-->
-        <div class="combineds card card-wide card-static">
+        <div class="combineds">
 
             <!-- STATIC, COMBINED, NO JINJA -->
-            <div class="static-combined card card-wide card-static">
+            <div class="static-combined card card-wide card-accent-side">
                 <div class="metadata">
                     <span class="category">Included Static</span>
                     <h1 class="title">I am a COMBINED-STATIC card</h1>
@@ -66,7 +66,7 @@
                     Author:
                     Category:
                       -->
-                    <a href="/project/{{ item.id }}/" class="card card-{{ item.size|default('small') }} card-project">
+                    <a href="/project/{{ item.id }}/" class="card card-{{ item.size|default('default') }} card-project">
                         {% if item.metadata.snapshot %}
                             <img src="{{ url_for('static', filename=item.metadata.snapshot) }}" alt="Project Image">
                         {% else %}
@@ -119,7 +119,7 @@
                     {% set year = date_parts[0] %}
                     {% set month = date_parts[1] %}
                     
-                    <a href="/blog/{{ year }}/{{ month }}/{{ item.metadata.link }}/" class="card card-{{ item.size|default('small') }} card-blog">
+                    <a href="/blog/{{ year }}/{{ month }}/{{ item.metadata.link }}/" class="card card-{{ item.size|default('default') }} card-blog">
                         {% if item.metadata.snapshot %}
                             <img src="{{ url_for('static', filename='blog/' + year + '/' + month + '/' + item.metadata.link + '/' + item.metadata.snapshot) }}" alt="Blog Image">
                         {% else %}
@@ -153,7 +153,7 @@
                     <!-- pending -->
                 {% endif %}
             {% endfor %}
-            
+
             <!-- STATIC CAARDS at ENDING or for footer -->
             <div class="static-combined card card-wide card-static">
                 <div class="metadata" class.hidden="false">
@@ -170,6 +170,9 @@
     <p class="updated-text">Last updated:<strong> May 17th, 2025.</strong></p>
     {% include '_navbar.html' | safe %}
 
+    <footer>
+        <a href="https://github.com/alexandrglm" target="_blank"><i class="fa-brands fa-github"></i>@alexandrglm</a>
+    </footer>
 </body>
-    {{ render_footer() | safe }}
+  {{ render_footer() | safe }}
 </html>
