@@ -44,7 +44,7 @@ def main_server(app):
 
         not_hidden = [p for p in projects if not p.get('hidden', False)]
         
-        not_hidden.sort(key=lambda x: int(x.get('order', '999')), reverse= reversed_order)
+        not_hidden.sort(key=lambda x: int(x.get('order', '999')), reverse= reversed_orders)
         
         return not_hidden
 
