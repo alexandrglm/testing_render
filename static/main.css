@@ -1,47 +1,57 @@
-@media screen and (max-width: 768px) {
-    .site-title > .logo {
-        height: 50px;
-    }
+:root {
+    /* ###### CARDS ###### */
+    --card-min-width: 280px;
+    --card-padding: 20px;
+    --card-gap: 20px;
+    --card-border-radius: 12px;
+    --card-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 8px 16px rgba(0, 0, 0, 0.1), 0px 12px 24px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0px 8px 20px rgba(82, 82, 82, 0.897);
+    --card-border: 1px solid #e0e0e0;
+    --card-hover-transform: translateY(-10px) scale(1.02);
+    --img-hover-transform: translateY(-5px) scale(1.05);
+    
+    /* ###### COLOURS, ACCEENTS ###### */
+    --bg-color: #ffffff;
+    --card-bg: #f9f9f9;
+    --card-bg-blog: #fff5f5;
+    --card-bg-static: #f0f8ff;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --text-muted: #999;
+    --border-color: #e0e0e0;
+    --border-hover: rgba(0, 0, 0, 0.61);
+    --accent-color: #ff6961;
+    --blog-accent: #ff4757;
+    --static-accent: #2196f3;
+    
+    /* ###### NAV ###### */
+    --nav-bg: #1a1a1a8d;
+    --nav-height: 80px;
+    --nav-border: #2f2f2f;
+    --nav-text: rgba(245, 245, 245, 0.858);
+    --nav-glow: 0 0 20px rgba(255, 105, 180, 0.8),
+                0 0 25px rgba(0, 191, 255, 0.8),
+                0 0 35px rgba(255, 255, 0, 0.6),
+                0 0 55px rgba(0, 255, 0, 0.4);
 }
 
-@media screen and (max-width: 480px) {
-    .site-title > .logo {
-        height: 40px;
-    }
-    
-    .container {
-        padding: 20px 10px;
-        gap: 15px;
-    }
-    
-    .item {
-        width: 150px;
-        padding: 15px;
-    }
-    
-    .metadata .title {
-        font-size: 1.1em;
-    }
-    
-    .metadata .desc {
-        font-size: 0.8em;
-    }
-}
 
-/* Commons */
+
+/* ###### MAIN ###### */
 body {
     font-family: "Lato", sans-serif;
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
     background-size: cover;
     background-repeat: repeat;
-    color: #000000;
+    color: var(--text-primary);
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 
 header {
     width: 100%;
@@ -65,16 +75,8 @@ header p {
     margin-top: -10px;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px 20px;
-}
 
-
-/* NavBar shitties */
+/* ###### NAVBAR specific ###### */
 nav {
     display: flex;
     align-items: center;
@@ -136,6 +138,7 @@ nav {
         rgba(255, 255, 0, 0.1),
         rgba(0, 255, 0, 0.1)
     );
+
     transform: translate(-50%, -50%);
     z-index: -1;
     border-radius: 50%;
@@ -143,32 +146,111 @@ nav {
 }
 
 
-/* title cards*/
-.item {
+/* ###### BODY GRID ###### */
+.cards-wrapper,
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
+    background: none;
+    gap: var(--card-gap);
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 1400px;
+    box-sizing: border-box;
+}
+
+.combineds{}
+
+
+/* ###### CARD DEFAULT BASE ###### */
+.card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    padding: 20px;
-    width: 240px;
+    /* background-color: var(--card-bg);*/
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
     text-align: center;
-    box-shadow: 
-        0px 4px 8px rgba(0, 0, 0, 0.1),
-        0px 8px 16px rgba(0, 0, 0, 0.1), 
-        0px 12px 24px rgba(0, 0, 0, 0.1); 
+    box-shadow: var(--card-shadow);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     text-decoration: none;
-    border: 1px solid #e0e0e0;
+    border: var(--card-border);
     overflow: hidden;
     position: relative;
+    color: inherit;
 }
 
-.item:hover {
-    transform: translateY(-10px) scale(1.02);
+.card:hover {
+    transform: var(--card-hover-transform);
 }
 
-.item img {
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--card-border-radius);
+    border: 3px dotted var(--border-hover);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    box-shadow: 10px 10px 5px rgb(100, 75, 75);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+
+
+/* ###### CARD SIZES ###### */
+.card-default {
+
+}
+
+.card-wide {
+    grid-column: span 2;
+}
+
+.card-jumbo {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.card-banner {}
+
+.card-mini {}
+
+
+
+
+
+/* ###### CARD TYPES ###### */
+.static-alone {
+    background-color: var(--card-bg);   
+}
+
+.static-combined {
+    background-color: var(--card-bg);   
+}
+
+.card-project {
+    background-color: var(--card-bg);
+}
+
+.card-blog {
+    background-color: var(--card-bg-blog); 
+    border-left: 4px solid var(--blog-accent);
+}
+
+.card-accent-side {
+    background-color: var(--card-bg-static); 
+    border-left: 4px solid var(--static-accent);
+}
+
+/* ###### CARD CONTENT ###### */
+.card img {
     width: 100%;
     height: auto;
     border-radius: 5px;
@@ -177,41 +259,25 @@ nav {
     transform: translateY(0);
 }
 
-.item:hover img {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0px 8px 20px rgba(82, 82, 82, 0.897);
+.card:hover img {
+    transform: var(--img-hover-transform);
+    box-shadow: var(--card-hover-shadow);
     filter: brightness(1.2);
 }
 
-.item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 12px;
-    border: 3px dotted rgba(0, 0, 0, 0.61);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    box-shadow: 10px 10px  5px rgb(100, 75, 75);
-}
-
-.item:hover::before {
-    opacity: 1;
-}
 .metadata {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 100px;
+    width: 100%;
 }
 
 .metadata .title {
     font-family: "Merriweather", serif;
     font-size: 1.3em;
     font-weight: 700;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 8px;
     flex-shrink: 0;
 }
@@ -219,41 +285,135 @@ nav {
 .metadata .desc {
     margin-top: 20px;
     font-size: 0.9em;
-    color: #666666;
+    color: var(--text-secondary);
     line-height: 1.4;
     display: flex;
     flex-grow: 1;
-    align-items:flex-end;
+    align-items: flex-end;
     justify-content: center;
-
-}
-/* pendiente, para botones en totlecards */
-.buttonGroup {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
 }
 
-.button {
-    margin: 0 8px;
-    font-size: 1.4em;
-    transition: color 0.2s ease-in-out;
+.metadata .date {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-style: italic;
 }
 
-.button a {
-    color: #000000;
-    text-decoration: none;
+.metadata .category {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
-.button:hover a {
-    color: #555555;
+.card-blog .category {
+    background: var(--blog-accent);
+}
+
+.card-static .category {
+    background: var(--static-accent);
 }
 
 
-/* footer no Jinja */
+
+/* ###### FOOTER (not COOKIES) ###### */
 .updated-text {
     text-align: center;
     color: #aaa;
     font-size: 0.9rem;
     margin-top: 5px;
+}
+
+footer {
+    background-color: #121;
+    color: greenyellow;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-family: "Merriweather", serif;
+    font-size: 1lh;
+
+}
+
+footer a {
+    color: #f5f5dc;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-weight: 500;
+    margin:  0 1lh 0 0;
+}
+
+footer a:hover {
+    color: coral;
+}
+
+footer .fa-github {
+    margin: 0 0.1lh 0 20px;
+    font-size: 1rem;
+}
+
+
+
+/* ###### MEDIA QUERIES ###### */
+@media screen and (max-width: 768px) {
+    :root {
+        --card-min-width: 250px;
+        --card-gap: 15px;
+        --card-padding: 15px;
+    }
+    
+    .site-title > .logo {
+        height: 50px;
+    }
+
+    .card-wide,
+    .card-jumbo,
+    .card-banner,
+    .card-mini {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+
+    :root {
+        --card-min-width: 200px;
+    }
+    
+    .site-title > .logo {
+        height: 40px;
+    }
+    
+    
+    .cards-wrapper {
+        padding: 20px 10px;
+    }
+    
+    .metadata .title {
+        font-size: 1.1em;
+    }
+    
+    .metadata .desc {
+        font-size: 0.8em;
+    }
+
+    .card-wide,
+    .card-jumbo,
+    .card-banner,
+    .card-mini {
+        grid-column: span 1/2;
+        grid-row: span 1/2;
+    }
+
 }
