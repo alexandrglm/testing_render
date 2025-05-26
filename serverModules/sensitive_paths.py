@@ -40,7 +40,6 @@ SERVER_POISONED_PATHS = [
     '/backend/.env',
     '/backup*',
     '/backup*/',
-    '/blog/*',
     '/bundle.js',
     '/CHANGELOG.txt',
     '/cloud-config.yml',

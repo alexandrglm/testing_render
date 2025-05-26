@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modular Grid System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="site-title">
+                <div class="logo">
+                    <img src="logo_web.png" alt="Just Learning!">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="cards-wrapper">
+        <!-- DEMO: Static Content -->
+        <div class="card card-wide card-static">
+            <div class="metadata">
+                <span class="category">Featured</span>
+                <h1 class="title">Welcome to My Portfolio</h1>
+                <p class="desc">This is a static featured card that spans two columns. Perfect for highlighting important content or announcements.</p>
+            </div>
+        </div>
+
+        <!-- DEMO: Mixed Content (Projects + Blog Posts) -->
+        <!-- Project Example -->
+        <a href="/project/14/" class="card card-small card-project">
+            <img src="project14.png" alt="Project Image">
+            <div class="metadata">
+                <span class="category">Project</span>
+                <h1 class="title">14. Amazing Web App</h1>
+                <p class="desc">A revolutionary web application built with modern technologies</p>
+                <div class="date">2025-05-20</div>
+            </div>
+        </a>
+
+        <!-- Blog Post Example -->
+        <a href="/blog/intro-to-grid/" class="card card-small card-blog">
+            <img src="blog-grid.png" alt="Blog Image">
+            <div class="metadata">
+                <span class="category">Blog</span>
+                <h1 class="title">Introduction to CSS Grid</h1>
+                <p class="desc">Learn the fundamentals of CSS Grid layout and create responsive designs</p>
+                <div class="date">2025-05-18</div>
+            </div>
+        </a>
+
+        <!-- Wide Project Example -->
+        <a href="/project/15/" class="card card-wide card-project">
+            <img src="project15.png" alt="Project Image">
+            <div class="metadata">
+                <span class="category">Featured Project</span>
+                <h1 class="title">15. Dashboard Analytics</h1>
+                <p class="desc">A comprehensive analytics dashboard with real-time data visualization and advanced reporting capabilities</p>
+                <div class="date">2025-05-22</div>
+            </div>
+        </a>
+
+        <!-- More examples... -->
+        <a href="/project/16/" class="card card-small card-project">
+            <img src="project16.png" alt="Project Image">
+            <div class="metadata">
+                <span class="category">Project</span>
+                <h1 class="title">16. Mobile App</h1>
+                <p class="desc">Cross-platform mobile application</p>
+                <div class="date">2025-05-15</div>
+            </div>
+        </a>
+
+        <a href="/blog/responsive-design/" class="card card-small card-blog">
+            <img src="blog-responsive.png" alt="Blog Image">
+            <div class="metadata">
+                <span class="category">Tutorial</span>
+                <h1 class="title">Responsive Design Tips</h1>
+                <p class="desc">Best practices for creating mobile-first responsive websites</p>
+                <div class="date">2025-05-10</div>
+            </div>
+        </a>
+    </div>
+
+    <p class="updated-text">Last updated: <strong>May 24th, 2025.</strong></p>
+
+    {% include '_navbar.html' | safe %}
+    {{ render_footer() | safe }}
+</body>
+</html>

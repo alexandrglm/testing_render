@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cards Responsivo</title>
+    <style>
+        :root {
+            /* ###### CARDS ###### */
+            --card-min-width: 280px;
+            --card-padding: 20px;
+            --card-gap: 20px;
+            --card-border-radius: 12px;
+            --card-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 8px 16px rgba(0, 0, 0, 0.1), 0px 12px 24px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0px 8px 20px rgba(82, 82, 82, 0.897);
+            --card-border: 1px solid #e0e0e0;
+            --card-hover-transform: translateY(-10px) scale(1.02);
+            --img-hover-transform: translateY(-5px) scale(1.05);
+
+            /* ###### COLOURS, ACCEENTS ###### */
+            --bg-color: #ffffff;
+            --card-bg: #f9f9f9;
+            --card-bg-blog: #fff5f5;
+            --card-bg-static: #f0f8ff;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --border-color: #e0e0e0;
+            --border-hover: rgba(0, 0, 0, 0.61);
+            --accent-color: #ff6961;
+            --blog-accent: #ff4757;
+            --static-accent: #2196f3;
+
+            /* ###### NAV ###### */
+            --nav-bg: #1a1a1a8d;
+            --nav-height: 80px;
+            --nav-border: #2f2f2f;
+            --nav-text: rgba(245, 245, 245, 0.858);
+            --nav-glow: 0 0 20px rgba(255, 105, 180, 0.8),
+                        0 0 25px rgba(0, 191, 255, 0.8),
+                        0 0 35px rgba(255, 255, 0, 0.6),
+                        0 0 55px rgba(0, 255, 0, 0.4);
+        }
+
+        /* ###### MAIN ###### */
+        body {
+            font-family: "Lato", sans-serif;
+            background-color: var(--bg-color);
+            background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
+            background-size: cover;
+            background-repeat: repeat;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-family: "Lato", sans-serif;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 2em;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-top: -10px;
+        }
+
+        /* ###### NAVBAR specific ###### */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a8d;
+            padding: 10px 25px;
+            height: 80px;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            box-sizing: border-box;
+            border-bottom: 2px solid #2f2f2f;
+        }
+
+        .site-title {
+            font-family: "Merriweather", serif;
+            font-size: clamp(1rem, 1vw, 1rem);
+            font-weight: 900;
+            color: rgba(245, 245, 245, 0.858);
+            margin-left: 15px;
+            flex-grow: 1;
+            text-align: center;
+            position: relative;
+            text-shadow:
+                0 0 20px rgba(255, 105, 180, 0.8),
+                0 0 25px rgba(0, 191, 255, 0.8),
+                0 0 35px rgba(255, 255, 0, 0.6),
+                0 0 55px rgba(0, 255, 0, 0.4);
+        }
+
+        .site-title > .logo {
+            display: block;
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .site-title > .logo img {
+            height: 100%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+        }
+
+        .site-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 105, 180, 0.993),
+                rgba(0, 191, 255, 0.912),
+                rgba(255, 255, 0, 0.1),
+                rgba(0, 255, 0, 0.1)
+            );
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+
+        /* ###### CARDS GRID SYSTEM ###### */
+        .main-container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            width: 100%;
+        }
+
+        .cards-wrapper {
+            width: 100%;
+        }
+
+        .combineds {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
+            gap: var(--card-gap);
+            width: 100%;
+            grid-auto-rows: minmax(350px, auto);
+        }
+
+        /* ###### CARD BASE STYLES ###### */
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--card-bg);
+            border-radius: var(--card-border-radius);
+            padding: var(--card-padding);
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-decoration: none;
+            border: var(--card-border);
+            overflow: hidden;
+            position: relative;
+            color: inherit;
+            min-height: 350px;
+        }
+
+        .card:hover {
+            transform: var(--card-hover-transform);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--card-border-radius);
+            border: 3px dotted var(--border-hover);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            box-shadow: 10px 10px 5px rgb(100, 75, 75);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* ###### CARD SIZES ###### */
+
+        /* Default: 1 columna - formato vertical */
+        .card-default {
+            grid-column: span 1;
+            aspect-ratio: 3/4;
+        }
+
+        /* Wide: 2 columnas - dos default juntas horizontalmente */
+        .card-wide {
+            grid-column: span 2;
+            aspect-ratio: 3/2;
+        }
+
+        /* Jumbo: 2x2 - cuadrado enorme */
+        .card-jumbo {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: 1/1;
+        }
+
+        /* Banner: ocupa toda la fila disponible */
+        .card-banner {
+            grid-column: 1 / -1;
+            aspect-ratio: 4/1;
+            min-height: 200px;
+        }
+
+        /* Mini: mitad de una default horizontalmente */
+        .card-mini {
+            grid-column: span 1;
+            aspect-ratio: 3/2;
+            min-height: 200px;
+        }
+
+        /* Ajuste especial para cuando solo cabe 1 columna */
+        @media (max-width: calc(var(--card-min-width) * 2 + var(--card-gap) * 3)) {
+            .card-wide,
+            .card-jumbo {
+                grid-column: span 1;
+                aspect-ratio: 3/4;
+            }
+
+            .card-jumbo {
+                grid-row: span 1;
+            }
+        }
+
+        /* Ajustes para asegurar que el grid detecte correctamente las columnas disponibles */
+        @supports (grid-template-columns: subgrid) {
+            .combineds {
+                grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
+            }
+        }
+
+        /* Fix para navegadores que no calculan bien auto-fit con span */
+        .combineds {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--card-gap);
+            grid-auto-flow: row dense;
+        }
+
+        /* ###### CARD TYPES ###### */
+        .static-alone {
+            background-color: var(--card-bg);
+        }
+
+        .static-combined {
+            background-color: var(--card-bg);
+        }
+
+        .card-project {
+            background-color: var(--card-bg);
+        }
+
+        .card-blog {
+            background-color: var(--card-bg-blog);
+            border-left: 4px solid var(--blog-accent);
+        }
+
+        .card-accent-side {
+            background-color: var(--card-bg-static);
+            border-left: 4px solid var(--static-accent);
+        }
+
+        /* ###### CARD CONTENT ###### */
+        .card img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #85858580;
+            transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, filter 0.3s ease-in-out;
+            transform: translateY(0);
+        }
+
+        .card:hover img {
+            transform: var(--img-hover-transform);
+            box-shadow: var(--card-hover-shadow);
+            filter: brightness(1.2);
+        }
+
+        .metadata {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+            width: 100%;
+            padding-top: 15px;
+        }
+
+        .metadata .title {
+            font-family: "Merriweather", serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+
+        .metadata .desc {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            flex-grow: 1;
+            margin: 10px 0;
+        }
+
+        .metadata .date {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            margin-top: auto;
+            font-style: italic;
+        }
+
+        .metadata .category {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 500;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        .card-blog .category {
+            background: var(--blog-accent);
+        }
+
+        .card-static .category {
+            background: var(--static-accent);
+        }
+
+        /* ###### FOOTER ###### */
+        .updated-text {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        footer {
+            background-color: #121;
+            color: greenyellow;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            font-family: "Merriweather", serif;
+            font-size: 1rem;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #f5f5dc;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em;
+            font-weight: 500;
+            margin: 0 1rem 0 0;
+        }
+
+        footer a:hover {
+            color: coral;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="site-title">
+            <div class="logo">
+                <img src="https://via.placeholder.com/200x60/ff6961/ffffff?text=LOGO" alt="Logo">
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="project-grid">
+            <div class="cards-wrapper">
+                <div class="combineds">
+                    <!-- Card Banner - Ocupa toda la fila -->
+                    <div class="card card-banner card-blog">
+                        <img src="{{ url_for('static', filename='blog-default-cardboard.png') }}" alt="Banner">
+                        <div class="metadata">
+                            <div class="category">Banner</div>
+                            <div class="title">Card Banner - Ocupa toda la fila</div>
+                            <div class="desc">Esta card siempre ocupará toda la fila disponible, adaptándose al zoom.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Card Default - Formato vertical -->
+                    <div class="card card-default card-project">
+                        <img src="https://picsum.photos/300/200" alt="Proyecto">
+                        <div class="metadata">
+                            <div class="category">Default</div>
+                            <div class="title">Card Default</div>
+                            <div class="desc">Formato vertical estándar. Tamaño base del sistema.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Card Wide - 2 columnas -->
+                    <div class="card card-wide card-accent-side">
+                        <img src="https://picsum.photos/600/200" alt="Wide">
+                        <div class="metadata">
+                            <div class="category">Wide</div>
+                            <div class="title">Card Wide - 2 Columnas</div>
+                            <div class="desc">Ocupa el espacio de dos cards default horizontalmente, incluyendo el gap.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Cards Mini - Mitad de default -->
+                    <div class="card card-mini card-blog">
+                        <img src="https://picsum.photos/200/150" alt="Mini">
+                        <div class="metadata">
+                            <div class="category">Mini</div>
+                            <div class="title">Card Mini</div>
+                            <div class="desc">Mitad de una default.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <div class="card card-mini card-project">
+                        <img src="https://picsum.photos/200/150" alt="Mini">
+                        <div class="metadata">
+                            <div class="category">Mini</div>
+                            <div class="title">Card Mini 2</div>
+                            <div class="desc">Otra card mini.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Card Jumbo - 2x2 -->
+                    <div class="card card-jumbo card-accent-side">
+                        <img src="https://picsum.photos/400/300" alt="Jumbo">
+                        <div class="metadata">
+                            <div class="category">Jumbo</div>
+                            <div class="title">Card Jumbo - 2x2</div>
+                            <div class="desc">Cuadrado enorme que ocupa 2x2 espacios de cards default. Perfect para contenido destacado.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <!-- Más cards default para demostrar el auto-relleno -->
+                    <div class="card card-default card-blog">
+                        <img src="https://picsum.photos/300/200" alt="Default">
+                        <div class="metadata">
+                            <div class="category">Default</div>
+                            <div class="title">Card Default 2</div>
+                            <div class="desc">Otra card default para mostrar el auto-relleno.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <div class="card card-default card-project">
+                        <img src="https://picsum.photos/300/200" alt="Default">
+                        <div class="metadata">
+                            <div class="category">Default</div>
+                            <div class="title">Card Default 3</div>
+                            <div class="desc">Y otra más para completar la demostración.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+
+                    <div class="card card-default card-accent-side">
+                        <img src="https://picsum.photos/300/200" alt="Default">
+                        <div class="metadata">
+                            <div class="category">Default</div>
+                            <div class="title">Card Default 4</div>
+                            <div class="desc">El grid se auto-ajusta según el espacio disponible.</div>
+                            <div class="date">25 Mayo 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="#">GitHub</a>
+        <a href="#">Portfolio</a>
+    </footer>
+</body>
+</html>

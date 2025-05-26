@@ -1,0 +1,315 @@
+:root {
+    --font-family: "Merriweather", serif;
+    --font-size: 16px;
+    --line-height: 1.6;
+    --max-width: 80%;
+    --padding: 20px;
+    --border-radius: 4px;
+    --transition-speed: 0.3s;
+    --primary-color: #0366d6;
+    --secondary-color: #6a737d;
+    --background-color: #fffbe1;
+    --article-background: whitesmoke;
+    --text-color: #24292e;
+    --border-color: #eaecef;
+    --code-background: #f6f8fa;
+    --code-text-color: #24292e;
+    --blockquote-color: #6a737d;
+    --blockquote-border: #dfe2e5;
+    --table-header-background: #f6f8fa;
+    --table-border: #dfe2e5;
+    --hr-color: #eaecef;
+    --footnote-color: #6a737d;
+
+    --nav-bg: #1a1a1a8d;
+    --nav-h: 50vh;
+    --logo-h: 5lh;
+    --nav-border: #2f2f2f;
+}
+
+[data-theme="dark"] {
+    --background-color: #1e1e1e;
+    --text-color: #e1e1e1;
+    --border-color: #444;
+    --code-background: #2d2d2d;
+    --code-text-color: #e1e1e1;
+    --blockquote-color: #888;
+    --blockquote-border: #555;
+    --table-header-background: #2d2d2d;
+    --table-border: #444;
+    --hr-color: #555;
+    --footnote-color: #888;
+}
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--text-color);
+    background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
+    background-color: var(--background-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100vw;
+    height: var(--nav-h);
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: 10px 25px;
+    box-sizing: border-box;
+    background: var(--nav-bg);
+    border-bottom: 2px solid var(--nav-border);
+    z-index: 10;
+}
+
+.site-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.site-title > .logo {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: var(--logo-h);
+    max-width: 100vw;
+}
+
+.site-title > .logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+}
+
+.site-title::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    content: '';
+    background: radial-gradient(
+      circle,
+      rgba(255, 105, 180, 0.993),
+      rgba(0, 191, 255, 0.912),
+      rgba(255, 255, 0, 0.1),
+      rgba(0, 255, 0, 0.1)
+    );
+    border-radius: 50%;
+    filter: blur(10px);
+}
+
+.main-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.blog-post > .author {
+  margin: 100px 0 20px 40px;
+  color: var(--blockquote-color);
+  font-family: 'Courier New', Courier, monospace;
+
+}
+
+.blog-post {
+
+    width: 100%;
+    max-width: var(--max-width);
+    padding: var(--padding);
+    margin: 0 0 -2em 0;
+    background-color: var(--article-background);
+    border-start-start-radius: 10px;
+}
+
+.blog-post img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.blog-post p {
+    margin: 1em 0;
+}
+
+.blog-post a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.blog-post a:hover {
+    color: coral;
+}
+
+.blog-post blockquote {
+    margin: 1em 0;
+    padding: 1em;
+    border-left: 4px solid var(--blockquote-border);
+    background: #f9f9f9;
+    color: var(--blockquote-color);
+    font-style: italic;
+}
+
+.blog-post pre,
+.blog-post code {
+    background: var(--code-background);
+    color: var(--code-text-color);
+    font-family: monospace;
+    border-radius: var(--border-radius);
+}
+
+.blog-post pre {
+    padding: 1em;
+    overflow-x: auto;
+    margin-bottom: 1em;
+}
+
+.blog-post code {
+    padding: 0.2em 0.4em;
+}
+
+.blog-post table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.blog-post th,
+.blog-post td {
+    border: 1px solid var(--table-border);
+    padding: 0.5em 1em;
+}
+
+.blog-post th {
+    background: var(--table-header-background);
+}
+
+.blog-post hr {
+    border: 1px solid rgba(0, 0, 0, 0.41);
+    border-top: 1px solid var(--hr-color);
+    margin: 2em 1em;
+}
+
+
+.textCentered {
+  text-align: center;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textJustified {
+  text-align: justify;
+  hyphens: auto;
+}
+
+
+footer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    height: 50lvh;
+    padding: 2rem;
+    box-sizing: border-box;
+    font-family: "Merriweather", serif;
+    font-size: 1rem;
+    background-color: #121212;
+    color: greenyellow;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.footer-one {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.footer-two {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.footer-THREE {
+    padding: 1rem 0;
+    text-align: right;
+}
+
+.updated-text {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-weight: 500;
+    color: #f5f5dc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    transform: translateY(-2px);
+    color: coral;
+}
+
+footer a i {
+    transition: transform 0.3s ease;
+}
+
+footer a:hover i {
+   transform: scale(1.2);
+}

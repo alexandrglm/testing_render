@@ -17,7 +17,7 @@ import threading
 from dotenv import load_dotenv
 import logging
 
-from server.main import main_server, routes_projects, routes_blogs
+from server.main import main_server, routes_projects, preCleanings
 from server.mainObjects import projects, static_pages, allowed_root_files
 # from server.mainProjects import routes_projects
 from server.mainCSSJinja import route_CSSJinja
@@ -26,6 +26,7 @@ from server.mainStaticRoutes import route_staticPages
 from server.mainRootAllowed import route_alloweds
 from server.mainCookies import route_Cookies
 from server.mainServices import service_manager
+from server.mainBlog import start_blog
 
 from serverModules.mail import start_server_email
 # from serverModules.logs import start_server_logs
@@ -45,6 +46,8 @@ app = Flask(__name__)
 
 ############################################################################
 # 0. SERVER STARTUP
+
+preCleanings()
 
 # #############
 # # 0.0 Logs 
@@ -73,7 +76,8 @@ main_server(app)
 #############
 # 2. PROJECTS ROUTES
 routes_projects(app)    
-routes_blogs(app)  
+
+
 #############
 # 3. CSS.jinja ROUTES
 route_CSSJinja(app)
@@ -89,6 +93,10 @@ route_alloweds(app)
 #############
 # 7. COOKIES 
 route_Cookies(app)
+
+#############
+# 7. COOKIES 
+start_blog(app)
 
 
 ############################################################################

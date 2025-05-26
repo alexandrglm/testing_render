@@ -3,168 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404 simple page using Flexbox</title>
+    <title>404</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='00/404.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <style>
-        body {
-            background-image: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, rgba(0, 0, 50, 0.8) 70%, rgba(0, 0, 20, 1) 100%);
-            font-family: "Sixtyfour Convergence", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            overflow: hidden;
-        }
-    
-        .errorWrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-            max-width: 90%;
-        }
-    
-        .errorHeading {
-            margin-bottom: 20px;
-        }
-    
-        .errorHeading h1 {
-            font-size: 3em;
-            margin: 0;
-            color: #fff;
-        }
-    
-        .errorHeading h2 {
-            font-size: 1.5em;
-            margin: 10px 0 0 0;
-            color: #fff;
-        }
-    
-        .canvas {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-width: 100%;
-            margin-top: 20px;
-            position: relative;
-        }
-    
-        .canvas img {
-            max-height: 350px;
-            width: auto;
-            display: block;
-        }
-    
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.7);
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-    
-        .play-button:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-    
-        .play-button i {
-            color: rgba(0, 0, 0, 0.8);
-            font-size: 24px;
-        }
-    
-        .canvas img[src*="test1gif"] + .play-button {
-            display: none;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 </head>
 <body>
-    <div class="errorWrapper"> 
-        <div class="errorHeading"> 
-            <h1>HTTP 404</h1>
-            <h2>Not every mistake is truly a mistake...</h2>
-        </div>
-        <div class="canvas">
-            <img id="404-image" src="{{ url_for('static', filename='404/404_logo.png') }}" alt="404 image">
-            <button class="play-button" id="play-button">
-                <i class="fas fa-play"></i>
-            </button>
+    <canvas id="webgl-canvas"></canvas>
+    <div class="main-container">
+        <div class="body-wrapper">
+            <div class="headings">
+                <h1>Hmm, this is a bit weird... looks like the page hasn't been put together yet!</h1>
+            </div>
+
+            <div class="links">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Go Home</a></li>
+                    <li><a href="{{ url_for('render_project', project_id=10) }}" target="_blank">This has been my favourite project!</a></li>
+                    <li><a href="{{ url_for('render_statics', pathName='contact') }}">Contact me</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    {{ render_footer() | safe }}        
 
-    <script>
-        const playButton = document.getElementById("play-button");
-        const canvas = document.querySelector(".canvas");
-
-        function loadGif() {
-            const gif = document.createElement("img");
-            gif.src = "{{ url_for('static', filename='404/test1.gif') }}";
-            gif.alt = "404 GIF";
-            gif.style.maxHeight = "640px";
-            gif.style.width = "auto";
-
-            canvas.innerHTML = "";
-            canvas.appendChild(gif);
-
-            const gifDuration = 4000;
-            const fadeOutTime = gifDuration - 500;
-            setTimeout(() => {
-                gif.style.transition = "opacity 0.5s";
-                gif.style.opacity = "0";
-                setTimeout(() => {
-                    const placeholder = document.createElement("div");
-                    placeholder.style.width = gif.offsetWidth + "px";
-                    placeholder.style.height = gif.offsetHeight + "px";
-                    placeholder.style.opacity = "0";
-                    canvas.innerHTML = "";
-                    canvas.appendChild(placeholder);
-                }, 500);
-            }, fadeOutTime);
-        }
-
-        playButton.addEventListener("click", () => {
-            playButton.style.display = "none";
-
-            const pngImage = document.createElement("img");
-            pngImage.src = "{{ url_for('static', filename='404/404_logo.png') }}";
-            pngImage.alt = "404 PNG";
-            pngImage.style.maxHeight = "640px";
-            pngImage.style.width = "auto";
-
-            canvas.innerHTML = "";
-            canvas.appendChild(pngImage);
-
-            const gifLoader = document.createElement("img");
-            gifLoader.src = "{{ url_for('static', filename='404/test1.gif') }}";
-            gifLoader.style.display = "none";
-
-            gifLoader.onload = () => {
-                loadGif();
-            };
-
-            document.body.appendChild(gifLoader);
-        });
-    </script>
+    <footer>
+        <div class="footer-bar">
+            <a href="https://github.com/alexandrglm" target="_blank"><i class="fa-brands fa-github"></i>@alexandrglm</a>
+        </div>
+    </footer>
     {% include '_navbar.html' | safe %}
-    {{ render_footer() | safe }}
+    <script src="{{ url_for('static', filename='00/index_shader.js') }}"></script>
 </body>
+    {{ render_footer() | safe }}
 </html>

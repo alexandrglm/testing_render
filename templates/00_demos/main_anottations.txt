@@ -1,0 +1,31 @@
+
+    <!--
+    <div class="cards-wrapper">
+        Static content here if needed
+        <div class="card card-wide card-static">...</div>
+
+        {% for item in combined_content %}
+            {% if item.type == 'project' %}
+                <a href="/project/{{ item.id }}/" class="card card-{{ item.size|default('small') }} card-project">
+                    <img src="{{ url_for('static', filename=item.id + '/' + item.id + '.png') }}" alt="Project Image">
+                    <div class="metadata">
+                        <span class="category">{{ item.category|default('Project') }}</span>
+                        <h1 class="title">{{ item.id }}. {{ item.title }}</h1>
+                        <p class="desc">{{ item.desc }}</p>
+                        {% if item.date %}<div class="date">{{ item.date }}</div>{% endif %}
+                    </div>
+                </a>
+            {% elif item.type == 'blog' %}
+                <a href="/blog/{{ item.slug }}/" class="card card-{{ item.size|default('small') }} card-blog">
+                    <img src="{{ url_for('static', filename='blog/' + item.image) }}" alt="Blog Image">
+                    <div class="metadata">
+                        <span class="category">{{ item.category|default('Blog') }}</span>
+                        <h1 class="title">{{ item.title }}</h1>
+                        <p class="desc">{{ item.desc }}</p>
+                        <div class="date">{{ item.date }}</div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    -->

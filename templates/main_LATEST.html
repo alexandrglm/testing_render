@@ -1,0 +1,198 @@
+<!-- (stable-server branch) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just Learning! - Dev Showcase</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <!-- HEADER -> NAVBAR  -->
+    <header>
+        <nav>
+            <div class="site-title">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='logo_web.png') }}" alt="Just Learning!">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ENTIRE BODY WRAPPER -->
+    <div class="main-container">
+        <div class="project-gridc">
+            <div class="cards-wrapper"><!--- Replacing old .container-->
+                
+                <!-- STATIC CARDBOADS, NO JINJA, SEPARATED FROM combindes
+                <div class="static-alone card card-wide card-static">
+                    <div class="metadata">
+                        <span class="category">FIRST CARD OUTLINED</span>
+                        <h1 class="title">I am an outter-static cardboard</h1>
+                        <p class="desc">With its own container bla bla bla lorem ipsum bla bla bla.</p>
+                    </div>
+                </div> -->
+                
+                <!-- COMBINED-Jinja CARDBOARDS WRAPPER-->
+                <div class="combineds">
+
+                    <!-- STATIC, COMBINED, NO JINJA -->
+                    <div class="static-combined card card-wide card-accent-side">
+                        <div class="metadata">
+                            <span class="category">Included Static</span>
+                            <h1 class="title">I am a COMBINED-STATIC card</h1>
+                            <p class="desc">And I am at the beginning, sharing container with the combined-jinja cards!.</p>
+                        </div>
+                    </div>
+
+                    {% for item in combined_content %}
+                        
+                        {% if item.type == 'project' %}
+                            
+                            <!-- 
+                        
+                            Carboard For PROJECTS
+
+                            Image:  If custom project'snapshot', elif project path:file
+
+                            Subtitle: If - else nothing
+                            Title:  id + title
+                            Description:
+                            Date: 
+                            Author:
+                            Category:
+                            -->
+                            <a href="/project/{{ item.id }}/" class="card card-{{ item.size|default('default') }} card-project">
+                                {% if item.metadata.snapshot %}
+                                    <img src="{{ url_for('static', filename=item.metadata.snapshot) }}" alt="Project Image">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename=item.id + '/' + item.id + '.png') }}" alt="Project Image">
+                                {% endif %}
+                                
+                                <div class="metadata">
+                                    {% if item.metadata.subtitle %}
+                                        <span class="category">{{ item.metadata.subtitle }}</span>
+                                    {% endif %}
+                                    
+                                    <h1 class="title">
+                                        {% if item.id %}{{ item.id }}. {% endif %}{{ item.metadata.title }}
+                                    </h1>
+                                    
+                                    {% if item.metadata.desc %}
+                                        <p class="desc">{{ item.metadata.desc }}</p>
+                                    {% endif %}
+                                    
+                                    {% if item.metadata.date %}
+                                        <div class="date">{{ item.metadata.date }}</div>
+                                    {% endif %}
+                                    
+                                    {% if item.metadata.author %}
+                                        <div class="author">By {{ item.metadata.author }}</div>
+                                    {% endif %}
+                                    
+                                    {% if item.metadata.category %}
+                                        <div class="tags">{{ item.metadata.category }}</div>
+                                    {% endif %}
+                                </div>
+                            </a>
+
+                        <!-- 
+                        
+                            Carboard For BLOGS
+
+                            Image:  blog path + From'snapshot.file' or DEFAULT (when missing.pending testing back and/or frontend pic validations or duplicated)
+
+                            Category:
+                            Title:  mandatory
+                            Description:
+                            Date: 
+                            Author:
+                            Category:
+                            -->
+                        {% elif item.type == 'blog' %}
+                            <!-- Jinja Blog paths (by date+link) preparation -->
+                            {% set date_parts = item.metadata.date.split('-') %}
+                            {% set year = date_parts[0] %}
+                            {% set month = date_parts[1] %}
+                            
+                            <a href="/blog/{{ year }}/{{ month }}/{{ item.metadata.link }}/" class="card card-{{ item.size|default('default') }} card-blog">
+                                {% if item.metadata.snapshot %}
+                                    <img src="{{ url_for('static', filename='blog/' + year + '/' + month + '/' + item.metadata.link + '/' + item.metadata.snapshot) }}" alt="Blog Image">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='blog/default-image.png') }}" alt="Blog Image">
+                                {% endif %}
+                                
+                                <div class="metadata">
+                                    {% if item.metadata.subtitle %}
+                                        <span class="category">{{ item.metadata.subtitle }}</span>
+                                    {% endif %}
+                                    
+                                    <h1 class="title">{{ item.metadata.title }}</h1>
+                                    
+                                    {% if item.metadata.desc %}
+                                        <p class="desc">{{ item.metadata.desc }}</p>
+                                    {% endif %}
+                                    
+                                    <div class="date">{{ item.metadata.date }}</div>
+                                    
+                                    {% if item.metadata.author %}
+                                        <div class="author">By {{ item.metadata.author }}</div>
+                                    {% endif %}
+                                    
+                                    {% if item.metadata.category %}
+                                        <div class="tags">{{ item.metadata.category }}</div>
+                                    {% endif %}
+                                </div>
+                            </a>
+
+                        {% else %}
+                            <!-- pending -->
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- STATIC CAARDS at ENDING or for footer -->
+                    <div class="static-combined card card-wide card-static">
+                        <div class="metadata" class.hidden="false">
+                            <span class="category">Included LAST Static</span>
+                            <h1 class="title">The LAST COMBINED-STATIC card</h1>
+                            <p class="desc">And I am at end, sharing container with the combined-jinja cards!.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <p class="updated-text">Last updated:<strong> May 17th, 2025.</strong></p>
+    {% include '_navbar.html' | safe %}
+
+    <script src="{{ url_for('static', filename='00/main.js') }}"></script>
+
+    <!-- FOOTER -> As a new body -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-one">
+                <p class="updated-text">Last updated:<strong> May 17th, 2025.</strong></p>
+            </div>
+            
+            <div class="footer-THREE">
+                <canvas class="footer-shader"></canvas>
+                I'm really hardcoding this part
+            </div>
+
+            <div class="footer-two">
+                <a href="https://github.com/alexandrglm" target="_blank">
+                    <i class="fa-brands fa-github"></i>@alexandrglm
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+  {{ render_footer() | safe }}
+</html>

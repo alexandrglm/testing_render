@@ -1,7 +1,7 @@
-/.vscode
-/.tests
-/.secrets
-/.venv
+**/.vscode
+**/.tests
+**/.secrets
+**/.venv
 **/__pycache__
 **/Pipfile.lock
 **/Pipfile
