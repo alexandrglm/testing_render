@@ -14,4 +14,4 @@ python-dotenv
 gunicorn
 python-telegram-bot
 psutil
-shutil
+pytest-shutil
