@@ -1,120 +1,119 @@
-<footer>
-    <style>
-        .cookie-consent-banner {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.95);
-            color: #333;
-            padding: 20px;
-            border-radius: 12px;
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 11000;
-            max-width: 500px;
-            width: 90%;
-            font-size: 14px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-        .cookie-consent-banner p {
-            margin: 0 0 15px;
-            line-height: 1.5;
-            color: #555;
-        }
-        .cookie-consent-banner p strong {
-            font-weight: bold;
-            color: #333;
-        }
-        .cookie-consent-banner .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .cookie-consent-banner button {
-            background-color: transparent;
-            color: #007BFF;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            font-weight: 500;
-        }
-        .cookie-consent-banner button:hover {
-            background-color: rgba(0, 123, 255, 0.1);
-            color: #0056b3;
-        }
-        .cookie-consent-banner button#reject-cookies {
-            color: #bd4c32;
-        }
-        .cookie-consent-banner button#reject-cookies:hover {
-            background-color: rgba(189, 76, 50, 0.1);
-            color: #ab2b18;
-        }
-        .cookie-consent-banner button#accept-cookies {
-            color: #28a745;
-        }
-        .cookie-consent-banner button#accept-cookies:hover {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: #218838;
-        }
-        .cookie-consent-banner a {
-            color: #007BFF;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .cookie-consent-banner a:hover {
-            text-decoration: underline;
-        }
-    </style>
+
+<style>
+    .cookie-consent-banner {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #333;
+        padding: 20px;
+        border-radius: 12px;
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 11000;
+        max-width: 500px;
+        width: 90%;
+        font-size: 14px;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+    .cookie-consent-banner p {
+        margin: 0 0 15px;
+        line-height: 1.5;
+        color: #555;
+    }
+    .cookie-consent-banner p strong {
+        font-weight: bold;
+        color: #333;
+    }
+    .cookie-consent-banner .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    .cookie-consent-banner button {
+        background-color: transparent;
+        color: #007BFF;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-weight: 500;
+    }
+    .cookie-consent-banner button:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+        color: #0056b3;
+    }
+    .cookie-consent-banner button#reject-cookies {
+        color: #bd4c32;
+    }
+    .cookie-consent-banner button#reject-cookies:hover {
+        background-color: rgba(189, 76, 50, 0.1);
+        color: #ab2b18;
+    }
+    .cookie-consent-banner button#accept-cookies {
+        color: #28a745;
+    }
+    .cookie-consent-banner button#accept-cookies:hover {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #218838;
+    }
+    .cookie-consent-banner a {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .cookie-consent-banner a:hover {
+        text-decoration: underline;
+    }
+</style>
 <div id="cookie-consent-banner" class="cookie-consent-banner">
-    <p>
-        This site uses its own cookies to manage the server. Your data is neither processed nor stored in any way. We would have preferred not to use cookies at all and just display this message to say: "This site doesn't use cookies, but isn't it cool how Jinja handles footers?"
-    </p>
-    <div class="buttons">
-        <button id="accept-cookies">I just click buttons without reading</button>
-        <button id="reject-cookies">Got it!</button>
-    </div>
+<p>
+    This site uses its own cookies to manage the server. Your data is neither processed nor stored in any way. We would have preferred not to use cookies at all and just display this message to say: "This site doesn't use cookies, but isn't it cool how Jinja handles footers?"
+</p>
+<div class="buttons">
+    <button id="accept-cookies">I just click buttons without reading</button>
+    <button id="reject-cookies">Got it!</button>
+</div>
 </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cookieBanner = document.getElementById('cookie-consent-banner');
-            const acceptBtn = document.getElementById('accept-cookies');
-            const rejectBtn = document.getElementById('reject-cookies');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cookieBanner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+        const rejectBtn = document.getElementById('reject-cookies');
 
-            // Mostrar solo si no hay decisión previa
-            if (!localStorage.getItem('cookieDecision')) {
-                cookieBanner.style.display = 'block';
-                
-                // Cerrar al hacer clic fuera
-                document.addEventListener('click', function(e) {
-                    if (!cookieBanner.contains(e.target)) {
-                        cookieBanner.style.display = 'none';
-                        localStorage.setItem('cookieDecision', 'dismissed');
-                    }
-                }, { once: true });
-            }
+        // Mostrar solo si no hay decisión previa
+        if (!localStorage.getItem('cookieDecision')) {
+            cookieBanner.style.display = 'block';
 
-            // Manejar botones
-            [acceptBtn, rejectBtn].forEach(btn => {
-                btn.addEventListener('click', function() {
+            // Cerrar al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!cookieBanner.contains(e.target)) {
                     cookieBanner.style.display = 'none';
-                    localStorage.setItem('cookieDecision', this.id.replace('-cookies', ''));
-                    
-                    // Animación de desvanecimiento
-                    cookieBanner.style.transition = 'opacity 0.3s';
-                    cookieBanner.style.opacity = '0';
-                    setTimeout(() => {
-                        cookieBanner.style.display = 'none';
-                    }, 300);
-                });
+                    localStorage.setItem('cookieDecision', 'dismissed');
+                }
+            }, { once: true });
+        }
+
+        // Manejar botones
+        [acceptBtn, rejectBtn].forEach(btn => {
+            btn.addEventListener('click', function() {
+                cookieBanner.style.display = 'none';
+                localStorage.setItem('cookieDecision', this.id.replace('-cookies', ''));
+
+                // Animación de desvanecimiento
+                cookieBanner.style.transition = 'opacity 0.3s';
+                cookieBanner.style.opacity = '0';
+                setTimeout(() => {
+                    cookieBanner.style.display = 'none';
+                }, 300);
             });
         });
-    </script>
-</footer>
+    });
+</script>

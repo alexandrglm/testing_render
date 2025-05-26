@@ -1,4 +1,3 @@
-
 from server.mainObjects import projects
 from server.main import rendering_checks
 import os
@@ -28,12 +27,12 @@ def start_blog(app):
 
         try:
 
-            template_path = f'blog/{year}/{month:02d}/{slug}.html'
-            return render_template(template_path, blog=blog)
+            post_path = f'blog/{year}/{month:02d}/{slug}/{slug}.html'
+            return render_template(post_path, blog=blog)
 
         except Exception as e:
 
-            print(f'\n[ERROR] (BLOGS) -> {template_path} error :\n   {str(e)}\n\n')
+            print(f'\n[ERROR] (BLOGS) -> {post_path} error :\n   {str(e)}\n\n')
             return render_template('404/index_404.html')
 
 
@@ -49,8 +48,8 @@ def start_blog(app):
             
             try:
                 year, month, *_ = date.split('-')
-                filename = f"blog/{year}/{month}/{link}/{snapshot}"
-                return send_from_directory('static', filename)
+                thePostPic = f"static/blog/{year}/{month}/{link}/{snapshot}"
+                return send_from_directory('static', thePostPic)
             
             except ValueError:
                 pass
@@ -116,7 +115,7 @@ def start_blog(app):
             
             post_html = base_template.replace("{{ content }}", html_body)
 
-            blog_paths = os.path.join('templates', "blog", yyyy, mm)
+            blog_paths = os.path.join('templates', "blog", yyyy, mm, link)
             os.makedirs(blog_paths, exist_ok=True)
 
             out_path = os.path.join(blog_paths, f'{link}.html')

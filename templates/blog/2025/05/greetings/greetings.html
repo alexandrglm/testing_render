@@ -1,0 +1,91 @@
+<!-- (stable-server branch) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post: {{ blog.metadata.title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='blog/blogPost.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Las block formulas, para el front (back llevan pymdown-extensions) -->
+    <script src="https://cdn.jsdelivr.net/npm/js-polyfills@0.1.43/polyfill.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@latest/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+    <!-- HEADER -> NAVBAR  -->
+    <header>
+        <nav>
+            <div class="site-title">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='logo_web.png') }}" alt="Just Learning!">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container">
+
+        <article class="blog-post">
+            <div class="date">
+                {{ "Date:    %s " | format(blog.metadata.date) }}
+            </div>
+            <h1 class="textCentered" id="why-a-blog">Why a blog?</h1>
+<p>Greetings!</p>
+<p>And, now, reality:</p>
+<h3 class="textCentered" id="the-magic-of-this-website-isnt-much"><strong>The "magic" of this website isn't much.</strong></h3>
+<p>While years ago I might have used an already functional service, like WordPress, not so many years ago I discovered the virtues of MarkDown as a language. Since then I don't use word processors (my LibreOffice Writer has been gathering dust for a while).  </p>
+<p>This site was minded as a place where I could apply, in a technical way, some things I learn along the way.  </p>
+<p>First it was a simple <em>"Hello World"</em> -without HTML, just Python-Flask- that had everything but simplicity.   </p>
+<p>I would have taken much less time typing HTML code, key by key, than trying to work with Strings, interpolation, methods , etc ... but learnt a few more.</p>
+<p>Then I started trying to materialize some ideas, as a "colour palette converter  for the Amstrad-CPC (dec to  hex conversion) in TypeScript. Later, replicated the idea purely in Python, from the back-end..</p>
+<p>Later on,  due to the "necessity" of free-tier account my server is, a web Shell app was created, or an entire persistant (and free) storage using MongoDB/NoSQL by parsing files into BSON's.</p>
+<p>I know silly ideas were started. </p>
+<p>I couldn't say if this examples can even be considered as a valid  portfolio. 😅</p>
+<hr />
+<p>But, what I have definitely realized is, without any doubt, ... it's not about learning one programming language or another, neither about which one is better now what kind of  approach to apply on something or not.</p>
+<p>It's not about whether being a child and knowing how to program my own games using BASIC or if nowaday I'm even capable of, at least, understanding C.</p>
+<p>What I'm realizing is that I'm learning to understand newer programming languages, so  that, step by step (sketch by sketch), I find parallelisms between them in structures, objects, routines, from the basis.</p>
+<p>Just like this 'blog system', this entire server, developed function by method from scratch.</p>
+<p>If you want to know the only thing that I know for certain is that this learning, these resources and efforts, should have been dedicated many, many eons ago.</p>
+<h3 class="textCentered" id="and-thats-the-real-magic-of-this">And that's the real magic of this:</h3>
+<blockquote>
+<p>I really should start documenting these sporadic projects of mine somewhere!</p>
+</blockquote>
+<p><img alt="Some of my 'shitties'" src="/static/blog/2025/05/greetings/01.png/" /></p>
+<p>Sincerously,</p>
+            <div class="author">
+                {{ "   %s" | format(blog.metadata.author) }}
+            </div>
+        </article>
+
+    </div>
+    {% include '_navbar.html' | safe %}
+
+    <script src="{{ url_for('static', filename='00/main.js') }}"></script>
+
+    <!-- FOOTER -> As a new body -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-one">
+                <p class="updated-text">Last updated:<strong> May 17th, 2025.</strong></p>
+            </div>
+            
+            <div class="footer-THREE">
+                <canvas class="footer-shader"></canvas>
+                This part is really being in development :-D
+            </div>
+
+            <div class="footer-two">
+                <a href="https://github.com/alexandrglm" target="_blank">
+                    <i class="fa-brands fa-github"></i>@alexandrglm
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+  {{ render_footer() | safe }}
+</html>

@@ -108,7 +108,7 @@
                                 {% if item.metadata.snapshot %}
                                     <img src="{{ url_for('static', filename='blog/' + year + '/' + month + '/' + item.metadata.link + '/' + item.metadata.snapshot) }}" alt="Blog Image">
                                 {% else %}
-                                    <img src="{{ url_for('static', filename='blog/default-image.png') }}" alt="Blog Image">
+                                    <img src="{{ url_for('static', filename='blog-default.png') }}" alt="Blog Image">
                                 {% endif %}
                                 
                                 <div class="metadata">
