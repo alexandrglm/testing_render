@@ -5,9 +5,10 @@
  ( () => {
 
     const baseCardClass = ('.card');
+    const cards = document.querySelectorAll(baseCardClass)
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
 
         init3DCardEffects();
         
@@ -15,12 +16,10 @@
 
     
     function init3DCardEffects() {
+
+       cards.forEach(card => {
         
-        const cards = document.querySelectorAll(baseCardClass);
-        
-        
-        cards.forEach(card => {
-            
+                      
             // ON HOVER (pending  add & test touchmove event)
             card.addEventListener('mousemove', (e) => {
                 
